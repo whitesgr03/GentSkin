@@ -355,11 +355,10 @@ export default {
 }
 </script>
 
-<style scope>
+<style scoped>
 .table td {
   border: none;
 }
-
 .btn-type:after {
   position: absolute;
   border-radius: 19px;

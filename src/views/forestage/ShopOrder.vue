@@ -355,6 +355,7 @@
                       class="btn btn-outline-dark text-white"
                       type="button"
                       @click="addCouponCode"
+                      :disabled="coupon_code == ''"
                     >
                       <!--addCouponCode 比對成功時將可帶入折扣-->
                       套用優惠碼
@@ -482,10 +483,18 @@ export default {
       }
       vm.isLoading = true
       this.$http.post(api, { data: coupon }).then(response => {
-        // console.log('優惠卷', response)
-        vm.getCart()
-        vm.coupon_code = ''
+        const coupon = response.data
+        if (coupon.success) {
+          vm.getCart()
+          vm.coupon_code = ''
+          this.$bus.$emit('message:push', '已使用優惠卷', 'tohoh')
+        } else {
+          this.$bus.$emit('message:push', '請輸入正確的優惠碼', 'tohoh')
+        }
         vm.isLoading = false
+        // console.log('優惠卷', message)
+        // 修正付款完成後某些按鈕會套入hove
+        console.log('優惠卷', coupon)
       })
     },
     goForm() {
