@@ -40,7 +40,7 @@ export default {
         status, //訊息顯示的樣式
         timestamp //訊息多久會消失
       })
-      console.log(this.messages)
+      // console.log(this.messages)
       //觸發清除訊息的函式(removeMessageWithTiming)
       this.removeMessageWithTiming(timestamp)
     },

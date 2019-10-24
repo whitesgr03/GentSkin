@@ -494,7 +494,7 @@ export default {
         vm.isLoading = false
         // console.log('優惠卷', message)
         // 修正付款完成後某些按鈕會套入hove
-        console.log('優惠卷', coupon)
+        // console.log('優惠卷', coupon)
       })
     },
     goForm() {
