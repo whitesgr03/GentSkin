@@ -2,8 +2,8 @@
   <div class="message-alert" style="z-index:9999">
     <div
       class="alert alert-dismissible animated jackInTheBox position-relative p-0"
-      :class="'alert-' + item.status"
       v-for="(item, i) in messages"
+      :class="'alert-' + item.status"
       :key="i"
     >
       <div
@@ -40,20 +40,12 @@ export default {
         status, //訊息顯示的樣式
         timestamp //訊息多久會消失
       })
+      console.log(this.messages)
       //觸發清除訊息的函式(removeMessageWithTiming)
       this.removeMessageWithTiming(timestamp)
     },
     removeMessage(num) {
-      $('.alert').one('click', () => {
-        $('.alert').removeClass('jackInTheBox')
-        $('.alert')
-          .addClass('lightSpeedOut')
-          .addClass('faster')
-        setTimeout(() => {
-          this.messages.splice(num, 1)
-        }, 500)
-      })
-      // this.messages.splice(num, 1) //訊息右上角的主動清除按鈕
+      this.messages.splice(num, 1) //訊息右上角的主動清除按鈕
     },
     removeMessageWithTiming(timestamp) {
       // 執行函式後 4秒後清除訊息
@@ -61,13 +53,7 @@ export default {
       setTimeout(() => {
         vm.messages.forEach((item, i) => {
           if (item.timestamp === timestamp) {
-            $('.alert').removeClass('jackInTheBox')
-            $('.alert')
-              .addClass('lightSpeedOut')
-              .addClass('faster')
-            setTimeout(() => {
-              vm.messages.splice(i, 1)
-            }, 500)
+            vm.messages.splice(i, 1)
           }
         })
       }, 4000)
