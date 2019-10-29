@@ -12,7 +12,6 @@ export default new Router({
     },
     {
       path: '/', //虛擬路徑
-      name: 'Home', //元件的名稱
       component: () => import('@/views/Home.vue'), //對應的vue檔名稱
       children: [
         {
@@ -87,7 +86,6 @@ export default new Router({
     //後台
     {
       path: '/admin',
-      name: 'Dashboard',
       component: () => import('@/views/Dashboard.vue'),
       children: [
         {

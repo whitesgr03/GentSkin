@@ -393,7 +393,7 @@ export default {
       vm.isLoading = true
       this.$http.get(api).then(response => {
         vm.cart = response.data.data
-        // console.log('購物車資料', response.data.data)
+        console.log('購物車資料', response.data.data)
         vm.isLoading = false
       })
     },

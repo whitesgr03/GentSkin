@@ -45,8 +45,8 @@
                 />
                 <button
                   type="button"
-                  class="btn-type"
-                  style="padding: 5px 20px; color:white"
+                  class="btn-type btn-type3"
+                  style="padding: 5px 20px;"
                 >
                   訂閱
                 </button>
@@ -102,14 +102,5 @@ img {
 
 img:hover {
   opacity: 1;
-}
-
-.btn-type {
-  background-color: rgba(31, 70, 140, 0.6);
-  transition: all 80ms ease;
-}
-
-.btn-type:hover {
-  background-color: rgba(31, 70, 140, 1);
 }
 </style>

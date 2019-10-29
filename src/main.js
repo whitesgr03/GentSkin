@@ -62,7 +62,7 @@ new Vue({
 
 router.beforeResolve((to, from, next) => {
   //頁面登入驗證
-  console.log('目前從', from.name, '頁面,轉移到', to.name, '頁面')
+  // console.log('目前從', from.name, '頁面,轉移到', to.name, '頁面')
   if (to.meta.requiresAuth) {
     //如果要to的頁面有meta.requiresAuth的變數為ture的話就執行
     const api = `${process.env.VUE_APP_APIPATH}/api/user/check` //api路徑

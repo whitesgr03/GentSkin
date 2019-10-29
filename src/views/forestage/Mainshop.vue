@@ -1,7 +1,8 @@
 <template>
   <div>
     <Navbar :navCart="cart" :navCartItem="cartitem" />
-    <Menubar class="sticky-top" />
+    <Menubar class="sticky-top" :navCart="cart" :navCartItem="cartitem" />
+
     <div class="swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide carousel-bgc-3 d-flex align-items-center">
@@ -26,8 +27,7 @@
                   <router-link
                     tag="button"
                     to="/journal"
-                    class="btn-type mt-3"
-                    style="background-color:#B17844;"
+                    class="btn-type btn-type2 mt-3"
                   >
                     閱讀更多
                   </router-link>
@@ -50,7 +50,7 @@
                   <router-link
                     tag="button"
                     to="/shop"
-                    class="btn-type mt-3"
+                    class="btn-type btn-type2 mt-3"
                     style="background-color:#B17844;"
                   >
                     立即選購
@@ -72,7 +72,7 @@
                   <router-link
                     tag="button"
                     to="/shop"
-                    class="btn-type mt-3"
+                    class="btn-type btn-type2 mt-3"
                     style="background-color:#B17844;"
                   >
                     檢視單品
@@ -88,7 +88,7 @@
       <div class="swiper-scrollbar"></div>
     </div>
 
-    <div class="container ">
+    <div class="container">
       <div class="row py-5">
         <div class="col-4">
           <div class="card-wrapper">
@@ -157,8 +157,11 @@
         </div>
         <div class=" d-flex justify-content-center">
           <button
-            class="btn-type btn-14 mt-3"
+            class="btn-type btn-type2 mt-3"
             style="background-color:#B17844;"
+            data-toggle="modal"
+            data-target="#couponModal"
+            data-backdrop="true"
           >
             限時優惠
           </button>
@@ -239,20 +242,27 @@
       <div class="container">
         <div class="stroke text-center">
           <h3 style="letter-spacing:5px;">
-            <span style="font-size: 4rem">OPENING </span
-            ><span style="font-size: 3rem"> OFFER</span>
+            <span style="font-size: 4rem">Grand </span
+            ><span style="font-size: 3.5rem"> Opening</span>
           </h3>
-          <div class="my-5" style="font-size: 2.5rem;">
+          <div class="my-5 h4">
             <P style=" letter-spacing:10px;">
               慶祝開幕
             </P>
-            <p><i class="fas fa-check mr-3"></i> 結帳時輸入代碼可享折扣</p>
+            <p>
+              <i class="fas fa-check mr-3"></i>結帳金額滿
+              <strong class="h1 text-danger"> $3000</strong> 元
+            </p>
+            <p>
+              <i class="fas fa-check mr-3"></i>即可使用優惠
+              <strong class="h1 text-danger">30% OFF</strong> 折扣
+            </p>
           </div>
         </div>
         <div class=" d-flex justify-content-center">
-          <button class="btn-type mt-3" style="background-color:#B17844;">
-            立即查看
-          </button>
+          <router-link tag="button" to="/shop" class="btn-type btn-type2 mt-3"
+            >立即購物</router-link
+          >
         </div>
       </div>
     </div>
@@ -279,10 +289,60 @@
             <p>Saturday, 8:30am - 10:30pm</p>
             <p>Sunday, 8:30am - 10:30pm</p>
             <a href="http://tinyurl.com/y2ypnvg3" target="_blank">
-              <button class="btn-type mt-3" style="background-color:#B17844;">
+              <button
+                class="btn-type btn-type2 mt-3"
+                style="background-color:#B17844;"
+              >
                 立即前往
               </button>
             </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 優惠卷Modal -->
+    <div
+      class="modal fade"
+      id="couponModal"
+      tabindex="-1"
+      role="dialog"
+      data-backdrop="static"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content border-0 bg-transparent coupon-1">
+          <!-- 秋特賣 30% -->
+          <!-- 慶開幕 10% -->
+          <div class="m-4" style="border: 3px dashed #dee2e6;">
+            <div class="pt-4 mb-1 text-center" style="letter-spacing:5px;">
+              <div class="h2 stroke">
+                秋季限時優惠
+              </div>
+              <div class="h5 stroke">全館購物即可享有以下折扣</div>
+            </div>
+            <div
+              class="modal-body text-center d-flex justify-content-center"
+              style="font-size: 2rem;"
+            >
+              <div
+                class="p-3 w-50 text-warning"
+                style="border: 5px dotted #dee2e6; border-radius: 50rem "
+              >
+                <strong> 10% OFF</strong>
+              </div>
+            </div>
+            <div class="modal-footer border-0 d-flex justify-content-center">
+              <button
+                type="button"
+                class="btn-type btn-type3 rounded-pill"
+                style="padding: 5px 20px;"
+                data-dismiss="modal"
+              >
+                開始購物
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -307,9 +367,14 @@ export default {
     getCart() {
       const vm = this
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`
+      const getSite = sessionStorage.getItem('couponItem')
       this.$http.get(api).then(response => {
         vm.cart = response.data.data
         vm.cartitem = response.data.data.carts.length
+        if (getSite == null) {
+          $('#couponModal').modal('show')
+          const firstSite = sessionStorage.setItem('couponItem', 'coupon')
+        }
         // console.log('購物車資料', response.data)
       })
     },
@@ -390,26 +455,5 @@ export default {
   width: 70px;
   height: 87px;
   right: -15px;
-}
-
-.btn-type:after {
-  position: absolute;
-  border-radius: 19px;
-  content: '';
-  width: 0;
-  height: 100%;
-  top: 0;
-  right: 0;
-  z-index: -1;
-  background: #000;
-  transition: all 0.3s cubic-bezier(0.42, 0, 1, 1);
-}
-.btn-type:hover {
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  color: rgba(255, 255, 255, 0.8);
-}
-.btn-type:hover:after {
-  left: 0;
-  width: 100%;
 }
 </style>

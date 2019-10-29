@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar :navCart="cart" :navCartItem="cartitem" />
-    <Menubar class="sticky-top" />
+    <Menubar class="sticky-top" :navCart="cart" :navCartItem="cartitem"/>
 
     <div
       class="jumbotron jumbotron-fluid d-flex align-items-center justify-content-center mb-0 about-1"

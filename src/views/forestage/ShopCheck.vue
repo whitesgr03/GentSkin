@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar :navCart="cart" :navCartItem="cartitem" />
-    <Menubar class="sticky-top" />
+    <Menubar class="sticky-top" :navCart="cart" :navCartItem="cartitem" />
     <loading :active.sync="isLoading"></loading>
     <div class="container py-5">
       <div class="row justify-content-center">
@@ -69,19 +69,22 @@
                       role="document"
                     >
                       <div class="modal-content bg-dark">
+                        <button
+                          type="button"
+                          class="btn modal-close position-absolute rounded-circle"
+                          style="top: -15px; right: -15px;"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <i
+                            class="fas fa-times position-absolute"
+                            style="bottom: 3px; right: 7px;"
+                          ></i>
+                        </button>
                         <div class="modal-header ">
                           <h5 class="modal-title" id="exampleModalCenterTitle">
                             訂單貨號：({{ order.create_at }})，收件資訊如下：
                           </h5>
-                          <button
-                            type="button"
-                            class="close position-absolute"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                            style="top:0"
-                          >
-                            <span aria-hidden="true">&times;</span>
-                          </button>
                         </div>
                         <div class="modal-body text-left">
                           <p>收貨人姓名：{{ order.user.name }}</p>
@@ -126,6 +129,18 @@
                       role="document"
                     >
                       <div class="modal-content bg-dark">
+                        <button
+                          type="button"
+                          class="btn modal-close position-absolute rounded-circle"
+                          style="top: -15px; right: -15px;"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <i
+                            class="fas fa-times position-absolute"
+                            style="bottom: 3px; right: 7px;"
+                          ></i>
+                        </button>
                         <div class="text-left border-bottom p-3">
                           <h5
                             class="modal-title mb-3"
@@ -139,15 +154,6 @@
                               >訂購人Email：{{ order.user.email }}</span
                             >
                           </p>
-                          <button
-                            type="button"
-                            class="close position-absolute"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                            style="top:0"
-                          >
-                            <span aria-hidden="true">&times;</span>
-                          </button>
                         </div>
                         <div class="modal-body">
                           <table class="table text-white m-0">
@@ -248,7 +254,7 @@
           <div class="text-right pt-2 pr-3" v-if="order.is_paid === false">
             <!--尚未觸發parOrder更新order.is_paid時為false會顯示 點此付款 true時就會消失-->
             <button
-              class="btn-type"
+              class="btn-type btn-type2"
               style="background-color:#B17844; padding: 5px 20px;"
             >
               測試付款
@@ -358,25 +364,5 @@ export default {
 <style scoped>
 .table td {
   border: none;
-}
-.btn-type:after {
-  position: absolute;
-  border-radius: 19px;
-  content: '';
-  width: 0;
-  height: 100%;
-  top: 0;
-  right: 0;
-  z-index: -1;
-  background: #000;
-  transition: all 0.3s cubic-bezier(0.42, 0, 1, 1);
-}
-.btn-type:hover {
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  color: rgba(255, 255, 255, 0.8);
-}
-.btn-type:hover:after {
-  left: 0;
-  width: 100%;
 }
 </style>

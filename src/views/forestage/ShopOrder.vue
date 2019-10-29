@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar :navCart="cart" :navCartItem="cartitem" />
-    <Menubar class="sticky-top" />
+    <Menubar class="sticky-top" :navCart="cart" :navCartItem="cartitem" />
     <loading :active.sync="isLoading"></loading>
     <div class="container py-5 vh-75">
       <div class="row justify-content-center ">
@@ -11,7 +11,7 @@
               <div class="h3 text-center m-0">訂購資訊</div>
             </div>
             <form @submit.prevent="creatOrder">
-              <div class="card-body py-3">
+              <div class="card-body py-3 mb-5">
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <div
@@ -73,13 +73,15 @@
                       class="input-block"
                       :class="{ 'input-block-error': errors.has('email') }"
                     >
-                      <label for="email" class="input-label m-0">Email</label>
+                      <label for="useremail" class="input-label m-0"
+                        >Email</label
+                      >
                       <input
                         type="email"
                         name="email"
                         v-model="form.user.email"
                         class="input-placeholder"
-                        id="email"
+                        id="useremail"
                         v-validate="'required|email'"
                         placeholder="Email@example.com"
                       />
@@ -216,10 +218,7 @@
                 </div>
               </div>
               <div class="card-footer p-0   border-0 text-center">
-                <button
-                  class="btn-type btn-type2"
-                  style="background-color:#B17844;"
-                >
+                <button class="btn-type btn-type2">
                   送出訂單
                 </button>
               </div>
@@ -245,8 +244,9 @@
                       <button
                         type="button"
                         class="btn btn-outline-danger rounded btn-sm"
-                        data-target="#removeCart"
                         data-toggle="modal"
+                        data-target="#removeCart"
+                        @click.prevent="removeItem = item.id"
                       >
                         <i class="far fa-trash-alt fa-lg"></i>
                       </button>
@@ -264,7 +264,7 @@
                           role="document"
                         >
                           <div
-                            class="modal-content bg-dark  border border-secondary"
+                            class="modal-content bg-dark border border-secondary"
                           >
                             <div class="modal-body text-center p-4 h4">
                               你確定要移除這項商品嗎
@@ -287,10 +287,9 @@
                               >
                                 <div
                                   class="p-2"
-                                  @click.prevent="removeCartItem(item.id)"
+                                  @click.prevent="removeCartItem"
                                 >
                                   確定
-                                  <!-- removeCartItem(item.id) 按下按鈕移除單一筆資料 -->
                                 </div>
                               </div>
                             </div>
@@ -327,56 +326,45 @@
               </table>
             </div>
             <div class="card-footer py-3  mt-3 border-0">
-              <div class="">
-                <div
-                  class="h5 mb-3 text-right pr-4"
-                  v-if="cart.final_total == cart.total"
-                >
-                  <span class="mr-3">總金額</span>
-                  {{ cart.total | currency }}
-                </div>
-                <div
-                  class="h5 mb-3 text-right pr-4 text-tohoh"
-                  v-if="cart.final_total !== cart.total"
-                >
-                  <span class="mr-3">折扣後金額</span>
-                  {{ cart.final_total | currency }}
-                </div>
-                <div class="input-group mb-3">
-                  <input
-                    type="text"
-                    class="form-control input-color"
-                    v-model="coupon_code"
-                    placeholder="請輸入優惠碼"
-                  />
-                  <!--在後端資料庫中抓取與v-model相同的文字做為比對-->
-                  <div class="input-group-append">
-                    <button
-                      class="btn btn-outline-dark text-white"
-                      type="button"
-                      @click="addCouponCode"
-                      :disabled="coupon_code == ''"
-                    >
-                      <!--addCouponCode 比對成功時將可帶入折扣-->
-                      套用優惠碼
-                    </button>
-                    <i
-                      class="far fa-question-circle text-warning align-self-center ml-2 js-flash"
-                      data-toggle="tooltip"
-                      data-placement="right"
-                      data-html="true"
-                      title="<p>優惠期間：</p><p>輸入vip - 75折</p><div>輸入vvip - 5折</div>"
-                    >
-                    </i>
-                  </div>
+              <div class="h5 mb-3 text-right pr-4 text-secondary">
+                <del>總金額 {{ cart.total | currency }}</del>
+              </div>
+
+              <div class="h5 mb-3 text-right pr-4 text-tohoh">
+                折扣後金額 {{ cart.final_total | currency }}
+              </div>
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  class="form-control input-color bg-RIKYUNEZUMI border-RIKYUNEZUMI"
+                  v-model="coupon_code"
+                  placeholder="請輸入優惠碼"
+                />
+                <div class="input-group-append">
+                  <button
+                    class="btn btn-outline-RIKYUNEZUMI"
+                    type="button"
+                    @click="addCouponCode"
+                    :disabled="isDisable"
+                    :class="{ 'text-success': coupon_code != '' }"
+                  >
+                    使用優惠
+                  </button>
+                  <i
+                    class="far fa-question-circle text-warning align-self-center ml-2 js-flash"
+                    data-toggle="tooltip"
+                    data-placement="right"
+                    data-html="true"
+                    title="<div>秋季優惠：<p>- 凡購買商品立即享9折 -</p></div>
+                      <div>開幕優惠：<div>總金額滿3000元 <div>輸入autumn</div></div><div>- 即可享7折 -</div></div>"
+                  >
+                  </i>
                 </div>
               </div>
-              <div class="text-center pt-4" v-if="cart.carts != ''">
+
+              <div class="text-center pt-4">
                 <router-link class="text-decoration-none" to="/shop">
-                  <button
-                    class="btn-type btn-type2 "
-                    style="background-color:#B17844; "
-                  >
+                  <button class="btn-type btn-type2 ">
                     繼續選購
                   </button>
                 </router-link>
@@ -390,9 +378,8 @@
           </div>
           <div class="py-5">
             <router-link
-              class="btn-type text-decoration-none"
+              class="btn-type btn-type3 text-decoration-none"
               to="/shop"
-              style=" background-color:#1f468c; color:white"
               >繼續選購商品
             </router-link>
           </div>
@@ -410,10 +397,10 @@ import Menubar from '@/components/forestage/Menubar.vue'
 export default {
   data() {
     return {
-      cart: [],
       isLoading: false,
+      isDisable: false,
       coupon_code: '',
-      products: [],
+      removeItem: '',
       cart: [],
       cartitem: [],
       form: {
@@ -425,8 +412,7 @@ export default {
           country: '',
           zip: '',
           address: ''
-        },
-        message: ''
+        }
       }
     }
   },
@@ -434,15 +420,39 @@ export default {
   methods: {
     getCart() {
       const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`
       vm.isLoading = true
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`
       this.$http.get(api).then(response => {
         vm.cart = response.data.data
         vm.cartitem = response.data.data.carts.length
-        vm.isLoading = false
+        this.autoCoupon()
+        setTimeout(() => {
+          vm.isLoading = false
+        }, 1000)
         // console.log('購物車資料', response.data)
       })
     },
+    autoCoupon() {
+      const vm = this
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`
+      const Api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`
+      const coupon = {
+        code: 'grandopening'
+      }
+
+      if (vm.cart.total < 3000 || vm.cart.final_total == vm.cart.total) {
+        this.$http.post(api, { data: coupon }).then(response => {
+          // console.log('自動套用10%優惠卷', response)
+        })
+        setTimeout(() => {
+          this.$http.get(Api).then(response => {
+            vm.cart = response.data.data
+            vm.cartitem = response.data.data.carts.length
+          })
+        }, 1000)
+      }
+    },
+
     creatOrder() {
       const vm = this
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`
@@ -464,42 +474,48 @@ export default {
         }
       })
     },
-    removeCartItem(id) {
+    removeCartItem() {
       const vm = this
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${vm.removeItem}`
+      $('#removeCart').modal('hide')
       vm.isLoading = true
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`
       this.$http.delete(api).then(response => {
         vm.getCart()
         this.$bus.$emit('message:push', '商品已被刪除', 'tohoh')
+        setTimeout(() => {
+          vm.isLoading = false
+        }, 1500)
       })
-
-      $('#removeCart').modal('hide')
     },
     addCouponCode() {
       const vm = this
+      vm.isDisable = true
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`
       const coupon = {
         code: vm.coupon_code
       }
-      vm.isLoading = true
-      this.$http.post(api, { data: coupon }).then(response => {
-        const coupon = response.data
-        if (coupon.success) {
-          vm.getCart()
-          vm.coupon_code = ''
-          this.$bus.$emit('message:push', '已使用優惠卷', 'tohoh')
-        } else {
-          this.$bus.$emit('message:push', '請輸入正確的優惠碼', 'tohoh')
-        }
-        vm.isLoading = false
-        // console.log('優惠卷', message)
-        // 修正付款完成後某些按鈕會套入hove
-        // console.log('優惠卷', coupon)
-      })
-    },
-    goForm() {
-      const vm = this
-      vm.$router.push('/payment/form')
+      if (vm.cart.total >= 3000) {
+        vm.isLoading = true
+        this.$http.post(api, { data: coupon }).then(response => {
+          if (response.data.success) {
+            vm.getCart()
+            vm.coupon_code = ''
+            this.$bus.$emit('message:push', '已使用優惠碼', 'tohoh')
+          } else {
+            this.$bus.$emit('message:push', '錯誤的優惠碼', 'tohoh')
+          }
+          vm.isLoading = false
+          setTimeout(() => {
+            vm.isDisable = false
+          }, 2000)
+          // console.log('優惠卷', response)
+        })
+      } else {
+        this.$bus.$emit('message:push', '未符合優惠條件', 'tohoh')
+        setTimeout(() => {
+          vm.isDisable = false
+        }, 2000)
+      }
     }
   },
   created() {
@@ -528,26 +544,5 @@ export default {
 
 .form-group {
   margin-bottom: 2rem;
-}
-
-.btn-type2:after {
-  position: absolute;
-  border-radius: 19px;
-  content: '';
-  width: 0;
-  height: 100%;
-  top: 0;
-  right: 0;
-  z-index: -1;
-  background: #000;
-  transition: all 0.3s cubic-bezier(0.42, 0, 1, 1);
-}
-.btn-type2:hover {
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  color: rgba(255, 255, 255, 0.8);
-}
-.btn-type2:hover:after {
-  left: 0;
-  width: 100%;
 }
 </style>

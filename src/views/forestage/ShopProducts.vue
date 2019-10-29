@@ -2,170 +2,192 @@
   <div>
     <loading :active.sync="isLoading"></loading>
     <Navbar :navCart="cart" :navCartItem="cartitem" />
-    <div
-      class="d-flex justify-content-center py-2 
+    <header
+      class="py-2 
       bg-eerie sticky-top border-bottom border-white"
     >
-      <ul class="nav">
-        <li class="nav-item  active d-none d-sm-block fadein">
-          <a
-            class="nav-link text-white position-relative nav-text"
-            href="#"
-            @click=";(categories = ''), (search = '')"
-          >
-            商品<i
-              class="fas fa-angle-down animated fadeInLeft position-absolute"
-              style="top: 15px; right:-7px;"
-            ></i>
-          </a>
-          <div
-            class="w-100 rounded-0 bg-dark d-block fadeout py-4"
-            style="top:56px; left:0;"
-          >
-            <div class="container">
-              <div class="row  justify-content-around text-center">
-                <ul class="nav flex-column ">
-                  <li class="nav-item ">
-                    <a
-                      class="nav-link h5 text-white  rounded-pill"
-                      href="#"
-                      :class="{ 'categorie-color': categories == '' }"
-                      @click=";(categories = ''), (search = '')"
-                    >
-                      <strong>ALL</strong>
-                    </a>
-                  </li>
-                </ul>
-                <ul class="nav flex-column">
-                  <li class="nav-item">
-                    <a
-                      class="nav-link h5 text-white rounded-pill"
-                      href="#"
-                      :class="{ 'categorie-color': categories == 'Tops' }"
-                      @click=";(categories = 'Tops'), (search = '')"
-                    >
-                      <strong>上衣</strong>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link disabled" href="#">短 TEE</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link disabled" href="#">襯衫</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link disabled" href="#">外套</a>
-                  </li>
-                </ul>
-                <ul class="nav flex-column">
-                  <li class="nav-item">
-                    <a
-                      class="nav-link h5 text-white rounded-pill"
-                      href="#"
-                      :class="{ 'categorie-color': categories == 'Bottoms' }"
-                      @click=";(categories = 'Bottoms'), (search = '')"
-                    >
-                      <strong>褲子</strong>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link disabled" href="#">短褲</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link disabled" href="#">長褲</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link disabled" href="#">牛仔褲</a>
-                  </li>
-                </ul>
-                <ul class="nav flex-column">
-                  <li class="nav-item">
-                    <a
-                      class="nav-link h5 text-white rounded-pill"
-                      href="#"
-                      :class="{
-                        'categorie-color': categories == 'Accessories'
-                      }"
-                      @click=";(categories = 'Accessories'), (search = '')"
-                    >
-                      <strong>配件</strong>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link disabled" href="#">帽子</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link disabled" href="#">包包</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link disabled" href="#">鞋類</a>
-                  </li>
-                </ul>
+      <div class="d-flex justify-content-center ">
+        <ul class="nav">
+          <li class="nav-item  active d-none d-sm-block fadein">
+            <a
+              class="nav-link text-white position-relative nav-text"
+              href="#"
+              @click=";(categories = ''), (search = '')"
+            >
+              商品<i
+                class="fas fa-angle-down animated fadeInLeft position-absolute"
+                style="top: 15px; right:-7px;"
+              ></i>
+            </a>
+            <div
+              class="w-100 rounded-0 bg-dark d-block fadeout py-4"
+              style="top:56px; left:0;"
+            >
+              <div class="container">
+                <div class="row  justify-content-around text-center">
+                  <ul class="nav flex-column ">
+                    <li class="nav-item ">
+                      <a
+                        class="nav-link h5 text-white  rounded-pill"
+                        href="#"
+                        :class="{ 'categorie-color': categories == '' }"
+                        @click=";(categories = ''), (search = '')"
+                      >
+                        <strong>ALL</strong>
+                      </a>
+                    </li>
+                  </ul>
+                  <ul class="nav flex-column">
+                    <li class="nav-item">
+                      <a
+                        class="nav-link h5 text-white rounded-pill"
+                        href="#"
+                        :class="{ 'categorie-color': categories == 'Tops' }"
+                        @click=";(categories = 'Tops'), (search = '')"
+                      >
+                        <strong>上衣</strong>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link disabled" href="#">短 TEE</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link disabled" href="#">襯衫</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link disabled" href="#">外套</a>
+                    </li>
+                  </ul>
+                  <ul class="nav flex-column">
+                    <li class="nav-item">
+                      <a
+                        class="nav-link h5 text-white rounded-pill"
+                        href="#"
+                        :class="{ 'categorie-color': categories == 'Bottoms' }"
+                        @click=";(categories = 'Bottoms'), (search = '')"
+                      >
+                        <strong>褲子</strong>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link disabled" href="#">短褲</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link disabled" href="#">長褲</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link disabled" href="#">牛仔褲</a>
+                    </li>
+                  </ul>
+                  <ul class="nav flex-column">
+                    <li class="nav-item">
+                      <a
+                        class="nav-link h5 text-white rounded-pill"
+                        href="#"
+                        :class="{
+                          'categorie-color': categories == 'Accessories'
+                        }"
+                        @click=";(categories = 'Accessories'), (search = '')"
+                      >
+                        <strong>配件</strong>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link disabled" href="#">帽子</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link disabled" href="#">包包</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link disabled" href="#">鞋類</a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a
-            href="#"
-            class="nav-link text-white nav-text"
-            @click.prevent="about"
-          >
-            關於
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a
-            class="nav-link text-white nav-text"
-            href="#"
-            @click.prevent="journal"
-          >
-            消息
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-        <li class="nav-item ">
-          <a class="nav-link text-white nav-text" href="#" @click.prevent="map">
-            位置
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-      </ul>
-      <div
-        class="position-absolute"
-        style=" left:15px; top:5px; font-size: 2rem;"
-      >
-        <a class="text-white logoHide logo" href="#" @click.prevent="home"
-          >GentSkin</a
-        >
-      </div>
-
-      <form class="position-absolute" style="right:15px;">
-        <div class="form-input input-border ">
-          <!-- input-display -->
-          <span class="span-border ">
-            <!-- span-display -->
-            <input
-              type="text"
-              class="form-control border-0 px-2 bg-eerie text-white"
-              placeholder="Search..."
-              style="width:195px; box-shadow: none;"
-              v-model="search"
-              @click.prevent="formBorder"
-            />
-            <button
-              type="button"
-              class="text-white bg-transparent border-0 position-absolute"
-              style="right: 5px; top: -3px; outline: none;"
+          </li>
+          <li class="nav-item">
+            <a
+              href="#"
+              class="nav-link text-white nav-text"
+              @click.prevent="about"
             >
-              <i class="fas fa-search"></i>
-            </button>
-          </span>
+              關於
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a
+              class="nav-link text-white nav-text"
+              href="#"
+              @click.prevent="journal"
+            >
+              消息
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a
+              class="nav-link text-white nav-text"
+              href="#"
+              @click.prevent="map"
+            >
+              位置
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+        </ul>
+        <div class="position-absolute" style="left: 15px; top: 5px;">
+          <a class="text-white logoHide logo" href="#" @click.prevent="home"
+            >GentSkin</a
+          >
         </div>
-      </form>
-    </div>
+        <div class="position-absolute" style="right: 80px;">
+          <form class="form-input input-border">
+            <!-- input-display -->
+            <span class="span-border ">
+              <!-- span-display -->
+              <input
+                type="text"
+                class="form-control border-0 px-2 bg-eerie text-white"
+                placeholder="Search..."
+                style="width:195px; box-shadow: none;"
+                v-model="search"
+                @click.prevent="formBorder"
+              />
+              <button
+                type="button"
+                class="text-white bg-transparent border-0 position-absolute"
+                style="right: 5px; top: -3px; outline: none;"
+              >
+                <i class="fas fa-search"></i>
+              </button>
+            </span>
+          </form>
+        </div>
+        <div class="position-absolute" style="top: 15px; right:15px;">
+          <button
+            class="text-white bg-transparent border-0 animated logoHide"
+            type="button"
+            id="MenuButton"
+            data-toggle="modal"
+            data-target="#cartModal"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <i class="fas fa-cart-plus fa-2x mr-2 btn-cart position-relative">
+              <span
+                class="badge badge-pill badge-danger position-absolute"
+                style=" top:-5px; right:-15px; font-size: 0.8rem;"
+                v-if="cartitem != 0"
+                >{{ cartitem }}</span
+              >
+            </i>
+          </button>
+        </div>
+      </div>
+    </header>
 
     <div class="container py-5">
       <div class="row">
@@ -243,6 +265,8 @@ export default {
       products: [],
       cart: [],
       cartitem: [],
+      allItem: [],
+      item: [],
       status: {
         loadingItem: ''
       },
@@ -281,7 +305,7 @@ export default {
       this.$http.get(api).then(response => {
         vm.cart = response.data.data
         vm.cartitem = response.data.data.carts.length
-        // console.log('購物車資料', response.data)
+        // console.log('購物車資料', response.data.data.carts)
       })
     },
     formBorder() {
@@ -293,10 +317,6 @@ export default {
           $('.input-border').removeClass('input-display')
           $('.span-border').removeClass('span-display')
         })
-    },
-    payment() {
-      const vm = this
-      vm.$router.push('/payment/order')
     },
     home() {
       const vm = this

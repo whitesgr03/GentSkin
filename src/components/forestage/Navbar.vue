@@ -2,7 +2,7 @@
   <div>
     <loading :active.sync="isLoading"></loading>
     <header class="pt-2 bg-eerie">
-      <div class="row align-items-center  m-0">
+      <div class="row align-items-center m-0">
         <div class="col-4"></div>
         <div class="col-4 text-center">
           <a class="logo text-white" href="#" @click.prevent="home">GentSkin</a>
@@ -11,34 +11,40 @@
           <ul class="nav justify-content-end">
             <li class="nav-item mr-3">
               <button
-                class="text-white bg-transparent border-0"
+                class="text-white bg-transparent border-0 d-flex icon align-items-end"
                 type="button"
                 data-toggle="modal"
                 data-target="#orderModal"
               >
-                <i
-                  class="fas fa-clipboard-list  border border-white rounded-circle pt-3 mr-2"
-                  style="height: 45px; width: 45px; font-size: 1.5rem;"
-                ></i>
-                <span>訂單</span>
+                <div class="button-container mr-2">
+                  <i
+                    class="fas fa-clipboard-list button-icon"
+                    style="left: 13.5px; top: 12px;"
+                  ></i>
+                  <div class="button-border"></div>
+                </div>
+                <div>訂單</div>
               </button>
             </li>
             <li class="nav-item mr-3">
               <button
-                class="text-white bg-transparent border-0"
+                class="text-white bg-transparent border-0 d-flex icon align-items-end"
                 @click.prevent="loginBtn"
                 type="button"
               >
-                <i
-                  class="fas fa-user  border border-white rounded-circle pt-3 mr-2"
-                  style="height: 45px; width: 45px; font-size: 1.5rem;"
-                ></i>
-                <span>登入</span>
+                <div class="button-container mr-2">
+                  <i
+                    class="fas fa-user button-icon"
+                    style="left: 12px; top: 12px;"
+                  ></i>
+                  <div class="button-border"></div>
+                </div>
+                <div>登入</div>
               </button>
             </li>
             <li class="nav-item">
               <button
-                class="text-white bg-transparent border-0"
+                class="text-white bg-transparent border-0 d-flex icon align-items-end"
                 type="button"
                 id="dropdownMenuButton"
                 data-toggle="modal"
@@ -46,18 +52,21 @@
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                <i
-                  class="fas fa-shopping-cart border border-white rounded-circle pt-3 mr-2 btn-cart position-relative"
-                  style="height: 45px;  width: 46px; font-size: 1.5rem;"
-                >
+                <div class="button-container mr-2">
+                  <i
+                    class="fas fa-shopping-cart button-icon"
+                    style="left: 8px; top: 12px;"
+                  >
+                  </i>
                   <span
                     class="badge badge-pill badge-danger position-absolute"
-                    style=" top:5px; right:-8px; font-size: 0.8rem;"
+                    style="top: 2px; right: -5px; font-size: 0.8rem; z-index:1;"
                     v-if="navCartItem != 0"
                     >{{ navCartItem }}</span
                   >
-                </i>
-                <span>購物車</span>
+                  <div class="button-border"></div>
+                </div>
+                <div>購物車</div>
               </button>
             </li>
           </ul>
@@ -74,23 +83,23 @@
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
-      <div
-        class="modal-768 modal-dialog-centered"
-        role="document"
-        style="z-index:999"
-      >
+      <div class="modal-768 modal-dialog-centered" role="document">
         <div
-          class="model-container position-relative"
+          class="model-container position-relative rounded"
           :class="{ 'right-panel-active': sign == true }"
         >
           <button
             type="button"
-            class="close closeModel position-absolute"
+            class="btn modal-close closeModel position-absolute rounded-circle"
+            style="top: -15px; right: -15px;"
             aria-label="Close"
           >
-            <span aria-hidden="true">&times;</span>
+            <i
+              class="fas fa-times position-absolute"
+              style="bottom: 3px; right: 7px;"
+            ></i>
           </button>
-          <div class="form-container sign-up-container">
+          <div class="form-container sign-up-container rounded">
             <form class="form-show bg-dark" @submit.prevent="creat">
               <h1 class="mb-4">註冊會員</h1>
               <div
@@ -170,7 +179,10 @@
               </button>
             </form>
           </div>
-          <div class="form-container sign-in-container">
+          <div
+            class="form-container sign-in-container rounded"
+            style=" overflow: hidden;"
+          >
             <form @submit.prevent="creat" class="form-show bg-dark">
               <h1 class="mb-5">會員登入</h1>
               <div
@@ -223,7 +235,13 @@
               </button>
             </form>
           </div>
-          <div class="overlay-container">
+          <div
+            class="overlay-container"
+            :class="{
+              'rounded-right': sign == false,
+              'rounded-left': sign == true
+            }"
+          >
             <div class="overlay">
               <div class="overlay-panel overlay-left">
                 <div
@@ -354,10 +372,7 @@
                 class="text-decoration-none "
                 @click.prevent="payment"
               >
-                <button
-                  class="btn-type"
-                  style="background-color:#B17844;  color:black;"
-                >
+                <button class="btn-type btn-type3">
                   結帳
                 </button>
               </a>
@@ -384,11 +399,15 @@
         <div class="modal-content bg-dark">
           <button
             type="button"
-            class="close position-absolute"
+            class="btn modal-close position-absolute rounded-circle"
+            style="top: -15px; right: -15px;"
             data-dismiss="modal"
             aria-label="Close"
           >
-            <span aria-hidden="true">&times;</span>
+            <i
+              class="fas fa-times position-absolute"
+              style="bottom: 3px; right: 7px;"
+            ></i>
           </button>
           <div class="row">
             <div class="col-6">
@@ -426,7 +445,7 @@
                   <div class="modal-footer border-0  justify-content-center">
                     <button
                       type="button"
-                      class="btn-type form-btn"
+                      class="btn-type btn-type2 form-btn"
                       style="background-color:#B17844;"
                       @click.prevent="orderBtn"
                     >
@@ -460,15 +479,15 @@ export default {
   },
 
   methods: {
-    getCart() {
-      const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`
-      this.$http.get(api).then(response => {
-        vm.cart = response.data.data
-        vm.cartitem = response.data.data.carts.length
-        // console.log('home 購物車資料', response.data)
-      })
-    },
+    // getCart() {
+    //   const vm = this
+    //   const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`
+    //   this.$http.get(api).then(response => {
+    //     vm.cart = response.data.data
+    //     vm.cartitem = response.data.data.carts.length
+    //     // console.log('home 購物車資料', response.data)
+    //   })
+    // },
     getOrder() {
       const vm = this
       const orderList = new Set()
@@ -476,7 +495,7 @@ export default {
         const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/orders?page=${i}` //從後端取的orderId
         this.$http.get(api).then(response => {
           response.data.orders.forEach((item, i) => {
-            orderList.add(item.id) // 每頁分頁要放幾筆資料
+            orderList.add(item.id)
           })
         })
       }
@@ -492,6 +511,7 @@ export default {
       $('#cartModal').modal('hide')
       const vm = this
       vm.$router.push('/order')
+      $('html, body').animate({ scrollTop: 0 }, 1)
     },
     loginBtn() {
       const vm = this
@@ -561,7 +581,7 @@ export default {
   },
   created() {
     this.getOrder()
-    this.getCart()
+    // this.getCart()
   }
 }
 </script>
@@ -580,26 +600,5 @@ export default {
 .table th {
   border-bottom: 1px solid black;
   border-top: none;
-}
-
-.form-btn:after {
-  position: absolute;
-  border-radius: 19px;
-  content: '';
-  width: 0;
-  height: 100%;
-  top: 0;
-  right: 0;
-  z-index: -1;
-  background: #000;
-  transition: all 0.3s cubic-bezier(0.42, 0, 1, 1);
-}
-.form-btn:hover {
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  color: rgba(255, 255, 255, 0.8);
-}
-.form-btn:hover:after {
-  left: 0;
-  width: 100%;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar :navCart="cart" :navCartItem="cartitem" />
-    <Menubar class="sticky-top" />
+    <Menubar class="sticky-top" :navCart="cart" :navCartItem="cartitem" />
     <loading :active.sync="isLoading"></loading>
 
     <div class="container pt-5" v-if="!isLoading">
@@ -38,7 +38,7 @@
           </div>
           <div class="d-flex justify-content-between mt-4">
             <button
-              class="btn-type p-0"
+              class="btn-type btn-type3 p-0"
               style="width:140px; height:50px;"
               @click="addtoCart(product.id, amount)"
               :disabled="isDisable"
@@ -50,7 +50,7 @@
               >加入購物車
             </button>
             <button
-              class="btn-type  p-0"
+              class="btn-type btn-type3  p-0"
               style="width:140px; height:50px;"
               @click="buyNow(product.id, amount)"
             >
@@ -173,12 +173,13 @@ export default {
       const vm = this
       vm.isDisable = true
       vm.status.loadingItem = id
+
       if (vm.addNew != '') {
+        // 刪除重複加入的相同id商品 以便執行初次加入
         const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${this.addNew}`
-        this.$http.delete(api).then(response => {
-          vm.getCart()
-        })
+        this.$http.delete(api).then(response => {})
       }
+      // 初次加入
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`
       const cart = {
         product_id: id,
@@ -261,17 +262,7 @@ export default {
 </script>
 
 <style scoped>
-.btn-type {
-  background-color: rgba(31, 70, 140, 0.5);
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.btn-type:hover {
-  background-color: #1f468c;
-  color: white;
-}
-
-.btn-type:disabled {
+.btn-type3:disabled {
   background-color: rgba(31, 70, 140, 0.5);
 }
 </style>

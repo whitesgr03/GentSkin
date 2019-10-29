@@ -2,15 +2,15 @@
   <div>
     <Alert />
     <Navbar />
-    <div class="d-flex vh-100 login-bgc" style="">
+    <div class="d-flex vh-100 login-bgc">
       <form class="form-signin" @submit.prevent="signin">
         <!--使用signin方法觸發登入-->
-        <h1 class="h3 mb-3 font-weight-normal text-white">管理者登入</h1>
+        <h1 class="h3 font-weight-normal text-center">管理者登入</h1>
         <label for="inputEmail" class="sr-only">Email address</label>
         <input
           type="email"
           id="inputEmail"
-          class="form-control mb-2"
+          class="form-control mb-3 input-color"
           placeholder="請輸入Email"
           v-model="user.username"
           required
@@ -21,24 +21,26 @@
         <input
           type="password"
           id="inputPassword"
-          class="form-control"
+          class="form-control mb-3 input-color"
           placeholder="請輸入密碼"
           v-model="user.password"
           required
         />
         <!--使用v-mode連結API參數-->
-        <div class="checkbox mb-3"></div>
-        <button href="#" class="btn btn-lg  btn-block tohoh" type="submit">
-          登入
-        </button>
-        <button
-          href="#"
-          class="btn btn-lg btn-block tohoh"
-          type="button"
-          @click="home"
-        >
-          回首頁
-        </button>
+        <div class="mb-3">
+          <button class="btn-type btn-type2 w-100" type="submit">
+            登入
+          </button>
+        </div>
+        <div>
+          <button
+            class="btn-type btn-type2 w-100"
+            type="button"
+            @click.prevent="home"
+          >
+            回首頁
+          </button>
+        </div>
       </form>
     </div>
 
