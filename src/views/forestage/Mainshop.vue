@@ -11,7 +11,7 @@
               <div class="col-4" data-aos="fade-up" data-aos-duration="2000">
                 <div class="text-center">
                   <h3 class="h2 stroke" style="letter-spacing:15px;">
-                    秋季時尚
+                    冬季時尚
                   </h3>
                   <h3 class="stroke" style="font-size: 4rem;">
                     CONSCIOUS
