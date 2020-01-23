@@ -9,7 +9,7 @@
             class="page-link text-white bg-dark border-light"
             href="#"
             aria-label="Previous"
-            @click="getPage(paginations.current_page - 1)"
+            @click.prevent="getPage(paginations.current_page - 1)"
           >
             <!-- -1為上一頁 -->
             <i class="fas fa-chevron-left"></i>
@@ -26,7 +26,7 @@
           <a
             class="page-link text-white bg-dark border-light"
             href="#"
-            @click="getPage(page)"
+            @click.prevent="getPage(page)"
             >{{ page }}</a
           >
         </li>
@@ -37,7 +37,7 @@
             class="page-link text-white bg-dark border-light"
             href="#"
             aria-label="Next"
-            @click="getPage(paginations.current_page + 1)"
+            @click.prevent="getPage(paginations.current_page + 1)"
           >
             <!-- +1為下一頁 -->
             <i class="fas fa-chevron-right"></i>

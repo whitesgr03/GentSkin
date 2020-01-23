@@ -39,7 +39,7 @@
                   <tbody>
                     <tr>
                       <td>
-                        <a class="text-primary" href="#" @click="order(item.id)">
+                        <a class="text-primary" href="#" @click.prevent="order(item.id)">
                           {{ item.create_at }} </a>
                       </td>
                       <td>
@@ -229,7 +229,7 @@
                     <button
                       class="button"
                       id="signIn"
-                      @click="sign = false"
+                      @click.prevent="sign = false"
                     >
                       點此登入
                     </button>
@@ -245,7 +245,7 @@
                     <button
                       class="button"
                       id="signUp"
-                      @click="sign = true"
+                      @click.prevent="sign = true"
                     >
                       點此註冊
                     </button>

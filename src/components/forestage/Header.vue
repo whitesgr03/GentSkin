@@ -46,7 +46,7 @@
                   type="button"
                   data-toggle="modal"
                   data-target="#orderModal"
-                  @click="$emit('order')"
+                  @click.prevent="$emit('order')"
                 >
                 <i class="fas fa-clipboard-list position-absolute"
                 style="left:18px; top:20px"></i>
@@ -145,7 +145,7 @@
             type="button"
             data-toggle="modal"
             data-target="#orderModal"
-            @click="$emit('order')">
+            @click.prevent="$emit('order')">
             訂單
           </button>
         </div>

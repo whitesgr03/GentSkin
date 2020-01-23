@@ -3,7 +3,7 @@
     <loading :active.sync="isLoading" style="z-index: 9999;"></loading>
     <div class="coupons" v-if="coupons.length !== 0">
       <div class="text-right mb-4">
-        <button class="button bg-biwacha" @click="openModal(true)">
+        <button class="button bg-biwacha" @click.prevent="openModal(true)">
           新增優惠碼
         </button>
       </div>
@@ -11,21 +11,21 @@
         <thead>
           <tr>
             <th>名稱</th>
-            <th width="200" @click="reverse = !reverse, sortData = 'percent'"
+            <th width="200" @click.prevent="reverse = !reverse, sortData = 'percent'"
               style="cursor: pointer;">
               折扣百分比
               <i class="fas fa-sort text-tohoh" v-if="sortData == '' || sortData !== 'percent'"></i>
               <i v-if="sortData == 'percent'" class="fas fa-sort-up ml-1 text-tohoh"
               :class="{'reverse': reverse}"></i>
             </th>
-            <th width="200" @click="reverse = !reverse, sortData = 'date'"
+            <th width="200" @click.prevent="reverse = !reverse, sortData = 'date'"
               style="cursor: pointer;">
               到期日
               <i class="fas fa-sort text-tohoh" v-if="sortData == '' || sortData !== 'date'"></i>
               <i v-if="sortData == 'date'" class="fas fa-sort-up ml-1 text-tohoh"
               :class="{'reverse': reverse}"></i>
             </th>
-            <th width="150" @click="reverse = !reverse, sortData = 'enables'"
+            <th width="150" @click.prevent="reverse = !reverse, sortData = 'enables'"
               style="cursor: pointer;">
               是否啟用
               <i class="fas fa-sort text-tohoh" v-if="sortData == '' || sortData !== 'enables'"></i>
@@ -42,11 +42,11 @@
             <td>{{ item.due_date }}</td>
             <td>
               <span v-if="item.is_enabled" class="text-success"  style="cursor: pointer;"
-                @click="updataEnabled(false, item)">已啟用
+                @click.prevent="updataEnabled(false, item)">已啟用
                 <i class="fas fa-spinner fa-spin" v-if="newData === item.id"></i>
               </span>
               <span v-else class="text-warning"  style="cursor: pointer;"
-              @click="updataEnabled(true, item)">
+              @click.prevent="updataEnabled(true, item)">
                 未啟用
                 <i class="fas fa-spinner fa-spin" v-if="newData === item.id"></i>
               </span>
@@ -54,13 +54,13 @@
             <td>
               <button
                 class="button bg-konjyo"
-                @click="openModal(false, item)"
+                @click.prevent="openModal(false, item)"
               >
                 編輯
               </button>
               <button
                 class="button bg-momoshiocha"
-                @click="deleteModal(item)"
+                @click.prevent="deleteModal(item)"
               >
                 刪除
               </button>
@@ -154,7 +154,7 @@
               <button
                 type="button"
                 class="button bg-konjyo"
-                @click="updataCoupons"
+                @click.prevent="updataCoupons"
               >
                 確認
               </button>
@@ -192,7 +192,7 @@
               </div>
 
               <div class="col-6 p-0 btn btn-outline-danger border-0">
-                <div class="p-2" @click="deleteCoupon">
+                <div class="p-2" @click.prevent="deleteCoupon">
                   確定
                 </div>
               </div>

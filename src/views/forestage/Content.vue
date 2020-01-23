@@ -66,7 +66,7 @@
             <div class="d-flex justify-content-around">
               <button
                 class="button bg-konjyo text-white"
-                @click="addtoCart(product.id, amount)"
+                @click.prevent="addtoCart(product.id, amount)"
                 :disabled="isDisable"
               >
                 加入購物車
@@ -76,7 +76,7 @@
               </button>
               <button
                 class="button bg-konjyo text-white"
-                @click="buyNow(product.id, amount)"
+                @click.prevent="buyNow(product.id, amount)"
               >
                 立即購買
               </button>

@@ -261,7 +261,7 @@
                 v-model="coupon_code"
                 placeholder="請輸入優惠碼" />
               <button type="button" class="btn"
-                @click="addCouponCode" :disabled="isDisable"
+                @click.prevent="addCouponCode" :disabled="isDisable"
                 :class="{ 'text-success': coupon_code != '' }">
                 發送
               </button>

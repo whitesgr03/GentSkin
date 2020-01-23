@@ -99,7 +99,7 @@
           <li class="mx-2" v-for="page in filterItem.length" :key="page"
           @click.prevent="pagination">
             <button type="button" class="btn"
-              @click="pages = page - 1"
+              @click.prevent="pages = page - 1"
               :class="{ btnColor: pages === page - 1 }">
               {{ page }}
             </button>

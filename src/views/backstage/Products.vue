@@ -3,7 +3,7 @@
     <loading :active.sync="isLoading" style="z-index: 9999;"></loading>
     <div class="products" v-if="products.length !== 0">
       <div class="text-right mb-4">
-        <button class="button bg-biwacha" @click="openModal(true)">
+        <button class="button bg-biwacha" @click.prevent="openModal(true)">
           新增商品
         </button>
       </div>
@@ -21,14 +21,14 @@
             </th>
             <th>產品名稱</th>
             <th width="150">原價</th>
-            <th width="150" @click="reverse = !reverse, sortData = 'price'"
+            <th width="150" @click.prevent="reverse = !reverse, sortData = 'price'"
               style="cursor: pointer;">
               售價
               <i class="fas fa-sort text-tohoh" v-if="sortData == '' || sortData !== 'price'"></i>
               <i v-if="sortData == 'price'" class="fas fa-sort-up ml-1 text-tohoh"
               :class="{'reverse': reverse}"></i>
             </th>
-            <th width="150" @click="reverse = !reverse, sortData = 'release'"
+            <th width="150" @click.prevent="reverse = !reverse, sortData = 'release'"
               style="cursor: pointer;">
               是否上架
               <i class="fas fa-sort text-tohoh" v-if="sortData == '' || sortData !== 'release'"></i>
@@ -49,12 +49,12 @@
             <td class="text-center">{{ item.price | currency }}</td>
             <td>
               <span v-if="item.is_enabled" class="text-success"  style="cursor: pointer;"
-                @click="updataEnabled(false, item)" :class="{'gg':newData !== item.id}">已上架
+                @click.prevent="updataEnabled(false, item)" :class="{'gg':newData !== item.id}">已上架
                 <i class="fas fa-spinner fa-spin" v-if="newData === item.id"></i>
               </span>
               <span v-else class="text-warning"  style="cursor: pointer;"
               :class="{'gg':newData !== item.id}"
-              @click="updataEnabled(true, item)">
+              @click.prevent="updataEnabled(true, item)">
                 未上架
                 <i class="fas fa-spinner fa-spin" v-if="newData === item.id"></i>
               </span>
@@ -62,13 +62,13 @@
             <td>
               <button
                 class="button bg-konjyo"
-                @click="openModal(false, item)"
+                @click.prevent="openModal(false, item)"
               >
                 編輯
               </button>
               <button
                 class="button bg-momoshiocha"
-                @click="deleteModal(item)"
+                @click.prevent="deleteModal(item)"
               >
                 刪除
               </button>
@@ -271,7 +271,7 @@
                 </div>
               </div>
               <div class="col-6 p-0 btn btn-outline-danger border-0">
-                <div class="p-2" @click="deleteProduct">
+                <div class="p-2" @click.prevent="deleteProduct">
                   確定
                 </div>
               </div>

@@ -43,7 +43,7 @@
             <button
               type="button"
               class="btn btn-outline-info btn-sm"
-              @click="getProduct(item.id)"
+              @click.prevent="getProduct(item.id)"
             >
               <i
                 class="fas fa-spinner fa-spin"
@@ -55,7 +55,7 @@
             <button
               type="button"
               class="btn btn-outline-danger btn-sm ml-auto"
-              @click="addtoCart(item.id)"
+              @click.prevent="addtoCart(item.id)"
             >
               <i
                 class="fas fa-spinner fa-spin"
@@ -92,7 +92,7 @@
                   <button
                     type="button"
                     class="btn btn-outline-danger btn-sm"
-                    @click="removeCartItem(item.id)"
+                    @click.prevent="removeCartItem(item.id)"
                   >
                     <!--removeCartItem(item.id) 按下按鈕移除單一筆資料-->
                     <i class="far fa-trash-alt"></i>
@@ -138,7 +138,7 @@
               <button
                 class="btn btn-outline-info "
                 type="button"
-                @click="addCouponCode"
+                @click.prevent="addCouponCode"
               >
                 <!--addCouponCode 比對成功時將可帶入折扣-->
                 套用優惠碼

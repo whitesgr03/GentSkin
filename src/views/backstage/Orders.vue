@@ -5,7 +5,7 @@
       <table class="table mt-4  text-white">
         <thead>
           <tr>
-            <th width="150" @click="reverse = !reverse, sortData = 'buyData'"
+            <th width="150" @click.prevent="reverse = !reverse, sortData = 'buyData'"
               style="cursor: pointer;">
               下單日期
               <i class="fas fa-sort text-tohoh" v-if="sortData == '' || sortData !== 'buyData'"></i>
@@ -15,7 +15,7 @@
             <th width="200">Email</th>
             <th>購買項目</th>
             <th width="150">訂單金額</th>
-            <th width="120" @click="reverse = !reverse, sortData = 'payment'"
+            <th width="120" @click.prevent="reverse = !reverse, sortData = 'payment'"
               style="cursor: pointer;">
               付款狀態
               <i class="fas fa-sort text-tohoh" v-if="sortData == '' || sortData !== 'payment'"></i>
