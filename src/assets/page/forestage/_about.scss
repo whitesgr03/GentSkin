@@ -1,0 +1,96 @@
+
+.about {
+  .row {
+    position: relative;
+    justify-content: center;
+    align-items: center;
+  }
+  h3 {
+    font-size: $font-size-base * 2;
+    text-align: center;
+    @include media-breakpoint-down(sm) {
+      margin-bottom: $spacer * 2;
+    }
+  }
+  p {
+    font-size: $font-size-base * 1.2;
+    @include media-breakpoint-down(sm) {
+      font-size: $font-size-base;
+    }
+    span {
+      @include media-breakpoint-down(md) {
+        font-size: $font-size-base;
+      }
+    }
+  }
+  &-bg {
+    height: 650px;
+    display: flex;
+    text-align: center;
+    background-size: cover;
+    background-position: center center;
+    background-image: url(assets/images/about/about.jpg);
+      @include media-breakpoint-down(sm) {
+      height: 50vh;
+    }
+    h2 {
+      font-size: $font-size-base * 3.5;
+      text-transform: uppercase;
+      @include media-breakpoint-down(sm) {
+        font-size: $font-size-base * 2;
+      }
+    }
+  }
+  &-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin: 40px auto;
+    @include media-breakpoint-down(sm) {
+      width: 100%;
+    }
+    h3 {
+      font-size: $font-size-base * 2.5;
+      @include media-breakpoint-down(sm) {
+        font-size: $font-size-base * 2;
+      }
+    }
+  }
+  &-text {
+    @include media-breakpoint-down(sm) {
+      position: absolute;
+      text-shadow: 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black,
+    0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black,
+    0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black,
+    0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black,
+    0 0 4px black;
+      z-index: 1;
+      .animated {
+        padding: $spacer;
+      }
+    }
+  }
+  &-img {
+    max-width:100%;
+    max-height:650px;
+    margin: 30px 0;
+    @include media-breakpoint-down(sm) {
+      max-height:500px;
+    }
+  }
+  .team {
+    border-radius: 5rem;
+    margin-bottom: $spacer * 2;
+    @include media-breakpoint-down(md) {
+      border-radius: 3rem;
+    }
+    @include media-breakpoint-down(sm) {
+      border-radius: 5rem;
+    }
+    @include media-breakpoint-down(xs) {
+      border-radius: 3rem;
+    }
+  }
+}

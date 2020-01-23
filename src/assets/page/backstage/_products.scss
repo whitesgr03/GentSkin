@@ -1,0 +1,35 @@
+.products {
+    .button {
+        padding: 10px 20px;
+    }
+    .table {
+        .button {
+            border-radius: 10px;
+            margin: 0 5px;
+            padding: 0px 0.25rem;
+        }
+    }
+    .form {
+        width: 100%;
+    }
+    .uploadImage {
+        position: absolute;
+        top:0;
+        right:15px;
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 3px 12px;
+        cursor: pointer;
+    }
+    select {
+        height: auto;
+        width: auto;
+        padding: 0 1.75rem 0 0.75rem;
+    }
+    form {
+        display: flex;
+    }
+    .reverse {
+        transform: rotate(180deg);
+    }
+}

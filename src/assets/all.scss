@@ -1,6 +1,23 @@
-@import '~bootstrap/scss/functions'; //載入套用變數的方法
-@import './helpers/_variables'; //載入自定義變數
+@import '~bootstrap/scss/functions'; //載入bootstrap的函式
+
+@import './variable/variables'; //載入自定義bootstrap變數
+
 @import '~bootstrap/scss/bootstrap'; //載入bootstrap
 
-@import './_backstage'; //_dashboard版型的樣式
-@import './_forestage'; //_dashboard版型的樣式
+@import './mixin/grid';
+
+@import './layout/header';
+@import './layout/footer';
+@import './layout/sidebar';
+
+@import './module/alertMassage';
+@import './module/pagination';
+@import './module/scrollBtn';
+@import './module/form';
+@import './module/button';
+@import './module/modal';
+
+
+@import './page/forestage';
+@import './page/backstage';
+

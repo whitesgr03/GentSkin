@@ -38,7 +38,7 @@
             href="#"
             aria-label="Next"
             @click="getPage(paginations.current_page + 1)"
-          >  
+          >
             <!-- +1為下一頁 -->
             <i class="fas fa-chevron-right"></i>
           </a>
@@ -54,15 +54,15 @@ export default {
   props: {
     // pagination的資料要是物件才能傳遞到內層
     paginations: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   methods: {
     // 使用$emit將資料傳到外層
     getPage(page) {
       // console.log('分頁元件',page);
-      this.$emit('getPage', page)
-    }
-  }
-}
+      this.$emit('getPage', page);
+    },
+  },
+};
 </script>

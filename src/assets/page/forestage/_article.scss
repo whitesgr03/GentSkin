@@ -1,0 +1,41 @@
+
+.article  {
+  &-bg {
+    height: 650px;
+    display: flex;
+    text-align: center;
+    background-size: cover;
+    background-position: center center;
+    background-image: url(assets/images/article/article.jpg);
+      @include media-breakpoint-down(sm) {
+      height: 50vh;
+    }
+    h2 {
+      font-size: $font-size-base * 3.5;
+      text-transform: uppercase;
+      @include media-breakpoint-down(sm) {
+        font-size: $font-size-base * 2;
+      }
+    }
+  }
+  &-img {
+    width: 100%;
+    background-position: center center;
+    background-size: cover;
+    transition: all 0.35s;
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+  &-title {
+    text-align: center;
+    padding: 5%;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    p {
+      margin: 0;
+    }
+  }
+}

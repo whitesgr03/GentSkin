@@ -74,41 +74,36 @@ export default {
     return {
       orderId: '',
       order: {
-        user: {}
-      }
-    }
+        user: {},
+      },
+    };
   },
   methods: {
     getOrder() {
-      const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${vm.orderId}` //從後端取的orderId
-      vm.isLoading = true
-      this.$http.get(api).then(response => {
-        vm.order = response.data.order
+      const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${vm.orderId}`; // 從後端取的orderId
+      vm.isLoading = true;
+      this.$http.get(api).then((response) => {
+        vm.order = response.data.order;
         // console.log('結帳資料', response)
-        vm.isLoading = false
-      })
+        vm.isLoading = false;
+      });
     },
     parOrder() {
-      const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/pay/${vm.orderId}`
-      vm.isLoading = true
-      this.$http.post(api).then(response => {
-        if (response.data.success) {
-          // console.log('付款完成', response)
-        } else {
-          // console.log('付款失敗', response)
-        }
-        this.getOrder() //重新取得訂單資料 以更新order.is_paid為ture後的畫面
-        vm.isLoading = false
-      })
-    }
+      const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/pay/${vm.orderId}`;
+      vm.isLoading = true;
+      this.$http.post(api).then(() => {
+        this.getOrder(); // 重新取得訂單資料 以更新order.is_paid為ture後的畫面
+        vm.isLoading = false;
+      });
+    },
   },
 
   created() {
-    this.orderId = this.$route.params.orderId //對應route中的orderId
+    this.orderId = this.$route.params.orderId; // 對應route中的orderId
     // console.log(this.orderId)
-    this.getOrder()
-  }
-}
+    this.getOrder();
+  },
+};
 </script>

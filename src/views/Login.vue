@@ -1,52 +1,43 @@
 <template>
   <div>
     <Alert />
-    <Navbar />
-    <div class="d-flex vh-100 login-bgc">
-      <form class="form-signin" @submit.prevent="signin">
-        <!--使用signin方法觸發登入-->
-        <h1 class="h3 font-weight-normal text-center">管理者登入</h1>
-        <label for="inputEmail" class="sr-only">Email address</label>
+    <loading :active.sync="isLoading"></loading>
+    <div class="login">
+      <form class="form" @submit.prevent="signin">
+        <h1 class="h3 text-center mb-4">管理員登入</h1>
+        <label for="account" class="label">帳號
         <input
           type="email"
-          id="inputEmail"
-          class="form-control mb-3 input-color"
-          placeholder="請輸入Email"
+          class="input"
+          id="account"
           v-model="user.username"
-          required
-          autofocus
+          placeholder="Email@example.com"
         />
-        <!--使用v-mode連結API參數-->
-        <label for="inputPassword" class="sr-only">Password</label>
+        </label>
+        <label for="password" class="label">密碼
         <input
           type="password"
-          id="inputPassword"
-          class="form-control mb-3 input-color"
-          placeholder="請輸入密碼"
+          class="input"
+          id="password"
           v-model="user.password"
-          required
+          placeholder="Password"
         />
-        <!--使用v-mode連結API參數-->
-        <div class="mb-3">
-          <button class="btn-type btn-type2 w-100" type="submit">
-            登入
-          </button>
-        </div>
-        <div>
-          <button
-            class="btn-type btn-type2 w-100"
-            type="button"
-            @click.prevent="home"
-          >
-            回首頁
-          </button>
-        </div>
+        </label>
+        <button class="button bg-biwacha w-100 my-3">
+          登入
+        </button>
+        <button
+          class="button bg-biwacha w-100"
+          type="button"
+          @click.prevent="home"
+        >
+          回首頁
+        </button>
       </form>
     </div>
-
-    <!-- 登入提示Modal -->
+        <!-- 登入提示Modal -->
     <div
-      class="modal fade"
+      class="modal animated fadeIn"
       id="SigninModal"
       tabindex="-1"
       role="dialog"
@@ -65,58 +56,52 @@
 </template>
 
 <script>
-import $ from 'jquery'
-import Navbar from '@/components/forestage/Navbar'
-import Alert from '@/components/backstage/AlertMassage.vue'
+import $ from 'jquery';
+import Alert from '@/components/backstage/AlertMassage.vue';
+
 
 export default {
   name: 'Login',
   data() {
     return {
+      isLoading: false,
       user: {
-        username: '', //API使用的參數
-        password: '' //API使用的參數
-      }
-    }
+        username: '',
+        password: '',
+      },
+    };
   },
   methods: {
     signin() {
-      const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/admin/signin` //api路徑
-      this.$http.post(api, vm.user).then(response => {
-        //將變數傳入後端伺服器
-        console.log(response.data)
-        if (response.data.success) {
-          // 如果成功的話 將頁面從Login轉移到products
-          $('#SigninModal').modal('show')
-          setTimeout(function() {
-            $('#SigninModal').modal('hide')
-          }, 1000)
-          $('#SigninModal').on('hidden.bs.modal', function(e) {
-            vm.$router.push(`/admin/products`)
-          })
-        } else if (response.data.success == false) {
-          this.$bus.$emit('message:push', response.data.message, 'danger')
-        }
-      })
+      const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
+      vm.isLoading = true;
+      this.$http.post(api, vm.user).then((response) => {
+        vm.isLoading = false;
+        // console.log(response.data)
+        setTimeout(() => {
+          if (response.data.success) {
+            $('#SigninModal').modal('show');
+            setTimeout(() => {
+              $('#SigninModal').modal('hide');
+            }, 1000);
+            $('#SigninModal').on('hidden.bs.modal', () => {
+              vm.$router.push('/admin/products');
+            });
+          } else if (!response.data.success) {
+            this.$bus.$emit('alert', '帳號密碼輸入錯誤');
+            vm.isLoading = false;
+          }
+        }, 1);
+      });
     },
     home() {
-      const vm = this
-      vm.$router.push('/')
-    }
+      const vm = this;
+      vm.$router.push('/');
+    },
   },
   components: {
-    Navbar,
-    Alert
-  }
-}
+    Alert,
+  },
+};
 </script>
-
-<style scoped>
-.tohoh {
-  background-color: #b97d05;
-}
-.tohoh:hover {
-  background-color: #eea20a;
-}
-</style>

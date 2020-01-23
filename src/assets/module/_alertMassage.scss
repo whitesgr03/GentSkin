@@ -1,0 +1,22 @@
+.message {
+  position: fixed;
+  top: 0px;
+  left:50%;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -100px);
+  transition: all 1s;
+  @include media-breakpoint-down(sm) {
+    left: 0;
+    right: 0;
+    transform: translateY(-100px);
+  }
+  &-animate {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+    @include media-breakpoint-down(sm) {
+      transform: translateY(0px);
+    }
+  }
+}

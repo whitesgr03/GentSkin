@@ -1,96 +1,134 @@
 <template>
   <div>
     <loading :active.sync="isLoading"></loading>
-    <table class="table mt-4  text-white">
-      <thead>
-        <tr>
-          <th width="200">購買時間</th>
-          <th width="300">Email</th>
-          <th>購買款項</th>
-          <th width="100">應付金額</th>
-          <th width="150">是否付款</th>
-          <th width="100">編輯</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="item in sortOrder"
-          :key="item.id"
-          :class="{ 'text-secondary': !item.is_paid }"
-        >
-          <td>{{ item.create_at | date }}</td>
-          <td>{{ item.user.email }}</td>
-          <td>
-            <ul class="list-unstyled">
-              <li v-for="(product, i) in item.products" :key="i">
-                {{ product.product.title }} 數量：{{ product.qty }}
-                {{ product.product.unit }}
-              </li>
-            </ul>
-          </td>
-          <td class="text-right">{{ item.total | currency }}</td>
-          <td>
-            <span v-if="item.is_paid" class="text-success">已付款</span>
-            <span v-else>尚未付款</span>
-          </td>
-          <td>
-            <button class="btn btn-outline-primary btn-sm">編輯</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="orders" v-if="isLoading === false">
+      <table class="table mt-4  text-white">
+        <thead>
+          <tr>
+            <th width="150" @click="reverse = !reverse, sortData = 'buyData'"
+              style="cursor: pointer;">
+              下單日期
+              <i class="fas fa-sort text-tohoh" v-if="sortData == '' || sortData !== 'buyData'"></i>
+              <i v-if="sortData == 'buyData'" class="fas fa-sort-up ml-1 text-tohoh"
+              :class="{'reverse': reverse}"></i>
+            </th>
+            <th width="200">Email</th>
+            <th>購買項目</th>
+            <th width="150">訂單金額</th>
+            <th width="120" @click="reverse = !reverse, sortData = 'payment'"
+              style="cursor: pointer;">
+              付款狀態
+              <i class="fas fa-sort text-tohoh" v-if="sortData == '' || sortData !== 'payment'"></i>
+              <i v-if="sortData == 'payment'" class="fas fa-sort-up ml-1 text-tohoh"
+              :class="{'reverse': reverse}"></i>
+            </th>
+            <th width="100">編輯</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="item in sortOrder"
+            :key="item.id"
+            :class="{ 'text-secondary': !item.is_paid }"
+          >
+            <td>{{ item.create_at | date}}</td>
+            <td>{{ item.user.email }}</td>
+            <td>
+              <ul class="list-unstyled">
+                <li v-for="(product, i) in item.products" :key="i">
+                  {{ product.product.title }} 數量：{{ product.qty }}
+                  {{ product.product.unit }}
+                </li>
+              </ul>
+            </td>
+            <td class="text-right">{{ item.total | currency }}</td>
+            <td>
+              <span v-if="item.is_paid" class="text-success">已付款</span>
+              <span v-else class="text-warning">未付款</span>
+            </td>
+            <td>
+              <button class="button bg-konjyo">編輯</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-    <Pagination :paginations="pagination" @getPage="getOrders" />
+    <!-- <Pagination :paginations="pagination" @getPage="getOrders" /> -->
   </div>
 </template>
 
 <script>
-import $ from 'jquery'
-import Pagination from '@/components/backstage/Pagination'
+// import Pagination from '@/components/backstage/Pagination.vue';
 
 export default {
   data() {
     return {
       isLoading: false,
       pagination: {},
-      orders: []
-    }
+      orders: [],
+      totalItem: 0,
+      count: 0,
+      sortData: '',
+      reverse: false,
+    };
   },
   methods: {
-    getOrders(page) {
-      //取得api資料  //page = 1 預設參數 即可套用全部使用到getProducts的地方
-      const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}`
-      vm.isLoading = true //啟用讀取動畫
-      this.$http.get(api).then(response => {
-        vm.orders = response.data.orders
-        vm.pagination = response.data.pagination
-        console.log(response)
-        vm.isLoading = false //資料讀取完成後再停用動畫
-        //存取API提供的頁數
-      })
-    }
+    getitem(page) {
+      const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}}`;
+      this.$http.get(api).then((response) => {
+        if (response.data.success) {
+          response.data.orders.forEach((item) => {
+            vm.orders.push(item);
+            // console.log(vm.orders);
+          });
+        }
+      });
+      vm.count += 1;
+      if (vm.count === vm.totalItem) {
+        vm.isLoading = false;
+      }
+    },
+    getOrders() {
+      const vm = this;
+      vm.isLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${1}`;
+      this.$http.get(api).then((response) => {
+        if (response.data.success) {
+          vm.totalItem = response.data.pagination.total_pages;
+          // vm.pagination = response.data.pagination;
+          for (let i = 0; i < vm.totalItem; i += 1) {
+            vm.getitem(i + 1);
+          }
+        }
+      });
+    },
   },
   computed: {
-    // 按照以付款以及未付款來排順序
     sortOrder() {
-      const vm = this
-      let newOrder = []
-      if (vm.orders.length) {
-        newOrder = vm.orders.sort((a, b) => {
-          const aIsPaid = a.is_paid ? 1 : 0
-          const bIsPaid = b.is_paid ? 1 : 0
-          return bIsPaid - aIsPaid
-        })
+      const vm = this;
+      if (vm.sortData === 'payment') {
+        vm.orders.sort((a, b) => {
+          const aIsPaid = a.is_paid;
+          const bIsPaid = b.is_paid;
+          return (aIsPaid > bIsPaid ? 1 : -1) * (vm.reverse === true ? 1 : -1);
+        });
+      } else if (vm.sortData === 'buyData' && !vm.isLoading) {
+        vm.orders.sort((a, b) => {
+          const aData = a.create_at;
+          const bData = b.create_at;
+          return (aData > bData ? 1 : -1) * (vm.reverse === true ? 1 : -1);
+        });
       }
-      return newOrder
-    }
+      return vm.orders;
+    },
   },
   created() {
-    this.getOrders()
+    this.getOrders();
   },
-  components: {
-    Pagination
-  }
-}
+  // components: {
+  //   Pagination,
+  // },
+};
 </script>

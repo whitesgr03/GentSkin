@@ -1,0 +1,362 @@
+.modal {
+    .h1 {
+        @include media-breakpoint-down(sm) {
+            font-size: $h3-font-size;
+        }
+        
+    }
+}
+
+#orderModal {
+    .modal-dialog {
+        max-width: 768px;
+        width: 80%;
+    }
+    .modal-content {
+        height: 480px;
+        @include media-breakpoint-down(xs) { 
+            height: 400px;
+        }
+    }
+    .modal-img {
+        background-image: url(assets/images/navbar/order-1.jpg);
+        background-position: center right;
+        height: 480px;
+    }
+    .table {
+        font-size: $font-size-base * 0.8;
+        @include media-breakpoint-only(md) { 
+            font-size: $font-size-base * 0.65;
+        }
+        &-overflow {
+            overflow: auto;
+            height: 380px;
+            @include media-breakpoint-down(sm) {
+                height: 320px;
+            }
+        }
+    }
+}
+
+#loginModal {
+    .modal-dialog {
+        max-width: 768px;
+        width: 80%;
+    }
+    .modal-content {
+        height: 480px;
+        @include media-breakpoint-down(xs) { 
+            height: 400px;
+        }
+    }
+    .form-control {
+        height: auto;
+        padding: 1px 0.75rem;
+        background-color: $main-bg;
+    }
+    .panel {
+        height: 100%;
+        @include media-breakpoint-down(sm) {
+            overflow: hidden;
+        }
+        p {
+            @include media-breakpoint-down(xs) {
+                font-size: 1rem;
+            }
+        }
+        .col-12 {
+            @include media-breakpoint-down(sm) {
+                height:100%;
+                z-index: 2;
+            }
+        }
+        .z-index {
+            @include media-breakpoint-down(sm) {
+                z-index: 2;
+            }
+        }
+        &-signIn {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            transition: all 0.6s;
+            @include media-breakpoint-down(sm) { 
+                transition: transform 0.3s ,opacity 1s;
+            }
+        }
+        &-signUp {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.6s;
+            transform: translateX(-20%);
+            @include media-breakpoint-down(sm) { 
+                transition: all 0.3s;
+                transform: translate(0%, -90%);
+            }
+        }
+        &-slide {
+            .panel {
+                &-signIn {
+                    transition: all 0.6s;
+                    opacity: 0;
+                    visibility: hidden;
+                    transform: translateX(20%);
+                    @include media-breakpoint-down(sm) { 
+                        transform: translateY(5%);
+                        transition: all 0.3s;
+                    }
+                }
+                &-signUp {
+                    transition: all 0.6s;
+                    opacity: 1;
+                    visibility: visible;
+                    transform: translate(0%);
+                    @include media-breakpoint-down(sm) { 
+                        transform: translate(0%, -98%);
+                        transition: transform 0.3s ,opacity 1s;
+                    }
+                }
+            }
+            .overlay {
+                transform: translateX(-100%);
+                &-bgc {
+                    transform: translateX(50%);
+                }
+                &-left {
+                    transition: all 0.6s ease-in-out;
+                    opacity: 1;
+                    visibility: visible;
+                    transform: translateX(0);    
+                }
+                &-right {
+                    transition: all 0.6s ease-in-out;
+                    opacity: 0;
+                    visibility: hidden;
+                    transform: translateX(10%);
+                }
+            }
+        }
+    }
+    .overlay {
+        width: 50%;
+        height: 100%;
+        overflow: hidden;
+        transition: transform 0.6s ease-in-out;
+        @include media-breakpoint-down(sm) { 
+            display: none;
+        }
+
+        &-bgc {
+            background-image: url(assets/images/navbar/login.jpg);
+            background-position: bottom center;
+            border-radius: 0.3rem;
+            width: 200%;
+            height: 100%;
+            text-align: center;
+            transform: translateX(0%);
+            transition: transform 0.6s ease-in-out;
+        }
+        &-left {
+            display: flex;
+            height: 100%;
+            transition: all 0.6s ease-in-out;
+            transform: translateX(-10%);
+            opacity: 0;  
+            .button {
+                color: $white;
+                font-size: $font-size-sm;
+                background-color: #005caf;
+                padding: 10px 15px;
+            }
+            .overlay {
+                &-button {
+                    background: rgba(0, 0, 0, 0.3);;
+                }
+            }
+        }
+        &-right {
+            display: flex;
+            height: 100%;
+            transition: all 0.6s ease-in-out;
+            transform: translateX(0);
+            opacity: 1;
+            .button {
+                font-size: $font-size-sm;
+                background-color: #f75c2f;
+                padding: 10px 15px;
+            }
+            .overlay {
+                &-button {
+                    background: rgba(255, 255, 255, 0.4);
+                }
+            }
+        }
+        &-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: $black;
+            font-weight: $font-weight-bolder;
+            border-radius: 50%;
+            border: 1px solid $black;
+            width: 190px;
+            height: 190px;
+        }
+    }
+}
+
+#cartModal {
+    .modal-dialog {
+        max-width: 400px;
+        max-height: 100vh;
+        height: 100%;
+        margin: 0 0 0 auto;
+        width: 80%;
+    }
+    .modal-content {
+        max-height: 100vh;
+        height: 100%;
+        border-radius: 0;
+        border-left: 1px solid $black;
+    }
+    .modal-title {
+        border-bottom: 1px solid $black;
+    }
+    .modal-body{
+        padding: 0;
+    }
+    .modal-footer {
+        padding: $spacer * 1.5 0;
+        border-color: $black
+    }
+    .table {
+        font-size: $font-size-sm;
+        margin: 0;
+        img {
+            border: 1px solid $white;
+            padding: $spacer * .25;
+            width: 90px;
+        }
+        .td-width {
+            width: 210px;
+            @include media-breakpoint-down(xs) { 
+                width: 115px;            
+            }
+        }
+    }
+}
+
+#saleModal {
+    .modal-dialog {
+        @include media-breakpoint-down(xs) {
+            max-width: 85%;
+        }
+    }
+    .modal-content {
+        border: none;
+        background-color: transparent;
+        &::before {
+            content: '';
+            position: absolute;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+            filter: blur(1px);
+            background-size: cover;
+            background-position: center center;
+            background-image: url(assets/images/main/coupon-1.jpg);
+        
+        }
+    }
+    .modal-border {
+        margin: $spacer * 1.5;
+        padding: $spacer * 2 0;
+        border: 3px dashed #dee2e6;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        @include media-breakpoint-down(xs) { 
+            padding: $spacer 0;
+        }
+    }
+    h3 {
+        letter-spacing: 5px;
+        @include media-breakpoint-down(xs) { 
+            font-size: $font-size-base * 1.2;
+        }
+    }
+    span {
+        font-size: $font-size-base * 1.2;
+        @include media-breakpoint-down(xs) { 
+            letter-spacing: 3px;
+            font-size: $font-size-base * .8;
+        }
+    }
+    p {
+        padding: $spacer;
+        margin: $spacer * 2 0;
+        width: 50%;
+        border: 5px dotted #dee2e6;
+        border-radius: 50%;
+        color: $warning;
+        font-size: $font-size-base * 2;
+        font-weight: $font-weight-bolder;
+        @include media-breakpoint-down(xs) { 
+            padding: $spacer;
+            width: 60%;
+            margin: $spacer 0;
+            font-size: $font-size-base * 1.2;
+        }
+    }
+}
+
+#payModal {
+    .one {
+        opacity: 0;
+        animation: dot 5s infinite 1s;
+    }
+    
+    .two {
+        opacity: 0;
+        animation: dot 5s infinite 1.3s;
+    }
+    
+    .three {
+        opacity: 0;
+        animation: dot 5s infinite 1.6s;
+    }
+    
+    @keyframes dot {
+        0% { opacity: 0; }
+        50% { opacity: 1; }
+        60% { opacity: 0; }
+        70% { opacity: 0; }
+        80% { opacity: 0; }
+        100% { opacity: 0; }
+    }
+}
+
+#serviceModal {
+    .modal-dialog {
+        max-width: 768px;
+        width: 80%;
+    }
+    .modal-content {
+        @include media-breakpoint-down(xs) { 
+            height: 400px;
+        }
+    }
+    .modal-body {
+        display: flex;
+        justify-content: space-around;
+        @include media-breakpoint-down(xs) { 
+            flex-direction: column;
+            margin: 0 auto;
+        }
+    }
+}

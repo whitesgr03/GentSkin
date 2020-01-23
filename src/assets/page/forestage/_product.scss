@@ -1,0 +1,100 @@
+
+
+.product {
+  .row {
+    position: relative;
+    overflow: hidden;
+  }
+  .category {
+    padding: 0;
+    margin: $spacer auto;
+    transition: transform .5s;
+    &-moveUp {
+      transform: translateY(-25px);
+      transition: transform .5s;
+    }
+    &-moveDown {
+      transform: translateY(25px);
+      transition: transform .5s;
+    }
+    .nav-item {
+      padding: 0.5rem 1rem;
+    }
+    .nav-link {
+      padding: 0 5px 3px;
+      color: $white;
+      border: none;
+      border-bottom: 2px solid $white;
+      background-color: transparent;
+    }
+    .nav-active {
+      border-bottom: 2px solid $tohoh;
+    }
+  }
+  .item {
+    position: absolute;
+    width: 100%;
+    top: 50px;
+    left: 100%;
+    transition: all .7s;
+    &-display {
+      left: -100%;
+      transform: translateX(100%) skewX(0deg);
+      transition: transform 1s;
+    }
+  }
+  &-img {
+    width: 100%;
+    cursor: pointer;
+  }
+  &-content {
+    padding: $spacer * 1.5 $spacer * 0.5;
+    @include media-breakpoint-down(md) {
+      padding: $spacer * 1.5 0;
+    }
+  }
+  &-title {
+    cursor: pointer;
+    @include media-breakpoint-down(md) {
+      font-size: $font-size-base;
+    }
+    @include media-breakpoint-down(sm) {
+      font-size: $font-size-base * .9;
+    }
+  }
+  &-origin {
+    @include media-breakpoint-down(md) {
+      display: none;
+    }
+  }
+  &-price {
+    text-align: right;
+    margin-top: $spacer * 1.5;
+    @include media-breakpoint-down(md) {
+      margin-top: $spacer;
+      font-size: $font-size-base;
+    }
+    @include media-breakpoint-down(sm) {
+      font-size: $font-size-base * .9;
+    }
+  }
+}
+
+.pagination {
+  .btn {
+    padding: 0.325rem 0.85rem;
+    background-color: $input;
+    border: 1.5px solid rgba($white, 0.5);
+    border-radius: 50%;
+    &:hover {
+      background-color: rgba($black, 0.5);
+      border-color: rgba($white, 0.8);
+    }
+    &:active {
+      transform: scale(0.75);
+    }
+    &Color {
+      background-color: rgba($black, 0.5);
+    }
+  }
+}

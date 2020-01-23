@@ -7,7 +7,6 @@
         class="col-md-3 mb-4"
         v-for="item in products"
         :key="item.id"
-        v-if="item.is_enabled"
       >
         <!--透過vm.products將資料從後端取出顯示在畫面上  v-if代表未啟用商品時不顯示-->
         <div class="card border-0 shadow-sm bg-dark">
@@ -163,13 +162,10 @@
               name="email"
               id="useremail"
               v-model="form.user.email"
-              v-validate="'required|email'"
-              :class="{ 'is-invalid': errors.has('email') }"
               placeholder="請輸入 Email"
             />
-            <span class="text-danger" v-if="errors.has('email')">
-              <i class="fas fa-exclamation-circle"></i>
-              {{ errors.first('email') }} email@example.com
+            <span class="text-danger">
+              <i class="fas fa-exclamation-circle"> Email 不可留空。</i>
             </span>
           </div>
 
@@ -181,11 +177,9 @@
               name="name"
               id="username"
               v-model="form.user.name"
-              v-validate="'required'"
-              :class="{ 'is-invalid': errors.has('name') }"
               placeholder="請輸入姓名"
             />
-            <span class="text-danger" v-if="errors.has('name')">
+            <span class="text-danger">
               <i class="fas fa-exclamation-circle"></i> 姓名欄位 不得留空。
             </span>
           </div>
@@ -198,11 +192,9 @@
               name="tel"
               id="usertel"
               v-model="form.user.tel"
-              v-validate="'required'"
-              :class="{ 'is-invalid': errors.has('tel') }"
               placeholder="請輸入電話"
             />
-            <span class="text-danger" v-if="errors.has('tel')">
+            <span class="text-danger">
               <i class="fas fa-exclamation-circle"></i> 電話欄位 不得留空。
             </span>
           </div>
@@ -215,11 +207,9 @@
               name="address"
               id="useraddress"
               v-model="form.user.address"
-              v-validate="'required'"
-              :class="{ 'is-invalid': errors.has('address') }"
               placeholder="請輸入地址"
             />
-            <span class="text-danger" v-if="errors.has('address')">
+            <span class="text-danger">
               <i class="fas fa-exclamation-circle"></i> 地址欄位 不得留空。
             </span>
           </div>
@@ -321,8 +311,8 @@
 </template>
 
 <script>
-import $ from 'jquery'
-import Pagination from '@/components/backstage/Pagination'
+import $ from 'jquery';
+import Pagination from '@/components/backstage/Pagination.vue';
 
 export default {
   data() {
@@ -333,125 +323,119 @@ export default {
       number: '',
       pagination: {},
       status: {
-        loadingItem: ''
+        loadingItem: '',
       },
       form: {
         user: {
           name: '',
           email: '',
           tel: '',
-          address: ''
+          address: '',
         },
-        message: ''
+        message: '',
       },
       isLoading: false,
-      coupon_code: ''
-    }
+      coupon_code: '',
+    };
   },
   methods: {
     getProducts(page) {
-      const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`
-      vm.isLoading = true //啟用讀取動畫
-      this.$http.get(api).then(response => {
-        vm.products = response.data.products
-        vm.isLoading = false //資料讀取完成後再停用動畫
-        vm.pagination = response.data.pagination
-        console.log('販賣的物品', response.data)
-      })
+      const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`;
+      vm.isLoading = true; // 啟用讀取動畫
+      this.$http.get(api).then((response) => {
+        vm.products = response.data.products;
+        vm.isLoading = false; // 資料讀取完成後再停用動畫
+        vm.pagination = response.data.pagination;
+        // console.log('販賣的物品', response.data)
+      });
     },
     getProduct(id) {
-      const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`
-      vm.status.loadingItem = id
-      this.$http.get(api).then(response => {
-        vm.product = response.data.product
-        $('#productModal').modal('show')
-        vm.number = 1
-        vm.status.loadingItem = ''
-      })
+      const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
+      vm.status.loadingItem = id;
+      this.$http.get(api).then((response) => {
+        vm.product = response.data.product;
+        $('#productModal').modal('show');
+        vm.number = 1;
+        vm.status.loadingItem = '';
+      });
     },
     addtoCart(id, qty = 1) {
-      const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`
-      vm.status.loadingItem = id
+      const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      vm.status.loadingItem = id;
       const cart = {
         product_id: id,
-        qty
-      }
-
-      this.$http.post(api, { data: cart }).then(response => {
-        vm.getCart()
-        vm.status.loadingItem = ''
-        $('#productModal').modal('hide')
-        console.log('加入商品', response)
-      })
+        qty,
+      };
+      this.$http.post(api, { data: cart }).then(() => {
+        vm.getCart();
+        vm.status.loadingItem = '';
+        $('#productModal').modal('hide');
+        // console.log('加入商品', response)
+      });
     },
     getCart() {
-      const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`
-      vm.isLoading = true
-      this.$http.get(api).then(response => {
-        vm.cart = response.data.data
-        console.log('購物車資料', response.data.data)
-        vm.isLoading = false
-      })
+      const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      vm.isLoading = true;
+      this.$http.get(api).then((response) => {
+        vm.cart = response.data.data;
+        // console.log('購物車資料', response.data.data)
+        vm.isLoading = false;
+      });
     },
     removeCartItem(id) {
-      const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`
-      vm.isLoading = true
-      this.$http.delete(api).then(response => {
-        console.log('刪除', response)
-        vm.getCart()
-        vm.isLoading = false
-      })
+      const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
+      vm.isLoading = true;
+      this.$http.delete(api).then(() => {
+        vm.getCart();
+        vm.isLoading = false;
+      });
     },
     addCouponCode() {
-      const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`
+      const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
       const coupon = {
-        code: vm.coupon_code
-      }
-      vm.isLoading = true
-      this.$http.post(api, { data: coupon }).then(response => {
+        code: vm.coupon_code,
+      };
+      vm.isLoading = true;
+      this.$http.post(api, { data: coupon }).then((response) => {
         // console.log('優惠卷', response.data)
         if (response.data.success) {
-          vm.getProducts()
+          vm.getProducts();
         } else {
-          vm.getProducts()
+          vm.getProducts();
           // console.log('優惠卷使用失敗')
         }
-        vm.getCart()
-        vm.isLoading = false
-      })
+        vm.getCart();
+        vm.isLoading = false;
+      });
     },
-    creatOrder() {
-      const vm = this
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`
-      const order = vm.form
-      this.$validator.validate().then(result => {
-        if (result) {
-          this.$http.post(api, { data: order }).then(response => {
-            // console.log('建立訂單', response.data)
-            if (response.data.success) {
-              vm.$router.push(`/customer/check/${response.data.orderId}`) //確保傳入orderId
-            }
-          })
-        } else {
-          // console.log('欄位不完整')
-        }
-      })
-    }
+    // creatOrder() {
+    //   const vm = this;
+    //   const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
+    //   const order = vm.form;
+    //   this.$validator.validate().then((result) => {
+
+    //       this.$http.post(api, { data: order }).then((response) => {
+    //         // console.log('建立訂單', response.data)
+    //         if (response.data.success) {
+    //           vm.$router.push(`/customer/check/${response.data.orderId}`); // 確保傳入orderId
+    //         }
+    //       });
+
+    //   });
+    // },
   },
   created() {
-    this.getProducts()
-    this.getCart()
+    this.getProducts();
+    this.getCart();
   },
   components: {
-    Pagination
-  }
-}
+    Pagination,
+  },
+};
 </script>
-
-<style scoped></style>

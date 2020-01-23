@@ -1,23 +1,16 @@
 <template>
   <div>
-    <nav class="navbar navbar-dark bg-dark fixed-top flex-md-nowrap p-0 shadow">
-      <div class="col-sm-3 col-md-2 mr-0">
-        <a href="#" @click="home" class="navbar-brand shadow-none">
-          <i class="fas fa-store-alt text-info mr-2"> </i>
-          GentSkin
-        </a>
-      </div>
-
-      <ul class="navbar-nav px-3">
-        <li class="nav-item">
-          <a class="nav-link" href="#" @click.prevent="signout">登出</a>
-        </li>
-      </ul>
+    <nav class="navbar bg-dark title">
+      <router-link to="/home" class="logo">
+        GentSkin
+        <i class="fas fa-user-tie fa-lg"></i>
+      </router-link>
+      <a class="nav-link" href="#" @click.prevent="signout">管理員登出</a>
     </nav>
 
     <!-- 登出提示Modal -->
     <div
-      class="modal fade"
+      class="modal animated fadeIn"
       id="signoutModal"
       tabindex="-1"
       role="dialog"
@@ -36,32 +29,28 @@
 </template>
 
 <script>
-import $ from 'jquery'
+import $ from 'jquery';
+
 export default {
-  name: 'Navbar',
   methods: {
     signout() {
-      const api = `${process.env.VUE_APP_APIPATH}/logout` //api路徑
-      const vm = this
-      this.$http.post(api).then(response => {
-        //將變數傳入後端伺服器
+      const api = `${process.env.VUE_APP_APIPATH}/logout`;
+      const vm = this;
+      this.$http.post(api).then(() => {
         // console.log(response.data)
-        if (response.data.success) {
-          $('#signoutModal').modal('show')
-          setTimeout(function() {
-            $('#signoutModal').modal('hide')
-          }, 1000)
-          $('#signoutModal').on('hidden.bs.modal', function(e) {
-            vm.$router.push(`/`)
-            //如果成功的話 將頁面轉移到首頁
-          })
-        }
-      })
+        $('#signoutModal').modal('show');
+        setTimeout(() => {
+          $('#signoutModal').modal('hide');
+        }, 1000);
+        $('#signoutModal').on('hidden.bs.modal', () => {
+          vm.$router.push('/');
+        });
+      });
     },
     home() {
-      const vm = this
-      vm.$router.push('/')
-    }
-  }
-}
+      const vm = this;
+      vm.$router.push('/');
+    },
+  },
+};
 </script>

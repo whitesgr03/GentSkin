@@ -1,0 +1,60 @@
+
+button:focus {
+    outline: none;
+  }
+
+.button {
+    border-radius: 20px;
+    border: 1px solid $black;
+    font-weight: bold;
+    padding: 12px 40px;
+    letter-spacing: 1px;
+    transition: all 0.5s , transform 80ms ;
+    position: relative;
+    z-index: 1;
+    @include media-breakpoint-down(sm) {
+      padding: 6px 20px;
+    }
+    &:active {
+      transform: scale(0.9);
+    }
+    &:disabled {
+      color:black;
+      cursor: no-drop;
+    }
+    &-animated {
+      &:after {
+        position: absolute;
+        border-radius: 19px;
+        content: '';
+        width: 0%;
+        height: 100%;
+        top: 0;
+        right: 0;
+        z-index: -1;
+        background: $black;
+        transition: all 0.3s cubic-bezier(0.42, 0, 1, 1);
+      }
+      &:hover {
+        border-color: rgba($white, 0.8);
+        color: rgba($white, 0.8);
+        &:after {
+          left: 0;
+          width: 100%;
+        }
+      }
+    }
+    &-close { 
+      border-radius: 20px;
+      padding: 0 8px;
+      color: black;
+      background-color: rgba(255, 255, 255, 0.9);
+      top: -15px;
+      right: -15px;
+      border-width: 5px;
+      border-style: double;
+      border-color: $gray-800;
+      z-index: 3;
+    }
+  }
+  

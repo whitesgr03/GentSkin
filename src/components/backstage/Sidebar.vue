@@ -1,49 +1,33 @@
 <template>
   <div>
-    <nav class="col-md-2 d-none d-md-block sidebar text-white">
+    <nav class="col-md-2 sidebar">
       <div class="sidebar-sticky">
-        <h6
-          class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1"
-        >
-          <span>管理員</span>
-          <a class="d-flex align-items-center" href="#">
-            <span data-feather="plus-circle"></span>
-          </a>
-        </h6>
-        <ul class="nav flex-column mb-2">
+        <h5 class="px-3 mt-4 mb-5">
+        功能列表
+        </h5>
+        <ul class="nav flex-column">
           <li class="nav-item">
             <router-link class="nav-link  text-white" to="/admin/products">
-              <i class="fas fa-gift"></i>
-              產品列表
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link  text-white" to="/admin/orders">
               <i class="fas fa-dolly-flatbed"></i>
-              訂單列表
+              產品
             </router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link  text-white" to="/admin/coupons">
-              <i class="fas fa-ticket-alt"></i>
-              優惠卷
+              <i class="fas fa-gifts"></i>
+              優惠碼
             </router-link>
           </li>
-        </ul>
-
-        <h6
-          class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 "
-        >
-          <span>模擬功能</span>
-          <a class="d-flex align-items-center " href="#">
-            <span data-feather="plus-circle"></span>
-          </a>
-        </h6>
-        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <router-link class="nav-link  text-white" to="/admin/orders">
+              <i class="fas fa-clipboard-list"></i>
+              歷史訂單
+            </router-link>
+          </li>
           <li class="nav-item">
             <router-link class="nav-link  text-white" to="/customer/orders">
-              <i class="fas fa-shopping-cart"></i>
-              模擬訂單
+              <i class="fas fa-shopping-basket"></i>
+              模擬購物
             </router-link>
           </li>
         </ul>
