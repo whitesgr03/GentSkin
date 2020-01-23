@@ -21,7 +21,7 @@
             <h3 class="stroke">
               <span>秋季時尚</span> <br /> CONSCIOUS <br /><span>LIFE</span>
             </h3>
-            <router-link tag="button" to="/journal" class="button button-animated bg-biwacha">
+            <router-link tag="button" to="/article" class="button button-animated bg-biwacha">
             閱讀更多
             </router-link>
           </div>
@@ -109,38 +109,38 @@
             <div class="row m-0">
               <div class="col-6 col-md-5 p-0 px-2">
                 <div class="wrapper">
-                  <div class="category-bg category-tops">
+                  <router-link tag="div" to="/shop" class="category-bg category-tops">
                     <div class="category-shadow">
                       <div class="category-text stroke">Tops</div>
                     </div>
-                  </div>
+                  </router-link>
                 </div>
               </div>
               <div class="col-6 col-md-7 p-0 px-2">
                 <div class="wrapper">
-                  <div class="category-bg category-coat">
+                  <router-link tag="div" to="/shop" class="category-bg category-coat">
                     <div class="category-shadow">
                       <div class="category-text stroke">Outers</div>
                     </div>
-                  </div>
+                  </router-link>
                 </div>
               </div>
               <div class="col-6 col-md-7 col-lg-8 p-0 px-2">
                 <div class="wrapper">
-                  <div class="category-bg category-shoes">
+                  <router-link tag="div" to="/shop" class="category-bg category-shoes">
                     <div class="category-shadow">
                       <div class="category-text stroke">Shoes</div>
                     </div>
-                  </div>
+                  </router-link>
                 </div>
               </div>
               <div class="col-6 col-md-5 col-lg-4 p-0 px-2">
                 <div class="wrapper">
-                  <div class="category-bg category-bottoms">
+                  <router-link tag="div" to="/shop" class="category-bg category-bottoms">
                     <div class="category-shadow">
                       <div class="category-text stroke"><span>Bottoms</span></div>
                     </div>
-                  </div>
+                  </router-link>
                 </div>
               </div>
             </div>
@@ -149,20 +149,20 @@
             <div class="row m-0">
               <div class="col-6 col-md-12 p-0 px-2">
                 <div class="wrapper">
-                  <div class="category-bg category-accessories">
+                  <router-link tag="div" to="/shop" class="category-bg category-accessories">
                     <div class="category-shadow">
                       <div class="category-text stroke"><span>Accessories</span></div>
                     </div>
-                  </div>
+                  </router-link>
                 </div>
               </div>
               <div class="col-6 col-md-12 p-0 px-2">
                 <div class="wrapper">
-                  <div class="category-bg category-suit">
+                  <router-link tag="div" to="/shop" class="category-bg category-suit">
                     <div class="category-shadow">
                       <div class="category-text stroke">Suit</div>
                     </div>
-                  </div>
+                  </router-link>
                 </div>
               </div>
             </div>
@@ -173,7 +173,7 @@
     <div class="sale discount justify-content-center align-items-center text-center">
       <div class="sale-content">
           <h3 class="stroke">
-            Grand Opening <br /> <span>慶祝開幕</span> <br>
+            Special Offer <br /> <span>特價優惠</span> <br>
           </h3>
           <p class="stroke">
             <i class="fas fa-search-dollar mr-3"></i>結帳金額滿
