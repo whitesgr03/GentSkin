@@ -98,7 +98,7 @@
           <button class="button button-animated bg-biwacha"
           data-toggle="modal"
           data-target="#saleModal">
-            限時優惠
+            無限時優惠
           </button>
       </div>
     </div>
