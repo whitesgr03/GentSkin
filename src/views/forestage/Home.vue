@@ -98,7 +98,7 @@
           <button class="button button-animated bg-biwacha"
           data-toggle="modal"
           data-target="#saleModal">
-            無限時優惠
+            限時優惠
           </button>
       </div>
     </div>
@@ -173,7 +173,7 @@
     <div class="sale discount justify-content-center align-items-center text-center">
       <div class="sale-content">
           <h3 class="stroke">
-            Special Offer <br /> <span>特價優惠</span> <br>
+            Special Offer <br /> <span>無限時優惠</span> <br>
           </h3>
           <p class="stroke">
             <i class="fas fa-search-dollar mr-3"></i>結帳金額滿

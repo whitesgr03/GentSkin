@@ -270,8 +270,8 @@
                 data-toggle="tooltip"
                 data-placement="bottom"
                 data-html="true"
-                title="<div>無限優惠：<p>- 凡購買商品立即享9折 -</p></div>
-                  <div>特別優惠：<div>總金額大於(滿)3000元 <div>輸入GentSkin</div>
+                title="<div>秋季優惠：<p>- 凡購買商品立即享9折 -</p></div>
+                  <div>特價優惠：<div>總金額大於(滿)3000元 <div>輸入GentSkin</div>
                   </div><div>- 即可享7折 -</div></div>">
               </i>
             </form>

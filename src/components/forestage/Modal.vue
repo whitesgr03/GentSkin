@@ -343,7 +343,7 @@
         <div class="modal-content">
           <div class="modal-border">
               <h3 class="stroke">
-                無限時優惠
+                秋季限時特價
                 <br>
                 <span>
                   全館購物即可享有以下折扣
