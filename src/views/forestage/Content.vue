@@ -327,6 +327,7 @@ export default {
     this.getProduct(this.itemId);
     this.getCart();
     this.getLogin();
+    $('html, body').animate({ scrollTop: 0 }, 1);
   },
   components: {
     Modal,

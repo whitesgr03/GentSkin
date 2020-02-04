@@ -338,6 +338,7 @@ export default {
     this.getCart();
     this.getLogin();
     this.countdowntimer();
+    $('html, body').animate({ scrollTop: 0 }, 1);
   },
   components: {
     Modal,

@@ -57,21 +57,6 @@ export default {
         }, 3500);
       }
     },
-    // removeMessage(num) {
-    //   this.messages.splice(num, 1); // 點擊div後刪除
-    // },
-    // removeMessageWithTiming(timestamp) {
-    //   // 執行函式後 4秒後清除訊息
-    //   const vm = this;
-    //   // setTimeout(() => {
-    //   vm.messages.forEach((item, i) => {
-    //     // console.log(item.timestamp);
-    //     if (item.timestamp === timestamp) {
-    //       vm.messages.splice(i, 1);
-    //     }
-    //   });
-    //   // }, 4000);
-    // },
   },
   created() {
     const vm = this;

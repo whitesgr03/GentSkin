@@ -2,11 +2,6 @@
   <div>
     <loading :active.sync="isLoading"></loading>
     <div class="header">
-      <!-- <div class="d-flex justify-content-center">
-        <router-link to="/admin/products">
-          <i class="fas fa-user-tie fa-lg"></i>
-        </router-link>
-      </div> -->
         <div class="row align-items-center">
           <div class="position-absolute d-flex" style="left: 15px; z-index: 1;">
             <button type="button" class="header-button" @click.prevent="btnAnimate">

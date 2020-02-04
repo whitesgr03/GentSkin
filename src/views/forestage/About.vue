@@ -216,6 +216,7 @@ export default {
     this.getCart();
     this.getLogin();
     window.addEventListener('scroll', this.scroll);
+    $('html, body').animate({ scrollTop: 0 }, 1);
   },
   destroyed() {
     window.removeEventListener('scroll', this.scroll);
