@@ -32,7 +32,7 @@
 
 * 參考各大電商後進行網站配置，讓網站使用者在操作上可以更直覺更方便，
 
-* 作品是應用線上課程中所學的能力獨立製作而成。
+* 作品應用線上課程中所學的能力獨立製作而成。
   - 使用 Vue.js 作為 JavaScript Framework 建構 SPA
   - 使用 Bootstrap 作為 CSS Framework 建構內容
   - 使用 jQuery 建構動畫效果
