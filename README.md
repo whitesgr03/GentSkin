@@ -13,7 +13,7 @@
   電商網站設計：打造可供各平台瀏覽的響應式網頁
 </h4>
 
-<a href="https://whitebf.github.io/GentSkin/#/">
+<a align="center" href="https://whitebf.github.io/GentSkin/#/">
   <img src="https://img.shields.io/badge/Demo-Gentskin-yellowgreen">
 </a>
 
