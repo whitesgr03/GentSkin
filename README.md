@@ -43,36 +43,40 @@
 使用 Github Pages 架設靜態網站。
 
 ## 檔案結構
-    .
-    ├── ...
-    ├── docs                    # Documentation files (alternatively `doc`)
-    │   ├── TOC.md              # Table of contents
-    │   ├── faq.md              # Frequently asked questions
-    │   ├── misc.md             # Miscellaneous information
-    │   ├── usage.md            # Getting started guide
-    │   └── ...                 # etc.
-    └── ...
 
-    app
-    ├── config
-    │   └── routes.js
-    ├── screens
-    │   └── App
-    │       ├── screens
-    │       │   ├── Admin
-    │       │   │   ├── screens
-    │       │   │   │   ├── Reports
-    │       │   │   │   │   └── index.js
-    │       │   │   │   └── Users
-    │       │   │   │       └── index.js
-    │       │   │   └── index.js
-    │       │   └── Course
-    │       │       ├── screens
-    │       │       │   └── Assignments
-    │       │       │       └── index.js
-    │       │       └── index.js
-    │       └── index.js
-    └── index.js
+    src
+    ├── assets
+    │   ├── images                        # 所有圖片素材
+    │   ├── layout
+    │   │     ├── header.scss             # 頁首
+    │   │     ├── footer.scss             # 頁尾
+    │   │     └── sidebar.scss            # Dashboard 的側邊欄
+    │   ├── mixin
+    │   │     └── grid.scss               # Grid system
+    │   ├── module
+    │   │     ├── alertMassage.scss       # 訊息提示
+    │   │     ├── button.scss
+    │   │     ├── form.scss
+    │   │     ├── modal.scss              # 修改 Bootstrap modal
+    │   │     ├── pagination.scss         # 分頁
+    │   │     └── scrollBtn.scss          # 回頂端按鈕
+    │   ├── page
+    │   │     ├── forestage
+    │   │     ├── backstage
+    │   │     ├── forestage.scss          # 前台頁面SCSS
+    │   │     └── backstage.scss          # 後台頁面SCSS
+    │   ├── variable                      # Bootstrap 變數
+    │   └── all.scss
+    │
+    │
+    ├── components
+    │   ├── forestage                     # 前台主要頁面
+    │   └── backstage                     # 後台主要頁面
+    └── views
+    └── App.vue
+    └── bus.js
+    └── bus.js
+    └── router.js
     
 ## packages
 
