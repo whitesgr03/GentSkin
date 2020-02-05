@@ -28,12 +28,11 @@
 
 <img src="https://i.imgur.com/wz1WkPn.jpg?1">
 
-## Key Feature
+## 作品介紹
 
 * 參考各大電商後進行網站配置，讓網站使用者在操作上可以更直覺更方便，
-* 使用 Github Pages 架設靜態網站。
 
-* 作品應用線上課程中所學的能力獨立製作而成。
+* 作品是應用線上課程中所學的能力獨立製作而成。
   - 使用 Vue.js 作為 JavaScript Framework 建構 SPA
   - 使用 Bootstrap 作為 CSS Framework 建構內容
   - 使用 jQuery 建構動畫效果
@@ -46,7 +45,11 @@
   - 快速的讀取速度
   - 桌上型和行動版都能擁有良好的使用體驗
 
-## File Structure
+## 架設環境
+
+使用 Github Pages 架設靜態網站。
+
+## 檔案結構
 
     src
     ├── assets
@@ -93,11 +96,11 @@
     │
     └── bus.js                            # Event Bus
     
-## Packages
+## packages
 
 - [vue-router](https://github.com/vuejs/vue-router)
-- [vee-validate](https://github.com/logaretm/vee-validate)
-- [animate.css](https://github.com/daneden/animate.css)
-- [swiper](https://github.com/nolimits4web/swiper)
+- [vee-validate](https://github.com/logaretm/vee-validate)  # 表單驗證
+- [animate.css](https://github.com/daneden/animate.css)     # CSS動畫
+- [swiper](https://github.com/nolimits4web/swiper)          # 輪播套件
 - [axios](https://github.com/axios/axios)
 - [vue-axios](https://github.com/imcvampire/vue-axios)
