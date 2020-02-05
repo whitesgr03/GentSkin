@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="https://whitebf.github.io/GentSkin/#/" target="_blank">
+  <a href="https://whitebf.github.io/GentSkin/#/">
     <img src="https://img.icons8.com/color/500/000000/jeans-jacket.png"
          alt="GentSkin"
          width="200">
@@ -13,6 +13,11 @@
   電商網站設計：打造可供各平台瀏覽的響應式網頁
 </h4>
 
+<a href="https://whitebf.github.io/GentSkin/#/">
+  <img src="https://img.shields.io/badge/Demo-Gentskin-yellowgreen">
+</a>
+
+
 <p align="center">
   <a href="#作品介紹">作品介紹</a> •
   <a href="#架設環境">架設環境</a> •
@@ -22,7 +27,7 @@
 </p>
 
 
-<a href="https://whitebf.github.io/GentSkin/#/" target="_blank">
+<a href="https://whitebf.github.io/GentSkin/#/">
   <img src="https://i.imgur.com/wz1WkPn.jpg?1">
 </a>
 
