@@ -1,7 +1,7 @@
 <h1 align="center">
   <br>
   <a href="https://whitebf.github.io/GentSkin/#/">
-    <img src="https://img.icons8.com/color/200/000000/jeans-jacket.png"
+    <img src="https://img.icons8.com/color/500/000000/jeans-jacket.png"
          alt="Markdownify"
          width="200">
   </a>
