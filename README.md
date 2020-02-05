@@ -30,9 +30,16 @@
 
 ## 作品介紹
 
-* 這個作品是應用線上課程中所學的能力獨立製作而成。
-* 讓網站使用者在操作上可以更直覺更方便。
-* 以各大電商網站為藍本參考網站配置後，自行設計屬於現代電商須具備的各大要素
+* 參考各大電商後進行網站配置，讓網站使用者在操作上可以更直覺更方便，
+
+* 作品是應用線上課程中所學的能力獨立製作而成。
+  - 使用 Vue.js 作為 JavaScript Framework 建構 SPA
+  - 使用 Bootstrap 作為 CSS Framework 建構內容
+  - 使用 jQuery 建構動畫效果
+  - 使用 Sass/SCSS 使 CSS 進行結構化
+  - 使用 Responsive Web Design 建構響應式網頁
+
+* 自行設計屬於現代電商須具備的幾個要素。
   - 完整的瀏覽規劃
   - 美觀的介面排板
   - 快速的讀取速度
@@ -51,8 +58,10 @@
     │   │     ├── header.scss             # 頁首
     │   │     ├── footer.scss             # 頁尾
     │   │     └── sidebar.scss            # Dashboard 的側邊欄
+    │   │
     │   ├── mixin
     │   │     └── grid.scss               # Grid system
+    │   │
     │   ├── module
     │   │     ├── alertMassage.scss       # 訊息提示
     │   │     ├── button.scss
@@ -60,27 +69,38 @@
     │   │     ├── modal.scss              # 修改 Bootstrap modal
     │   │     ├── pagination.scss         # 分頁
     │   │     └── scrollBtn.scss          # 回頂端按鈕
+    │   │
     │   ├── page
     │   │     ├── forestage
     │   │     ├── backstage
     │   │     ├── forestage.scss          # 前台頁面SCSS
     │   │     └── backstage.scss          # 後台頁面SCSS
+    │   │
     │   ├── variable                      # Bootstrap 變數
     │   └── all.scss
-    │
     │
     ├── components
     │   ├── forestage                     # 前台主要頁面
     │   └── backstage                     # 後台主要頁面
-    └── views
-    └── App.vue
-    └── bus.js
-    └── bus.js
-    └── router.js
+    │
+    ├── filters
+    │   ├── currency.js                   # 前台主要組件
+    │   └── date.js                       # 後台主要組件
+    │   
+    ├── views
+    │   ├── forestage                     # 前台主要頁面
+    │   ├── backstage                     # 後台主要頁面
+    │   ├── Index.vue                     # 前台版型
+    │   ├── Dashboard.vue                 # 後台版型
+    │   └── Login.vue                     # 登入頁面
+    │
+    └── bus.js                            # Event Bus
     
 ## packages
 
-使用到的技術和原因
-
-someing....
-- [Electron](http://electron.atom.io/)
+- [vue-router](https://github.com/vuejs/vue-router)
+- [vee-validate](https://github.com/logaretm/vee-validate)  # 表單驗證
+- [animate.css](https://github.com/daneden/animate.css)     # CSS動畫
+- [swiper](https://github.com/nolimits4web/swiper)          # 輪播套件
+- [axios](https://github.com/axios/axios)
+- [vue-axios](https://github.com/imcvampire/vue-axios)

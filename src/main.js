@@ -2,7 +2,6 @@
 import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-// import $ from 'jquery';
 import Loading from 'vue-loading-overlay'; //  全螢幕讀取動畫
 import 'vue-loading-overlay/dist/vue-loading.css'; //  全螢幕讀取動畫的CSS
 import 'bootstrap'; //  載入bootstrap套件
@@ -11,9 +10,6 @@ import * as rules from 'vee-validate/dist/rules'; // 驗證規則
 import zhTW from 'vee-validate/dist/locale/zh_TW.json'; //  驗證規則中文化
 import Animate from 'animate.css/animate.min.css'; // CSS動畫套件
 import 'swiper/css/swiper.css'; //  輪播套件
-import AOS from 'aos'; // Scroll動畫套件
-import 'aos/dist/aos.css';
-import VueClipboard from 'vue-clipboard2'; // 複製套件
 
 //  自定義 套件內容 .
 import App from './App.vue';
@@ -27,7 +23,6 @@ Vue.config.productionTip = false;
 //  全域方式啟用
 Vue.use(VueAxios, axios);
 Vue.use(Animate);
-Vue.use(VueClipboard);
 
 
 Object.keys(rules).forEach((rule) => { // 取的所有驗證規則
@@ -37,7 +32,6 @@ Object.keys(rules).forEach((rule) => { // 取的所有驗證規則
   });
 });
 
-AOS.init();
 Vue.component('Loading', Loading); //  全螢幕讀取動畫
 Vue.filter('currency', currencyFilter); //  千分號
 Vue.filter('date', dateFilter); //  日期轉換
