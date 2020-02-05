@@ -31,7 +31,11 @@
 ## 作品介紹
 
 * 這個作品是應用線上課程中所學的能力獨立製作而成。
-* 讓網站使用者在操作上可以更直覺更方便。
+  - 使用 Vue.js 做為前端框架建構一頁式網站
+  - 使用 Bootstrap 作為框架建構內容
+  - 使用 
+  - 桌上型和行動版都能擁有良好的使用體驗
+* 網站使用者在操作上可以更直覺更方便。
 * 以各大電商網站為藍本參考網站配置後，自行設計屬於現代電商須具備的各大要素
   - 完整的瀏覽規劃
   - 美觀的介面排板
@@ -51,8 +55,10 @@
     │   │     ├── header.scss             # 頁首
     │   │     ├── footer.scss             # 頁尾
     │   │     └── sidebar.scss            # Dashboard 的側邊欄
+        │
     │   ├── mixin
     │   │     └── grid.scss               # Grid system
+        │
     │   ├── module
     │   │     ├── alertMassage.scss       # 訊息提示
     │   │     ├── button.scss
@@ -60,27 +66,42 @@
     │   │     ├── modal.scss              # 修改 Bootstrap modal
     │   │     ├── pagination.scss         # 分頁
     │   │     └── scrollBtn.scss          # 回頂端按鈕
+        │
     │   ├── page
     │   │     ├── forestage
     │   │     ├── backstage
     │   │     ├── forestage.scss          # 前台頁面SCSS
     │   │     └── backstage.scss          # 後台頁面SCSS
+        │
     │   ├── variable                      # Bootstrap 變數
     │   └── all.scss
-    │
     │
     ├── components
     │   ├── forestage                     # 前台主要頁面
     │   └── backstage                     # 後台主要頁面
-    └── views
-    └── App.vue
-    └── bus.js
-    └── bus.js
-    └── router.js
+    │
+    ├── filters
+    │   ├── currency.js                   # 前台主要組件
+    │   └── date.js                       # 後台主要組件
+    │   
+    ├── views
+    │   ├── forestage                     # 前台主要頁面
+    │   ├── backstage                     # 後台主要頁面
+    │   ├── Index.vue                     # 
+    │   ├── Dashboard.vue                 # 
+    │   └── Login.vue                     # 登入頁面
+    │
+    ├── App.vue                           # 
+    ├── bus.js                            # 
+    ├── main.js                           # 
+    └── router.js                         # 
     
 ## packages
 
 使用到的技術和原因
 
-someing....
-- [Electron](http://electron.atom.io/)
+- [vue-router](http://electron.atom.io/)    #
+- [vee-validate](http://electron.atom.io/)  # 驗證
+- [animate.css](http://electron.atom.io/)   # 動畫
+- [swiper](http://electron.atom.io/)        # 輪播
+- [axios](http://electron.atom.io/)         # 
