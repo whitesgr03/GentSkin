@@ -14,7 +14,7 @@
   電商網站設計：打造可供各平台瀏覽的響應式網頁.
 </h4>
 
-[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+[![123](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
 # gentskin_
 
