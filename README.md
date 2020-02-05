@@ -2,13 +2,19 @@
   <br>
   <a href="https://whitebf.github.io/GentSkin/#/">
     <img src="https://img.icons8.com/color/500/000000/jeans-jacket.png"
-         alt="Markdownify"
+         alt="GentSkin"
          width="200">
   </a>
   <br>
-  Markdownify
+  GentSkin
   <br>
 </h1>
+
+<h4 align="center">
+  電商網站設計：打造可供各平台瀏覽的響應式網頁.
+</h4>
+
+[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
 # gentskin_
 
