@@ -16,6 +16,8 @@
 
 ![](https://img.shields.io/static/v1?label=123&message=456&color=blue)
 
+<img src="https://img.shields.io/badge/fuck-you-ff69b4.svg?maxAge=2592000&amp;style=flat">
+
 # gentskin_
 
 ## Project setup
