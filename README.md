@@ -14,7 +14,7 @@
   電商網站設計：打造可供各平台瀏覽的響應式網頁.
 </h4>
 
-# <img src="https://img.shields.io/badge/fuck-you-ff69b4.svg?maxAge=2592000&amp;style=flat">
+<img src="https://imgur.com/wz1WkPn">
 
 # gentskin_
 
