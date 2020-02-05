@@ -99,8 +99,8 @@
 ## packages
 
 - [vue-router](https://github.com/vuejs/vue-router)
-- [vee-validate](https://github.com/logaretm/vee-validate)  # 表單驗證
-- [animate.css](https://github.com/daneden/animate.css)     # CSS動畫
-- [swiper](https://github.com/nolimits4web/swiper)          # 輪播套件
+- [vee-validate](https://github.com/logaretm/vee-validate)
+- [animate.css](https://github.com/daneden/animate.css)
+- [swiper](https://github.com/nolimits4web/swiper)
 - [axios](https://github.com/axios/axios)
 - [vue-axios](https://github.com/imcvampire/vue-axios)
