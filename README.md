@@ -14,7 +14,7 @@
   電商網站設計：打造可供各平台瀏覽的響應式網頁.
 </h4>
 
-[![123]https://img.shields.io/badge/build-passing-green]
+![123](https://img.shields.io/badge/build-passing-green)
 
 # gentskin_
 
