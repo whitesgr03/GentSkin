@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="https://whitebf.github.io/GentSkin/#/">
+  <a href="https://whitebf.github.io/GentSkin/#/" target="_blank">
     <img src="https://img.icons8.com/color/500/000000/jeans-jacket.png"
          alt="GentSkin"
          width="200">
@@ -22,7 +22,7 @@
 </p>
 
 
-<a href="https://whitebf.github.io/GentSkin/#/">
+<a href="https://whitebf.github.io/GentSkin/#/" target="_blank">
   <img src="https://i.imgur.com/wz1WkPn.jpg?1">
 </a>
 
@@ -49,4 +49,5 @@ someing....
 
 使用到的技術和原因
 
+someing....
 - [Electron](http://electron.atom.io/)
