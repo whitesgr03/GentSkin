@@ -14,9 +14,9 @@
 </h4>
 
 <p align="center">
-  <a href="#key-features">作品介紹</a> •
+  <a href="#作品介紹">作品介紹</a> •
   <a href="#架設環境">架設環境</a> •
-  <a href="#">檔案結構</a> •
+  <a href="#檔案結構">檔案結構</a> •
   <a href="#packages">packages</a> •
 
 </p>
@@ -27,15 +27,19 @@
 </a>
 
 
-## Key Features 
-作品介紹
+## 作品介紹
 
-* LivePreview - Make changes, See changes
-  - Instantly see what your Markdown documents look like in HTML as you create them.
+* 這個作品是應用線上課程中所學的能力獨立製作而成。
+* 讓網站使用者在操作上可以更直覺更方便。
+* 以各大電商網站為藍本參考網站配置後，自行設計屬於現代電商須具備的各大要素
+  - 完整的瀏覽規劃
+  - 美觀的介面排板
+  - 快速的讀取速度
+  - 桌上型和行動版都能擁有良好的使用體驗
 
 ## 架設環境
 
-someing....
+使用 Github Pages 架設靜態網站。
 
 ## 檔案結構
 
