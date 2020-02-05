@@ -15,15 +15,17 @@
 
 <p align="center">
   <a href="#key-features">作品介紹</a> •
-  <a href="#">架設環境</a> •
+  <a href="#架設環境">架設環境</a> •
   <a href="#">檔案結構</a> •
   <a href="#packages">packages</a> •
 
 </p>
 
+
 <a href="https://whitebf.github.io/GentSkin/#/">
   <img src="https://i.imgur.com/wz1WkPn.jpg?1">
 </a>
+
 
 ## Key Features 
 作品介紹
