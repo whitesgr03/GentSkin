@@ -26,11 +26,7 @@
   <a href="#packages">packages</a> •
 </p>
 
-
-<a href="https://whitebf.github.io/GentSkin/#/">
-  <img src="https://i.imgur.com/wz1WkPn.jpg?1">
-</a>
-
+<img src="https://i.imgur.com/wz1WkPn.jpg?1">
 
 ## 作品介紹
 
