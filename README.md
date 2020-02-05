@@ -14,29 +14,29 @@
   電商網站設計：打造可供各平台瀏覽的響應式網頁.
 </h4>
 
-<img src="https://i.imgur.com/wz1WkPn.jpg?1">
+<a href="https://whitebf.github.io/GentSkin/#/">
+  <img src="https://i.imgur.com/wz1WkPn.jpg?1">
+</a>
 
-# gentskin_
 
-## Project setup
-```
-npm install
-```
+簡述作品功能與動機
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Key Features 作品介紹
 
-### Compiles and minifies for production
-```
-npm run build
-```
+* LivePreview - Make changes, See changes
+  - Instantly see what your Markdown documents look like in HTML as you create them.
 
-### Lints and fixes files
-```
-npm run lint
-```
+## 架設環境
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+someing....
+
+## 檔案結構
+
+someing....
+
+## Credits
+
+This software uses the following open source packages:
+使用到的技術和原因
+
+- [Electron](http://electron.atom.io/)
