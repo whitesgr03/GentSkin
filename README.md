@@ -14,7 +14,7 @@
   電商網站設計：打造可供各平台瀏覽的響應式網頁.
 </h4>
 
-<img src="https://imgur.com/wz1WkPn">
+<img src="https://i.imgur.com/wz1WkPn.jpg?1">
 
 # gentskin_
 
