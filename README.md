@@ -31,7 +31,6 @@
 ## 作品介紹
 
 * 參考其他電商後進行網站配置，讓網站使用者在操作上可以更直覺更方便
-  
   - 使用 Bootstrap 作為 CSS Framework 建構內容
   - 使用 jQuery 建構動畫效果
   - 使用 Sass/SCSS 使 CSS 進行結構化
