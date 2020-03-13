@@ -26,20 +26,20 @@
   <a href="#packages">packages</a> •
 </p>
 
-<img src="https://i.imgur.com/wz1WkPn.jpg?1">
+<img src="https://imgur.com/t4VrmH9">
 
 ## 作品介紹
 
-* 參考各大電商後進行網站配置，讓網站使用者在操作上可以更直覺更方便，
+* 參考其他電商後進行網站配置，讓網站使用者在操作上可以更直覺更方便，
 
-* 作品是應用線上課程中所學的能力獨立製作而成。
+* 應用自己在線上課程中所學的能力獨立製作而成。
   - 使用 Vue.js 作為 JavaScript Framework 建構 SPA
   - 使用 Bootstrap 作為 CSS Framework 建構內容
   - 使用 jQuery 建構動畫效果
   - 使用 Sass/SCSS 使 CSS 進行結構化
   - 使用 Responsive Web Design 建構響應式網頁
 
-* 自行設計屬於現代電商須具備的幾個要素。
+* 設計屬於現代電商須具備的幾個要素。
   - 完整的瀏覽規劃
   - 美觀的介面排板
   - 快速的讀取速度
@@ -101,6 +101,7 @@
 - [vue-router](https://github.com/vuejs/vue-router)
 - [vee-validate](https://github.com/logaretm/vee-validate)  # 表單驗證
 - [animate.css](https://github.com/daneden/animate.css)     # CSS動畫
-- [swiper](https://github.com/nolimits4web/swiper)          # 輪播套件
+- [vue-carousel](https://github.com/SSENSE/vue-carousel)          # 輪播套件
+- [vue-infinite-loading](https://github.com/PeachScript/vue-infinite-loading)          # 無線滾動套件
 - [axios](https://github.com/axios/axios)
 - [vue-axios](https://github.com/imcvampire/vue-axios)

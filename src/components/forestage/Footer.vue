@@ -70,18 +70,15 @@
         <div class="d-flex flex-column align-items-center">
             <ul class="nav">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="https://tinyurl.com/rdejmwv" target="_blank"
+                class="nav-link">
                   <i class="fab fa-lg fa-github"></i>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="https://tinyurl.com/qmhf5sd" target="_blank"
+                class="nav-link">
                   <i class="fab fa-lg fa-linkedin"></i>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fab fa-lg fa-codepen"></i>
                 </a>
               </li>
             </ul>
