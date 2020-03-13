@@ -400,15 +400,12 @@ export default {
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
       const order = vm.form;
-      const number = '000';
-      const random = String(Math.floor(Math.random() * 5) + 6) + number;
       vm.$refs.observer.validate().then((result) => {
         vm.isLoading = true;
         if (result) {
           vm.isLoading = false;
           $('#payModal').modal('show');
           this.$http.post(api, { data: order }).then((response) => {
-            // console.log('建立訂單', response.data)
             if (response.data.success) {
               const Api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/pay/${response.data.orderId}`;
               this.$http.post(Api).then(() => {});
@@ -417,7 +414,7 @@ export default {
                 this.$bus.$emit('getAmount');
                 this.$bus.$emit('orderId', response.data.orderId);
                 vm.$router.push({ name: 'Check', params: { orderId: response.data.orderId } });
-              }, Number(random));
+              }, 2000);
             }
           });
         } else {
@@ -467,7 +464,7 @@ export default {
         this.$bus.$emit('alert', '未符合優惠條件');
         setTimeout(() => {
           vm.isDisable = false;
-        }, 2000);
+        }, 1000);
       }
     },
   },

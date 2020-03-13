@@ -611,7 +611,7 @@ export default {
           vm.loginInput = '請先選擇帳號';
           vm.sign = false;
           vm.isLoading = false;
-        }, 2000);
+        }, 1000);
       } else if (vm.accountData.length > 0) {
         const verify = vm.accountData.find(item => item.account === vm.user.signUp.account
         && item.password === vm.user.signUp.password);
@@ -621,12 +621,12 @@ export default {
             this.$bus.$emit('alert', '測試帳號已註冊成功');
             vm.isLoading = false;
             vm.sign = false;
-          }, 2000);
+          }, 1000);
         } else {
           setTimeout(() => {
             vm.isLoading = false;
             this.$bus.$emit('alert', '此帳號已被註冊');
-          }, 2000);
+          }, 1000);
         }
       }
     },
