@@ -26,7 +26,7 @@
   <a href="#packages">packages</a> •
 </p>
 
-<img src="https://imgur.com/t4VrmH9">
+<img src="https://i.imgur.com/t4VrmH9.jpg">
 
 ## 作品介紹
 
