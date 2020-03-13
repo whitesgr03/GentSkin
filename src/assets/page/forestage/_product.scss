@@ -1,100 +1,233 @@
 
 
 .product {
-  .row {
-    position: relative;
-    overflow: hidden;
+  a {
+    display: block;
   }
-  .category {
-    padding: 0;
-    margin: $spacer auto;
-    transition: transform .5s;
-    &-moveUp {
-      transform: translateY(-25px);
-      transition: transform .5s;
-    }
-    &-moveDown {
-      transform: translateY(25px);
-      transition: transform .5s;
-    }
-    .nav-item {
-      padding: 0.5rem 1rem;
-    }
-    .nav-link {
-      padding: 0 5px 3px;
-      color: $white;
-      border: none;
-      border-bottom: 2px solid $white;
-      background-color: transparent;
-    }
-    .nav-active {
-      border-bottom: 2px solid $tohoh;
+  .loading {
+    &-height {
+      height: 80vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
-  .item {
-    position: absolute;
-    width: 100%;
-    top: 50px;
-    left: 100%;
-    transition: all .7s;
-    &-display {
-      left: -100%;
-      transform: translateX(100%) skewX(0deg);
-      transition: transform 1s;
+  .underline-active {
+    &::after {
+      width: 100%;
+      border-bottom: $border-width * 1 solid $white;
+      transition: width 1s;
     }
   }
-  &-img {
-    width: 100%;
-    cursor: pointer;
-  }
-  &-content {
-    padding: $spacer * 1.5 $spacer * 0.5;
-    @include media-breakpoint-down(md) {
-      padding: $spacer * 1.5 0;
+  &-navbar {
+    .row {
+      justify-content: space-between;
+      @include media-breakpoint-down(xs) {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    .search {
+      width: 40%;
+      height: 100%;
+      position: relative;
+      @include media-breakpoint-down(xs) {
+        width: 70%;
+      }
+      &::before {
+        content: '';
+        position: absolute;
+        width: 2.5px;
+        height: 0%;
+        background: #6c757d;
+        left: 0;
+        bottom: 0;
+        transition: height .5s 1.5s;
+      }
+      &::after {
+        content: '';
+        position: absolute;
+        height: 0%;
+        width: 2.5px;
+        background: #6c757d;
+        right: 0;
+        top: 0;
+        transition: height .5s ;
+      }
+      &-border {
+        width: 100%;
+        &::before {
+          content: '';
+          position: absolute;
+          background: #6c757d;
+          left: 0;
+          top: 0;
+          width: 0%;
+          height: 2.5px;
+          transition: width 1s 0.5s;
+        }
+        &::after {
+          content: '';
+          position: absolute;
+          background: #6c757d;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 2.5px;
+        }
+        &-LR {
+          &::before {
+            transition: height .5s;
+            height: 100%;
+          }
+          &::after {
+            height: 100%;
+            transition: height .5s 1.5s;
+          }
+        }
+        &-TB {
+          &::before {
+            width: 100%;
+          }
+        }
+      }
     }
   }
-  &-title {
-    cursor: pointer;
-    @include media-breakpoint-down(md) {
-      font-size: $font-size-base;
-    }
-    @include media-breakpoint-down(sm) {
-      font-size: $font-size-base * .9;
-    }
-  }
-  &-origin {
-    @include media-breakpoint-down(md) {
-      display: none;
-    }
-  }
-  &-price {
-    text-align: right;
-    margin-top: $spacer * 1.5;
-    @include media-breakpoint-down(md) {
-      margin-top: $spacer;
-      font-size: $font-size-base;
-    }
-    @include media-breakpoint-down(sm) {
-      font-size: $font-size-base * .9;
-    }
-  }
-}
 
-.pagination {
-  .btn {
-    padding: 0.325rem 0.85rem;
-    background-color: $input;
-    border: 1.5px solid rgba($white, 0.5);
-    border-radius: 50%;
-    &:hover {
-      background-color: rgba($black, 0.5);
-      border-color: rgba($white, 0.8);
+  .collections {
+    .row {
+      height: 100vh;
+      justify-content: center;
+      @include media-breakpoint-down(xs) {
+        height: 90vh;
+      }
     }
-    &:active {
-      transform: scale(0.75);
+    .underline {
+      font-size: $font-size-base * 2;
+      @include media-breakpoint-down(md) {
+        color: $white;
+      }
+      @include media-breakpoint-down(xs) {
+        font-size: $font-size-lg;
+      }
     }
-    &Color {
-      background-color: rgba($black, 0.5);
+    .text-content {
+      @include media-breakpoint-down(md) {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+        background-color: transparent;
+        position: relative;
+        height: auto;
+        width: 100%;
+        z-index: 1;
+        &::before {
+          content: '';
+          position: absolute;
+          z-index: -1;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          right: 0;
+          background-color: rgba(29, 30, 32, 0.507);
+        }
+      }
+    }
+    &-warp {
+      height: 100%;
+      background-color: #2f3133;
+      position: relative;
+    }
+    &-img {
+      width: 100%;
+      height: 100%;
+      color: $black;
+      background-size: cover;
+      background-position: center center;
+      @include media-breakpoint-down(md) {
+        width: 100%;
+      }
+      &-tops {
+        margin-left: auto;
+        background-image: url(assets/images/collection/tops.jpg);
+      }
+      &-tshirt {
+        background-image: url(assets/images/collection/t-shirt.jpg);
+      }
+      &-shirt {
+        background-image: url(assets/images/collection/shirt.jpg);
+      }
+      &-outer {
+        background-image: url(assets/images/collection/outer.jpg);
+      }
+      &-bottoms {
+        margin-left: auto;
+        background-image: url(assets/images/collection/bottoms.jpg);
+      }
+      &-shorts {
+        background-image: url(assets/images/collection/shorts.jpg);
+      }
+      &-pants {
+        background-image: url(assets/images/collection/pants.jpg);
+      }
+      &-jeans {
+        background-image: url(assets/images/collection/jeans.jpg);
+      }
+      &-accessories {
+        margin-left: auto;
+        background-image: url(assets/images/collection/accessories.jpg);
+      }
+      &-hat {
+        background-image: url(assets/images/collection/hat.jpg);
+      }
+      &-bag {
+        background-image: url(assets/images/collection/bag.jpg);
+      }
+      &-shoes {
+        background-image: url(assets/images/collection/shoes.jpg);
+      }
+    }
+  
+    &-content {
+      top:50%;
+      left: 0;
+      width: 50%;
+      padding: 20px;
+      transform: translateY(-50%);
+      background-color: #484a4d;
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  &-item {
+    img {
+      width: 100%;
+      cursor: pointer;
+      transition: all 3s;
+      &:hover {
+        transform: scale(1.1);
+        @include media-breakpoint-down(md) {
+          transform: none;
+        }
+      }
+    }
+    .content {
+      padding: $spacer * 1 $spacer * 0.5;
+      @include media-breakpoint-down(md) {
+        padding: 0;
+      }
+    }
+    .text {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .underline {
+      @include media-breakpoint-down(md) {
+        border: none;
+      }
     }
   }
 }

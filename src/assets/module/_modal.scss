@@ -11,6 +11,12 @@
     .modal-dialog {
         max-width: 768px;
         width: 80%;
+        @include media-breakpoint-down(sm) { 
+            width: 60%;
+        }
+        @include media-breakpoint-down(xs) { 
+            width: 80%;
+        }
     }
     .modal-content {
         height: 480px;
@@ -42,6 +48,12 @@
     .modal-dialog {
         max-width: 768px;
         width: 80%;
+        @include media-breakpoint-down(sm) { 
+            width: 60%;
+        }
+        @include media-breakpoint-down(xs) { 
+            width: 80%;
+        }
     }
     .modal-content {
         height: 480px;
@@ -52,7 +64,19 @@
     .form-control {
         height: auto;
         padding: 1px 0.75rem;
-        background-color: $main-bg;
+        background-color: $main;
+    }
+    .button {
+        &-slide {
+            color: $black;
+            &::after {
+            background-color: $biwacha;
+            }
+            &:hover {
+            color: rgba($white, 1);
+            border: 1px solid $black;
+            }
+        }
     }
     .panel {
         height: 100%;
@@ -165,15 +189,10 @@
             transition: all 0.6s ease-in-out;
             transform: translateX(-10%);
             opacity: 0;  
-            .button {
-                color: $white;
-                font-size: $font-size-sm;
-                background-color: #005caf;
-                padding: 10px 15px;
-            }
             .overlay {
                 &-button {
-                    background: rgba(0, 0, 0, 0.3);;
+                    background: rgba(0, 0, 0, 0.3);
+                    z-index: -2;
                 }
             }
         }
@@ -183,14 +202,10 @@
             transition: all 0.6s ease-in-out;
             transform: translateX(0);
             opacity: 1;
-            .button {
-                font-size: $font-size-sm;
-                background-color: #f75c2f;
-                padding: 10px 15px;
-            }
             .overlay {
                 &-button {
                     background: rgba(255, 255, 255, 0.4);
+                    z-index: -2;
                 }
             }
         }
@@ -209,42 +224,109 @@
     }
 }
 
+
+
 #cartModal {
     .modal-dialog {
-        max-width: 400px;
+        max-width: 350px;
         max-height: 100vh;
         height: 100%;
         margin: 0 0 0 auto;
-        width: 80%;
+        @include media-breakpoint-down(md) {
+            max-width: 400px;
+            width: 80%;
+        }
     }
     .modal-content {
         max-height: 100vh;
         height: 100%;
         border-radius: 0;
-        border-left: 1px solid $black;
+        border-left: 1px solid rgba(255, 255, 255, 0.301);
+        .row {
+            align-items: center;
+            margin: 2rem 0;
+            padding: 0 0 .5rem;
+        }
     }
     .modal-title {
-        border-bottom: 1px solid $black;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.301);
     }
     .modal-body{
         padding: 0;
     }
     .modal-footer {
         padding: $spacer * 1.5 0;
-        border-color: $black
+        border-color: rgba(255, 255, 255, 0.301)
     }
-    .table {
-        font-size: $font-size-sm;
-        margin: 0;
-        img {
-            border: 1px solid $white;
-            padding: $spacer * .25;
-            width: 90px;
+    img {
+        border-color: rgba(255, 255, 255, 0.301) !important;
+    }
+    .button {
+        &-slide {
+            color: $black;
+            &::after {
+            background-color: $biwacha;
+            }
+            &:hover {
+            color: rgba($white, 1);
+            border: 1px solid $momoshiocha;
+            }
         }
-        .td-width {
-            width: 210px;
-            @include media-breakpoint-down(xs) { 
-                width: 115px;            
+    }
+}
+#menuModal {
+    z-index: 1041;
+    .modal-dialog {
+        max-width: 350px;
+        max-height: 100vh;
+        height: 100%;
+        margin: 0 auto 0 0;
+        @include media-breakpoint-down(sm) {
+            max-width: 400px;
+            width: 80%;
+        } 
+    }
+    .modal-content {
+        max-height: 100vh;
+        height: 100%;
+        border-radius: 0;
+        border-left: 1px solid $white;
+    }
+    .mobileMenu {
+        margin-bottom: 5rem;
+        .nav {
+            justify-content: space-around;
+            &-item {
+                &-hide {
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: all 1s;
+                }
+                &-visible {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+        }
+    }
+    .mobileList {
+        .nav {
+            li {
+                border-color: white !important;
+            }
+            i {
+                position: absolute;
+                right: 0;
+                top: 12px;
+            }
+        }
+        .collapse {
+            &-text {
+                padding: 1rem 0 1rem 2rem;
+                border-bottom: none;
+            }
+            li {
+                color: rgba(255, 255, 255, 0.5);
             }
         }
     }
@@ -268,8 +350,7 @@
             filter: blur(1px);
             background-size: cover;
             background-position: center center;
-            background-image: url(assets/images/main/coupon-1.jpg);
-        
+            background-image: url(assets/images/home/coupon-1.jpg);
         }
     }
     .modal-border {

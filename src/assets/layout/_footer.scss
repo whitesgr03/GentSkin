@@ -14,4 +14,14 @@
       opacity: 0.7;
     }
   }
+  .nav {
+    &-link {
+      span {
+        cursor: pointer;
+      }
+      &:hover {
+        color : rgba($white, .5);
+      }
+    }
+  }
 }

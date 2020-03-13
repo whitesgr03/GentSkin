@@ -1,11 +1,11 @@
 <template>
   <div>
     <loading :active.sync="isLoading"></loading>
-    <div class="orders" v-if="isLoading === false">
+    <div class="orders">
       <table class="table mt-4  text-white">
         <thead>
           <tr>
-            <th width="150" @click.prevent="reverse = !reverse, sortData = 'buyData'"
+            <th width="120" @click.prevent="reverse = !reverse, sortData = 'buyData'"
               style="cursor: pointer;">
               下單日期
               <i class="fas fa-sort text-tohoh" v-if="sortData == '' || sortData !== 'buyData'"></i>
@@ -41,7 +41,7 @@
                 </li>
               </ul>
             </td>
-            <td class="text-right">{{ item.total | currency }}</td>
+            <td class="text-center">{{ item.total | currency }}</td>
             <td>
               <span v-if="item.is_paid" class="text-success">已付款</span>
               <span v-else class="text-warning">未付款</span>
@@ -54,12 +54,10 @@
       </table>
     </div>
 
-    <!-- <Pagination :paginations="pagination" @getPage="getOrders" /> -->
   </div>
 </template>
 
 <script>
-// import Pagination from '@/components/backstage/Pagination.vue';
 
 export default {
   data() {
@@ -81,7 +79,6 @@ export default {
         if (response.data.success) {
           response.data.orders.forEach((item) => {
             vm.orders.push(item);
-            // console.log(vm.orders);
           });
         }
       });
@@ -97,7 +94,6 @@ export default {
       this.$http.get(api).then((response) => {
         if (response.data.success) {
           vm.totalItem = response.data.pagination.total_pages;
-          // vm.pagination = response.data.pagination;
           for (let i = 0; i < vm.totalItem; i += 1) {
             vm.getitem(i + 1);
           }
@@ -127,8 +123,5 @@ export default {
   created() {
     this.getOrders();
   },
-  // components: {
-  //   Pagination,
-  // },
 };
 </script>

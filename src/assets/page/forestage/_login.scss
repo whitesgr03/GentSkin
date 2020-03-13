@@ -12,4 +12,16 @@
     padding: 15px;
     margin: auto;
   }
+  .button {
+    &-slide {
+        color: $black;
+        &::after {
+        background-color: $biwacha;
+        }
+        &:hover {
+        color: rgba($white, 1);
+        border: 1px solid $momoshiocha;
+        }
+    }
+}
 }

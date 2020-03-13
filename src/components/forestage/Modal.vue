@@ -1,6 +1,7 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" style="z-index: 9999;"></loading>
+    <loading :active.sync="isLoading" loader="dots" style="z-index: 9999;"></loading>
+
     <!-- 訂單查詢 Modal -->
     <div
       class="modal animated bounceInDown"
@@ -60,6 +61,7 @@
         </div>
       </div>
     </div>
+
     <!-- 會員 Modal -->
     <div
       class="modal animated bounceInDown"
@@ -83,61 +85,43 @@
               <div class="panel-signIn align-items-center justify-content-center">
                 <div class="h1 mb-5">會員登入</div>
                 <form class="form d-flex flex-column align-items-center" @submit.prevent="signIn">
-                  <!-- <label for="loginEmail" class="label">
-                    信箱
-                  <input
-                    type="email"
-                    class="input"
-                    id="loginEmail"
-                    v-model="user.signIn.account"
-                    placeholder="Email@example.com"
-                  />
-                  </label>
-                  <label for="loginPassword" class="label">密碼
-                  <input
-                    type="password"
-                    id="loginPassword"
-                    class="input"
-                    v-model="user.signIn.password"
-                    placeholder="Password"
-                  />
-                  </label> -->
                   <label for="loginAccount" class="label"
                   >帳號
                     <select id="loginAccount"
-                    :class="{'select': accountData.length === 0}"
+                    :class="{'select': accountData.length === 0,
+                    'text-danger' : accountData.length === 0}"
                     :disabled="accountData.length === 0"
-                    class="form-control" v-model="user.signIn.account"
-                    @change="changeData(user.signIn.account)">
+                    class="form-control" v-model="user.signIn.username"
+                    @change="changeData(user.signIn.username)">
                       <option selected disabled value="" v-if="accountData.length === 0">
-                        請先註冊帳號
+                        請先進行註冊
                       </option>
                       <option selected disabled value="" v-else>
                         請選取任一測試帳號
                       </option>
                       <option v-for="(item, i) in accountData"
-                      :key="i" :value="item.account"
+                      :key="i" :value="item.username"
                       >
-                      {{ item.account }}
+                      GentSkinTest 0{{ i + 1}}
                       </option>
                     </select>
                   </label>
-                  <label for="loginName" class="label"
-                    >暱稱
+                  <label for="loginPassword" class="label"
+                    >密碼
                   <input
-                    type="text"
+                    type="password"
                     disabled
-                    id="loginName"
+                    id="loginPassword"
                     class="input"
-                    placeholder="請先選擇測試帳號"
-                    v-model="user.signIn.name"
+                    :placeholder="loginInput"
+                    v-model="user.signIn.password"
                   />
                   </label>
                   <p class="text-center">
-                    註冊完畢後即可選擇帳號
+                    請點選<span class="text-info">點此註冊</span>即可註冊帳號
                   </p>
-                  <button type="submit" class="button button-animated bg-biwacha"
-                  :disabled="user.signIn.account === ''">
+                  <button type="submit" class="button button-slide"
+                  :disabled="user.signIn.username === ''">
                     登入
                   </button>
                 </form>
@@ -153,60 +137,35 @@
                 <div class="h1 mb-4">註冊會員</div>
                 <form class="form mb-3 d-flex flex-column align-items-center"
                   @submit.prevent="signUp">
-                  <!-- <label for="registeremail" class="label">會員名稱<input
-                    type="email"
-                    class="input"
-                    id="registeremail"
-                    v-model="user.signUp.account"
-                    placeholder="Email@example.com"
-                  />
-                  </label> -->
-                  <!-- <label for="registerepassword" class="label">帳號
-                  <input
-                    type="password"
-                    id="registerepassword"
-                    class="input"
-                    v-model="user.signUp.password"
-                    placeholder="Password"
-                  />
-                  </label> -->
-                  <!-- <label for="confirmpassword" class="label">確認密碼
-                  <input
-                    type="password"
-                    id="confirmpassword"
-                    class="input"
-                    placeholder="Confirm Password"
-                  />
-                  </label> -->
                   <label for="registerAccount" class="label"
                   >帳號
                     <select id="registerAccount"
-                    class="form-control" v-model="user.signUp.account"
-                    @change="changeData(user.signUp.account, 'GentSkinTest 0')">
+                    class="form-control" v-model="user.signUp.username"
+                    @change="changeData(user.signUp.username, true)">
                       <option selected disabled value="">請選取任一測試帳號</option>
                       <option v-for="(item, i) in newAccount"
-                      :key="i" :value="('GentSkinTest 0'+ item.account)"
+                      :key="i" :value="item.username"
                       >
-                        GentSkinTest 0{{item.account}}
+                        GentSkinTest 0{{ i + 1}}
                       </option>
                     </select>
                   </label>
-                  <label for="registerName" class="label"
-                    >暱稱
+                  <label for="registerPassword" class="label"
+                    >密碼
                   <input
-                    type="text"
+                    type="password"
                     disabled
-                    id="registerName"
+                    id="registerPassword"
                     class="input"
-                    placeholder="請先選擇測試帳號"
-                    v-model="user.signUp.name"
+                    placeholder="請先選擇帳號"
+                    v-model="user.signUp.password"
                   />
                   </label>
                   <p class="text-center">
-                    測試帳號將於網頁關閉時完全清除
+                    立即加入會員即可享更多優惠！
                   </p>
-                  <button type="submit" class="button button-animated bg-biwacha"
-                  :disabled="user.signUp.account === ''">
+                  <button type="submit" class="button button-slide"
+                  :disabled="user.signUp.username === ''">
                     註冊
                   </button>
                 </form>
@@ -227,7 +186,8 @@
                       已經註冊過了？
                     </p>
                     <button
-                      class="button"
+                      class="button button-pull button-pull-right"
+                      type="button"
                       id="signIn"
                       @click.prevent="sign = false"
                     >
@@ -243,7 +203,8 @@
                       還沒有註冊嗎？
                     </p>
                     <button
-                      class="button"
+                      class="button button-pull button-pull-left"
+                      type="button"
                       id="signUp"
                       @click.prevent="sign = true"
                     >
@@ -257,6 +218,7 @@
         </div>
       </div>
     </div>
+
     <!-- 購物車 Modal -->
     <div
       class="modal animated fadeInRight faster p-0"
@@ -268,73 +230,288 @@
       <div
         class="modal-dialog"
         role="document"
-        :class="{'modal-dialog-scrollable' : navCart.carts != ''}"
+        :class="{'modal-dialog-scrollable' : cartItem.carts != ''}"
       >
-        <div
-          class="modal-content bg-kogecha"
-          v-if="navCart.carts != ''">
-          <button type="button" class="close position-absolute" style="right: 0; top:-10px"
-          data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-          <div
-            class="modal-title text-center"
-          >
+        <form class="modal-content bg-black" @submit.prevent="payment" v-if="cartItem.carts != ''">
+          <button type="button" class="close position-absolute text-white"
+          style="right: 10px; top: 0px; opacity: 1;" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="modal-title text-center">
             <h5 class="my-4">
-              已選擇的商品
+              購物車
             </h5>
           </div>
           <div class="modal-body">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th style="border-bottom: 1px solid black;" width="90" scope="col"></th>
-                  <th style="border-bottom: 1px solid black;" scope="col">
-                      <td>商品</td>
-                      <td class="td-width text-right">價格</td>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="item in navCart.carts" :key="item.id">
-                  <th>
-                    <img :src="item.product.imageUrl" scope="row"/>
-                  </th>
-                  <td class="align-middle">
-                    <tr>
-                      <td>
-                        {{ item.product.title }}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td width="100%">
-                        {{ item.qty }}/{{ item.product.unit }}
-                      </td>
-                      <td>
-                        {{ item.final_total | currency }}
-                      </td>
-                    </tr>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="row" v-for="item in cartItem.carts" :key="item.id">
+              <div class="col-5">
+                <img class="w-100 border p-1" :src="item.product.imageUrl" />
+              </div>
+              <div class="col-7">
+                <p>
+                  {{ item.product.title }}
+                </p>
+                <div>
+                  <p>
+                    {{ item.final_total | currency }}
+                  </p>
+                  <p class="m-0">
+                    {{ item.qty }}/{{ item.product.unit }}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
           <div
             class="modal-footer justify-content-around">
             <div class="h5 m-0">
-              <span class="mr-3">總金額</span> {{ navCart.total | currency }}
+              <span class="mr-3">總金額</span> {{ cartItem.total | currency }}
             </div>
-              <a href="#" class="button bg-konjyo" @click.prevent="payment">結帳</a>
+              <button type="submit" class="button button-slide">
+                結帳
+              </button>
           </div>
-        </div>
-        <div class="modal-content bg-kogecha justify-content-center"
-        v-if="navCart.carts == ''">
+        </form>
+        <div class="modal-content bg-black justify-content-center"
+        v-if="cartItem.carts == ''">
         <h5 class="m-0 text-center">
           您還沒有選購任何商品
         </h5>
         </div>
       </div>
     </div>
+
+    <!-- 手機板menu Modal -->
+    <div
+      class="modal animated fadeInLeft faster p-0 d-lg-none"
+      id="menuModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+      @click.prevent="$bus.$emit('menuButton');">
+      <div
+        class="modal-dialog"
+        role="document"
+      >
+        <div
+          class="modal-content bg-black">
+          <button type="button" class="close position-absolute  text-white"
+          style="left: 10px; top: 0px; z-index: 1041; opacity: 1;"
+          data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="modal-body">
+            <div class="mobileMenu">
+              <ul class="nav">
+                <li class="nav-item nav-item-hide"
+                  :class="{'nav-item-visible': loginStatus}">
+                  <button
+                    class="btn"
+                    type="button"
+                    data-toggle="modal"
+                    data-target="#orderModal"
+                  >
+                  <i class="fas fa-2x fa-clipboard-list"></i>
+                  </button>
+                </li>
+                <li class="nav-item">
+                  <button
+                    class="btn"
+                    type="button"
+                    data-toggle="modal"
+                    data-target="#loginModal"
+                    v-if="!loginStatus"
+                  >
+                    <i class="far fa-2x fa-user"></i>
+                  </button>
+                  <button
+                    class="btn"
+                    type="button"
+                    data-toggle="modal"
+                    data-target="#loginOutModal"
+                    v-if="loginStatus"
+                  >
+                    <i class="fas fa-2x fa-user-tie"></i>
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div class="mobileList">
+              <ul class="nav flex-column">
+                <li class="nav-item border-bottom">
+                <a href="#" class="nav-link"
+                @click.prevent="$bus.$emit('routerLink', ('/'))">
+                  首頁
+                </a>
+                </li>
+                <li class="nav-item position-relative border-bottom">
+                  <button id="shop" class="nav-link btn w-100 text-left" type="button"
+                  data-toggle="collapse" data-target="#product"
+                  aria-expanded="false" aria-controls="product">
+                    服飾
+                    <div class="plus border-0 position-absolute"
+                    style="right:0; top:12px;">
+                      <div class="horizontal" style="width:12px; height:2px; left:4px;" ></div>
+                      <div class="vertical" style="width:2px; height:12px; top:4px;"></div>
+                    </div>
+                  </button>
+                  <div class="collapse" id="product">
+                    <div class="accordion" id="accordionlist">
+                      <div class="collapse-text">
+                        <ul class="nav flex-column">
+                          <li class="nav-item position-relative">
+                            <button class="nav-link w-100 btn text-left shopList" type="button"
+                            data-toggle="collapse" data-target="#tops"
+                            aria-expanded="false" aria-controls="tops">
+                            <a href="#"
+                            @click.prevent="$bus.$emit('categorie', 'tops')">
+                              上衣
+                            </a>
+                              <div class="plus border-0 position-absolute"
+                              style="right:0; top:12px;">
+                                <div class="horizontal" style="width:12px; height:2px;
+                                left:4px;" ></div>
+                                <div class="vertical" style="width:2px; height:12px;
+                                top:4px;"></div>
+                              </div>
+                            </button>
+                            <div class="collapse" id="tops" data-parent="#accordionlist">
+                              <div class="collapse-text">
+                                <ul class="nav flex-column">
+                                  <li class="nav-item">
+                                    <a href="#" class="nav-link"
+                                    @click.prevent="$bus.$emit('categorie', 'tops', 't-shirt')">
+                                      T-shirt
+                                    </a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a href="#" class="nav-link"
+                                    @click.prevent="$bus.$emit('categorie', 'tops', 'shirt')">
+                                      襯衫
+                                    </a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a href="#" class="nav-link"
+                                    @click.prevent="$bus.$emit('categorie', 'tops', 'outer')">
+                                      外套
+                                    </a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </li>
+                          <li class="nav-item position-relative">
+                            <button class="nav-link w-100 btn text-left shopList" type="button"
+                            data-toggle="collapse" data-target="#bottoms"
+                            aria-expanded="false" aria-controls="bottoms">
+                            <a href="#"
+                            @click.prevent="$bus.$emit('categorie', 'bottoms')">
+                              下身
+                            </a>
+                              <div class="plus border-0 position-absolute"
+                              style="right:0; top:12px;">
+                                <div class="horizontal" style="width:12px; height:2px;
+                                left:4px;" ></div>
+                                <div class="vertical" style="width:2px; height:12px;
+                                top:4px;"></div>
+                              </div>
+                            </button>
+                            <div class="collapse" id="bottoms" data-parent="#accordionlist">
+                              <div class="collapse-text">
+                                <ul class="nav flex-column">
+                                  <li class="nav-item">
+                                    <a href="#" class="nav-link"
+                                    @click.prevent="$bus.$emit('categorie', 'bottoms', 'short')">
+                                      短褲
+                                    </a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a href="#" class="nav-link"
+                                    @click.prevent="$bus.$emit('categorie', 'bottoms', 'pants')">
+                                      長褲
+                                    </a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a href="#" class="nav-link"
+                                    @click.prevent="$bus.$emit('categorie', 'bottoms', 'jeans')">
+                                      牛仔褲
+                                    </a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </li>
+                          <li class="nav-item position-relative">
+                            <button class="nav-link w-100 btn text-left shopList" type="button"
+                            data-toggle="collapse" data-target="#accessories"
+                            aria-expanded="false" aria-controls="accessories">
+                            <a href="#"
+                            @click.prevent="$bus.$emit('categorie', 'accessories')">
+                              配件
+                            </a>
+                              <div class="plus border-0 position-absolute"
+                              style="right:0; top:12px;">
+                                <div class="horizontal" style="width:12px; height:2px;
+                                left:4px;" ></div>
+                                <div class="vertical" style="width:2px; height:12px;
+                                top:4px;"></div>
+                              </div>
+                            </button>
+                            <div class="collapse" id="accessories" data-parent="#accordionlist">
+                              <div class="collapse-text">
+                                <ul class="nav flex-column">
+                                  <li class="nav-item">
+                                    <a href="#" class="nav-link"
+                                    @click.prevent="$bus.$emit('categorie', 'accessories', 'hat')">
+                                      帽子
+                                    </a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a href="#" class="nav-link"
+                                    @click.prevent="$bus.$emit('categorie', 'accessories', 'bag')">
+                                      背包
+                                    </a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a href="#" class="nav-link"
+                                    @click.prevent="
+                                    $bus.$emit('categorie', 'accessories', 'shoes')">
+                                      鞋子
+                                    </a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </li>
+                          <li class="nav-item">
+                            <a href="#" class="nav-link"
+                            @click.prevent="$bus.$emit('categorie', 'all')">All</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="nav-item border-bottom">
+                <a href="#" class="nav-link"
+                @click.prevent="$bus.$emit('routerLink', ('/article'))">
+                  主題
+                </a>
+                </li>
+                <li class="nav-item border-bottom">
+                <a href="#" class="nav-link"
+                @click.prevent="$bus.$emit('routerLink', ('/about'))">
+                  關於
+                </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- 優惠提示 Modal -->
     <div class="modal animated rollIn" id="saleModal"
       tabindex="-1" role="dialog" data-backdrop="static"
@@ -343,139 +520,47 @@
         <div class="modal-content">
           <div class="modal-border">
               <h3 class="stroke">
-                秋季限時特價
+                季節限定特價
                 <br>
                 <span>
                   全館購物即可享有以下折扣
                 </span>
               </h3>
               <p>10% OFF</p>
-              <button type="button" data-dismiss="modal"
-              class="button button-animated bg-biwacha">
+              <button type="button" data-dismiss="modal" class="button button-slide">
                 開始購物
               </button>
           </div>
         </div>
       </div>
     </div>
-    <!-- 刪除提示 Modal -->
+
+    <!-- 登出提示 Modal -->
     <div
-      class="modal animated bounceInDown" id="removeCart"
-      tabindex="-1" role="dialog" aria-labelledby="removeCartLabel"
+      class="modal animated bounceInDown" id="loginOutModal"
+      tabindex="-1" role="dialog" aria-labelledby="loginOutModal"
       aria-hidden="true">
       <div
         class="modal-dialog modal-dialog-centered"
         role="document"
       >
         <div
-          class="modal-content bg-dark border border-secondary"
+          class="modal-content flex-column  text-center bg-dark border border-secondary"
         >
-          <div class="modal-body text-center p-4 h4">
-            你確定要移除這項商品嗎
-          </div>
-
-          <div
-            class="row text-center  border-top border-secondary m-0"
-          >
-            <div
-              data-dismiss="modal"
-              class="col-md-6 p-0 btn btn-outline-danger border-0"
-            >
-              <div class="p-2 border-right border-secondary">
-                取消
-              </div>
-            </div>
-
-            <div
-              class="col-md-6 p-0 btn btn-outline-danger border-0"
-            >
-              <div
-                class="p-2"
-                @click.prevent="$emit('removeCart', '')"
-              >
-                確定
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- 客服Modal -->
-    <div class="modal animated bounceInDown" id="serviceModal" tabindex="-1"
-      role="dialog" aria-labelledby="exampleModalCenterTitle"
-      aria-hidden="true">
-      <div
-        class="modal-dialog modal-dialog-centered"
-        style="max-width: 650px;"
-        role="document"
-      >
-        <div class="modal-content bg-dark">
-          <button
-            type="button"
-            class="button-close position-absolute"
+          <p class="w-100 py-4 border-bottom border-secondary h5 m-0">
+            你確定要登出嗎
+          </p>
+          <div class="d-flex justify-content-between">
+            <button type="button"
             data-dismiss="modal"
-            aria-label="Close">
-            <i class="fas fa-times"></i>
+            class="py-3 w-50 btn btn-outline-danger border-0 rounded-0"
+            style="border-right: 1px solid #6c757d !important">
+              取消
             </button>
-          <div class="text-md-left text-center border-bottom p-3">
-            <h5 class="m-0">訂單問題查詢</h5>
-          </div>
-          <div class="modal-body">
-            <div class="custom-control custom-radio">
-              <input type="radio" id="progress" name="customerService" class="custom-control-input">
-              <label class="custom-control-label" for="progress">查出貨進度</label>
-            </div>
-            <div class="custom-control custom-radio">
-              <input type="radio" id="return" name="customerService" class="custom-control-input">
-              <label class="custom-control-label" for="return">退 / 換貨問題</label>
-            </div>
-            <div class="custom-control custom-radio">
-              <input type="radio" id="payment" name="customerService" class="custom-control-input">
-              <label class="custom-control-label" for="payment">付款問題</label>
-            </div>
-            <div class="custom-control custom-radio">
-              <input type="radio" id="invoice" name="customerService" class="custom-control-input">
-              <label class="custom-control-label" for="invoice">發票問題</label>
-            </div>
-          </div>
-          <div class="text-md-right text-center border-top p-3">
-            <p class="m-0">此為測試用，無任何功能</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- 超商取貨Modal -->
-    <div
-      class="modal animated bounceInDown"
-      id="testModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content bg-dark">
-          <div class="modal-body text-center p-4 h4">
-            <p>已為您選擇距離您最近的門市</p>
-            <p class="m-0">請點選送出訂單完成交易</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- 測試付款Modal -->
-    <div
-      class="modal animated fadeIn"
-      id="payModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content bg-dark">
-          <div class="modal-body h4 text-center">
-            正在建立訂單
-            <span class="one">.</span>
-            <span class="two">.</span>
-            <span class="three">.</span>
+            <button type="button" class="py-3 w-50 btn btn-outline-danger border-0"
+            @click.prevent="loginOut">
+              確定
+            </button>
           </div>
         </div>
       </div>
@@ -488,87 +573,54 @@
 import $ from 'jquery';
 
 export default {
-  props: ['navCart', 'orderList'],
   data() {
     return {
       sign: false,
       isLoading: false,
       loginStatus: false,
-      change: false,
-      number: '',
-      num: 0,
+      loginInput: '註冊完畢後即可選擇帳號',
+      cartItem: [],
+      orderList: [],
       accountData: [],
       newAccount:
       [{
-        account: '1',
-        name: '體貼的家豪',
-      },
-      {
-        account: '2',
-        name: '幽默的俊傑',
-      },
-      {
-        account: '3',
-        name: '開朗的淑惠',
-      },
-      {
-        account: '4',
-        name: '溫柔的美玲',
+        username: 'GentSkinTest01@gmail.com',
+        password: 'GentSkin',
       }],
       user: {
         signUp: {
-          account: '',
-          name: '',
-          login: false,
-          // password: '',
+          username: '',
+          password: '',
         },
         signIn: {
-          account: '',
-          name: '',
-          // password: '',
+          username: '',
+          password: '',
         },
       },
     };
   },
   methods: {
-    getData() {
-      const vm = this;
-      if (JSON.parse(sessionStorage.getItem('myAccount') !== null)) {
-        vm.accountData = JSON.parse(sessionStorage.getItem('myAccount'));
-      }
-    },
     signUp() {
+      // 註冊
       const vm = this;
       vm.isLoading = true;
-      // sessionStorage.clear();
-      // sessionStorage.removeItem('myAccount');
-      const getAccount = JSON.parse(sessionStorage.getItem('myAccount'));
-      if (getAccount === null) {
-        const newAccount = [];
-        newAccount.push(vm.user.signUp);
-        sessionStorage.setItem('myAccount', JSON.stringify(newAccount));
-        vm.accountData = JSON.parse(sessionStorage.getItem('myAccount'));
-        // console.log(vm.accountData);
+      if (vm.accountData.length === 0) {
         setTimeout(() => {
-          vm.isLoading = false;
+          vm.accountData.push(vm.user.signUp);
+          this.$bus.$emit('alert', '測試帳號已註冊成功');
+          vm.loginInput = '請先選擇帳號';
           vm.sign = false;
-          // vm.user.signUp.account = '';
-          // vm.user.signUp.password = '';
-          this.$bus.$emit('alert', '註冊成功，登入立即享購！');
+          vm.isLoading = false;
         }, 2000);
-      } else {
-        const verify = getAccount.find(item => item.account === vm.user.signUp.account
+      } else if (vm.accountData.length > 0) {
+        const verify = vm.accountData.find(item => item.account === vm.user.signUp.account
         && item.password === vm.user.signUp.password);
         if (verify === undefined) {
-          getAccount.push(vm.user.signUp);
-          sessionStorage.setItem('myAccount', JSON.stringify(getAccount));
-          vm.accountData = JSON.parse(sessionStorage.getItem('myAccount'));
           setTimeout(() => {
+            vm.accountData.push(vm.user.signUp);
+            this.$bus.$emit('alert', '測試帳號已註冊成功');
             vm.isLoading = false;
             vm.sign = false;
-            // vm.user.signUp.account = '';
-            // vm.user.signUp.password = '';
-            this.$bus.$emit('alert', '註冊成功，登入立即享購！');
           }, 2000);
         } else {
           setTimeout(() => {
@@ -579,67 +631,163 @@ export default {
       }
     },
     signIn() {
+      // 登入
       const vm = this;
       vm.isLoading = true;
-      vm.accountData = JSON.parse(sessionStorage.getItem('myAccount'));
-      const verify = vm.accountData.filter(item => item.account === vm.user.signIn.account
-        && item.password === vm.user.signIn.password);
-      setTimeout(() => {
-        if (verify.length === 1) {
-          verify[0].login = true;
-          sessionStorage.removeItem('myAccount');
-          sessionStorage.setItem('myAccount', JSON.stringify(vm.accountData));
-          vm.isLoading = false;
-          this.$bus.$emit('alert', `${vm.user.signIn.name}，您已成功登入！`);
-          $('#loginModal').modal('hide');
-          vm.loginStatus = true;
-          vm.$emit('signIn', vm.loginStatus);
-          // vm.user.signIn.account = '';
-          // vm.user.signIn.password = '';
-          vm.$emit('userLogin');
-        } else {
-          vm.isLoading = false;
-          this.$bus.$emit('alert', '您輸入的帳號密碼有誤！');
+      const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
+      if (vm.user.signIn.username !== '' && vm.user.signIn.password !== '') {
+        this.$http.post(api, vm.user.signIn).then((response) => {
+          if (response.data.success) {
+            $('#loginModal').modal('hide');
+            vm.loginStatus = true;
+            vm.$bus.$emit('loginStatus', true);
+            this.$bus.$emit('alert', '測試會員，您已成功登入！');
+            vm.isLoading = false;
+          } else {
+            this.$bus.$emit('alert', '您的帳號密碼有誤！');
+            vm.isLoading = false;
+          }
+        });
+      } else {
+        this.$bus.$emit('alert', '您尚未註冊帳號！');
+        vm.isLoading = false;
+      }
+    },
+    getOrder(id) {
+      // 取得歷史訂單
+      const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${id}`;
+      this.$http.get(api).then((response) => {
+        if (response.data.success) {
+          vm.orderList.push(response.data.order);
         }
-      }, 2000);
+      });
     },
     order(id) {
+      // 檢視訂單內容
       const vm = this;
       $('#orderModal').modal('hide');
-      if (vm.$router.history.current.name === 'Check') {
-        vm.$router.push('/');
-        setTimeout(() => {
-          vm.$router.push(`check/${id}`);
-        }, 1);
-      } else {
-        vm.$router.push(`check/${id}`);
-      }
+      $('#orderModal').on('hidden.bs.modal', () => {
+        $('#menuModal').modal('hide');
+        if (vm.$router.history.current.name === 'Check') {
+          vm.$router.push('/');
+          setTimeout(() => {
+            vm.$router.push({ name: 'Check', params: { orderId: id } });
+            $('html, body').animate({ scrollTop: 0 }, 1);
+          }, 1);
+        } else {
+          vm.$router.push({ name: 'Check', params: { orderId: id } });
+        }
+      });
     },
     payment() {
+      // 執行結帳動作
       const vm = this;
-      $('#cartModal').modal('hide');
-      vm.$router.push('/order');
-      $('html, body').animate({ scrollTop: 0 }, 1);
+      if (vm.loginStatus === true) {
+        $('#cartModal').modal('hide');
+        vm.$bus.$emit('routerLink', '/order');
+      } else {
+        $('#cartModal').modal('hide');
+        $('#loginModal').modal('show');
+        vm.$bus.$emit('alert', '請先登入會員');
+      }
     },
-    changeData(item, test) {
+    changeData(account, signUp) {
+      // 選取帳號帶入密碼
       const vm = this;
-      if (test === 'GentSkinTest 0') {
-        vm.newAccount.forEach((account) => {
-          if (item === (test + account.account)) {
-            vm.user.signUp.name = account.name;
+      if (signUp) {
+        vm.newAccount.forEach((item) => {
+          if (account === item.username) {
+            vm.user.signUp.password = item.password;
           }
         });
       } else {
-        vm.accountData.forEach((account) => {
-          if (item === account.account) {
-            vm.user.signIn.name = account.name;
+        vm.accountData.forEach((item) => {
+          if (account === item.username) {
+            vm.user.signIn.password = item.password;
           }
         });
       }
     },
+    loginOut() {
+      // 登出
+      const vm = this;
+      vm.isLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}/logout`;
+      this.$http.post(api).then((response) => {
+        if (response.data.success) {
+          vm.isLoading = false;
+          if (vm.$router.history.current.name === 'Check'
+          || vm.$router.history.current.name === 'Order') {
+            vm.$router.push('/');
+          }
+          vm.$bus.$emit('loginStatus', false);
+          vm.loginStatus = false;
+          $('#loginOutModal').modal('hide');
+          vm.$bus.$emit('alert', '您已成功登出！');
+        }
+      });
+    },
+  },
+  mounted() {
+    // 首次瀏覽顯示優惠資訊
+    // eslint-disable-next-line
+    $('.mobileList .shopList').click(function (e) {
+      e.preventDefault();
+      if ($(this).find('.plus').hasClass('minus')) {
+        $(this).find('.plus').removeClass('minus');
+      } else {
+        $('.mobileList .shopList').find('.plus').removeClass('minus');
+        $(this).find('.plus').addClass('minus');
+      }
+    });
+    // eslint-disable-next-line
+    $('#shop').click(function (e) {
+      e.preventDefault();
+      this.ckickList = true;
+      if ($(this).find('.plus').hasClass('minus')) {
+        $(this).find('.plus').removeClass('minus');
+        $('.mobileList .shopList').find('.plus').removeClass('minus');
+        setTimeout(() => {
+          $('.mobileList .accordion').find('.collapse').removeClass('show');
+        }, 200);
+      } else {
+        $(this).find('.plus').addClass('minus');
+      }
+    });
+    // eslint-disable-next-line
+    $('#menuModal').on('hidden.bs.modal', function (e) {
+      e.preventDefault();
+      setTimeout(() => {
+        if (!$(this).hasClass('show')) {
+          $('.mobileList .btn').find('.plus').removeClass('minus');
+          $('.mobileList').find('.collapse').removeClass('show');
+        }
+      }, 200);
+    });
   },
   created() {
-    this.getData();
+    setTimeout(() => {
+      const getSite = sessionStorage.getItem('couponModal');
+      const api = `${process.env.VUE_APP_APIPATH}/logout`;
+      if (getSite == null) {
+        $('#saleModal').modal('show');
+        sessionStorage.setItem('couponModal', 'coupon');
+        this.$http.post(api).then((response) => {
+          if (response.data.success) {
+            this.loginStatus = false;
+            this.$bus.$emit('loginStatus', false);
+          }
+        });
+      }
+    }, 500);
+    this.$bus.$on('orderId', (item) => {
+      this.getOrder(item);
+    });
+    this.$bus.$on('getCart', (item) => {
+      this.cartItem = item;
+      // 取得購物車資料
+    });
   },
 };
 </script>

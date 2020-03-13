@@ -8,11 +8,12 @@ export default new Router({
     // 前台
     {
       path: '*', // 避免用戶輸入不存在的路徑
-      redirect: '/', // 將重新導向login頁面
+      redirect: '/', // 將重新導向首頁
     },
     {
-      path: '/', // 虛擬路徑
-      component: () => import('@/views/Index.vue'), // 對應的vue檔名稱
+      path: '/',
+      component: () => import('@/views/Index.vue'),
+      // 前台主頁
       children: [
         {
           path: '/',
@@ -21,29 +22,40 @@ export default new Router({
           // 首頁
         },
         {
-          path: 'about',
-          name: 'About',
-          component: () => import('@/views/forestage/About.vue'),
-          meta: { requiresLogin: true },
-          // 關於
-        },
-        {
           path: 'article',
           name: 'Article',
           component: () => import('@/views/forestage/Article.vue'),
+          // 主題文章
+        },
+        {
+          path: 'about',
+          name: 'About',
+          component: () => import('@/views/forestage/About.vue'),
           // 關於我
         },
         {
-          path: 'shop',
-          name: 'Product',
-          component: () => import('@/views/forestage/Product.vue'),
-          // 產品列表
+          path: 'helper',
+          name: 'Helper',
+          component: () => import('@/views/forestage/Helper.vue'),
+          // 問題服務
         },
         {
-          path: 'content/:id',
+          path: 'contact',
+          name: 'Contact',
+          component: () => import('@/views/forestage/Contact.vue'),
+          // 聯絡資訊
+        },
+        {
+          path: 'shop/:item',
+          name: 'Product',
+          component: () => import('@/views/forestage/Product.vue'),
+          // 商品列表
+        },
+        {
+          path: 'content/:mainItem/:item',
           name: 'Content',
           component: () => import('@/views/forestage/Content.vue'),
-          // 產品內容
+          // 商品內容
         },
         {
           path: 'order',
@@ -53,7 +65,7 @@ export default new Router({
           // 產品訂單
         },
         {
-          path: 'check/:orderId',
+          path: 'check',
           name: 'Check',
           component: () => import('@/views/forestage/Check.vue'),
           // 訂單明細
@@ -72,47 +84,54 @@ export default new Router({
     {
       path: '/admin',
       component: () => import('@/views/Dashboard.vue'),
+      // 後台主頁
       children: [
         {
           path: 'products',
           name: 'Products',
           component: () => import('@/views/backstage/Products.vue'),
+          // 商品新增修改
           meta: { requiresAuth: true },
         },
         {
           path: 'orders',
           name: 'Orders',
+          // 客戶訂單查詢修改
           component: () => import('@/views/backstage/Orders.vue'),
           meta: { requiresAuth: true },
         },
         {
           path: 'coupons',
           name: 'Coupons',
+          // 優惠碼新增修改
           component: () => import('@/views/backstage/Coupons.vue'),
           meta: { requiresAuth: true },
         },
       ],
     },
 
-    {
-      path: '/customer',
-      name: 'Customer',
-      component: () => import('@/views/Dashboard.vue'),
-      meta: { requiresAuth: true },
-      children: [
-        {
-          path: 'orders',
-          name: 'CustomerOrder',
-          component: () => import('@/views/backstage/CustomerOrder.vue'),
-          meta: { requiresAuth: true },
-        },
-        {
-          path: 'check/:orderId', // 對應CustomerCheck中的this.$route.params.orderId;
-          name: 'CustomerCheck',
-          component: () => import('@/views/backstage/CustomerCheck.vue'),
-          meta: { requiresAuth: true },
-        },
-      ],
-    },
+    // {
+    //   path: '/customer',
+    //   name: 'Customer',
+    //   // 測試購物
+    //   component: () => import('@/views/Dashboard.vue'),
+    //   meta: { requiresAuth: true },
+    //   children: [
+    //     {
+    //       path: 'orders',
+    //       name: 'CustomerOrder',
+    //       // 商品
+    //       component: () => import('@/views/backstage/CustomerOrder.vue'),
+    //       meta: { requiresAuth: true },
+    //     },
+    //     {
+    //       path: 'check/:orderId',
+    //       name: 'CustomerCheck',
+    //       // 結帳
+    //       component: () => import('@/views/backstage/CustomerCheck.vue'),
+    //       meta: { requiresAuth: true },
+    //     },
+    //   ],
+    // },
   ],
 });

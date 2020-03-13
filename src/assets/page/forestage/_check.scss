@@ -1,26 +1,27 @@
 .check {
-    .table {
-        &-overflow {
-            overflow: auto;
-            height: 45vh;
-            @include media-breakpoint-down(md) {
-                height: 40vh;
-            }
-        }
-        img {
-            width: 100%;
+    .overflow {
+        overflow: auto;
+        height: 45vh;
+        @include media-breakpoint-down(md) {
+            height: 40vh;
         }
     }
-    &-info {
+    &-cartInfo {
         border: 1px solid $black;
         @include media-breakpoint-down(sm) {
             border: none;
+            padding: 1rem 0;
         }
         .col-md-8 {
             border-right: 1px solid $black;
             @include media-breakpoint-down(sm) {
                 border-right: none;
             }
+        }
+    }
+    &-receiverInfo {
+        @include media-breakpoint-down(sm) {
+            border-top: 1px solid $black;
         }
     }
 }

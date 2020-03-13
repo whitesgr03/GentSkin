@@ -9,7 +9,6 @@ import { extend } from 'vee-validate'; // 驗證規則
 import * as rules from 'vee-validate/dist/rules'; // 驗證規則
 import zhTW from 'vee-validate/dist/locale/zh_TW.json'; //  驗證規則中文化
 import Animate from 'animate.css/animate.min.css'; // CSS動畫套件
-import 'swiper/css/swiper.css'; //  輪播套件
 
 //  自定義 套件內容 .
 import App from './App.vue';
@@ -18,7 +17,7 @@ import './bus';
 import currencyFilter from './filters/currency';
 import dateFilter from './filters/date';
 
-Vue.config.productionTip = false;
+// Vue.config.productionTip = false;
 
 //  全域方式啟用
 Vue.use(VueAxios, axios);
@@ -50,19 +49,13 @@ new Vue({
 
 router.beforeResolve((to, from, next) => {
   //  頁面登入驗證
-  // console.log('目前從', from.name, '頁面,轉移到', to.name, '頁面');
-  // console.log('目前從', from, '頁面,轉移到', to, '頁面', next);
   if (to.meta.requiresAuth) {
-    //  如果要to的頁面有meta.requiresAuth的變數為ture的話就執行
+    //  頁面有meta.requiresAuth的變數為ture的話就執行
     const api = `${process.env.VUE_APP_APIPATH}/api/user/check`;
     axios.post(api).then((response) => {
-      //  console.log(response.data);
       if (response.data.success) {
-        //  如果成功的話 將頁面從from(Login頁面)轉移到next(products，Login頁面轉移的設定)
-        //  console.log('登入驗證通過')
         next();
       } else {
-        //  console.log('登入驗證未通過')
         next({
           path: '/login',
         });

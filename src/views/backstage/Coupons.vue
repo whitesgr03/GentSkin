@@ -1,7 +1,7 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" style="z-index: 9999;"></loading>
-    <div class="coupons" v-if="coupons.length !== 0">
+    <loading :active.sync="isLoading"></loading>
+    <div class="coupons">
       <div class="text-right mb-4">
         <button class="button bg-biwacha" @click.prevent="openModal(true)">
           新增優惠碼
@@ -68,7 +68,6 @@
           </tr>
         </tbody>
       </table>
-      <!-- <Pagination :paginations="pagination" @getPage="getCoupons" /> -->
       <!-- 新增模板 -->
       <div
         class="modal animated fadeIn"
@@ -146,14 +145,14 @@
             <div class="modal-footer">
               <button
                 type="button"
-                class="button bg-momoshiocha"
+                class="button bg-secondary"
                 data-dismiss="modal"
               >
                 取消
               </button>
               <button
                 type="button"
-                class="button bg-konjyo"
+                class="button bg-biwacha"
                 @click.prevent="updataCoupons"
               >
                 確認
@@ -206,7 +205,6 @@
 
 <script>
 import $ from 'jquery';
-// import Pagination from '@/components/backstage/Pagination.vue';
 
 export default {
   data() {
@@ -223,7 +221,6 @@ export default {
   },
   methods: {
     getCoupons(Loading) {
-      // 取得api資料  //page = 1 預設參數 即可套用全部使用到getProducts的地方
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${1}`;
       const vm = this;
       if (Loading) {
@@ -231,10 +228,8 @@ export default {
       }
       this.$http.get(api).then((response) => {
         vm.coupons = response.data.coupons;
-        // console.log(response.data);
         vm.newData = '';
         vm.isLoading = false; // 資料讀取完成後再停用動畫
-        // vm.pagination = response.data.pagination; // 存取API提供的頁數
       });
     },
     updataEnabled(isEnabled, item) {
@@ -247,7 +242,6 @@ export default {
       } else if (!isEnabled) {
         vm.tempProduct.is_enabled = 0;
       }
-      // console.log(vm.tempProduct);
       this.$http.put(api, { data: vm.tempProduct }).then(() => {
         vm.getCoupons(false);
       });
@@ -259,7 +253,6 @@ export default {
         this.isNew = true;
       } else {
         this.tempProduct = Object.assign({}, item);
-        // console.log(this.tempProduct);
         this.isNew = false;
       }
       $('#couponsModal').modal({
@@ -273,7 +266,6 @@ export default {
       let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon`;
       let httpMethod = 'post';
       if (!vm.isNew) {
-        // console.log(vm.tempProduct.id);
         api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempProduct.id}`;
         httpMethod = 'put';
       }
@@ -292,13 +284,11 @@ export default {
       $('#delcouponsModal').modal('show');
       const vm = this;
       vm.tempProduct = Object.assign({}, item);
-      // console.log(vm.tempProduct);
     },
     deleteCoupon() {
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempProduct.id}`;
       this.$http.delete(api).then(() => {
-        // console.log(response, vm.tempProduct);
         this.$bus.$emit('alert', '已刪除優惠碼');
         $('#delcouponsModal').modal('hide');
         vm.getCoupons();
@@ -333,8 +323,5 @@ export default {
   created() {
     this.getCoupons(true);
   },
-  // components: {
-  //   Pagination,
-  // },
 };
 </script>

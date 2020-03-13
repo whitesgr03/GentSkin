@@ -1,0 +1,104 @@
+.contact {
+    &-bg {
+        height: 650px;
+        display: flex;
+        text-align: center;
+        background-size: cover;
+        background-position: center center;
+        background-image: url(assets/images/contact/contact.jpg);
+        @include media-breakpoint-down(sm) {
+            height: 50vh;
+        }
+        h2 {
+            font-size: $font-size-base * 3.5;
+            text-transform: uppercase;
+            @include media-breakpoint-down(sm) {
+                font-size: $font-size-base * 2;
+            }
+        }
+    }
+    .location {
+        position: relative;
+        margin: 0 auto 6rem;
+        width: 80%;
+        @include media-breakpoint-down(md) {
+            width: 100%;
+            margin: 0 auto 8rem;
+        }
+        @include media-breakpoint-down(xs) {
+            margin: 0 auto 1rem;
+        }
+        &-map {
+            width: 100%;
+            height: 450px;
+            @include media-breakpoint-down(sm) {
+                height: 400px;
+            }
+            @include media-breakpoint-down(xs) {
+                height: 250px;
+            }
+        }
+        &-info {
+            position: absolute;
+            padding: 2rem 2rem 3rem;
+            bottom: -80px;
+            left: 5%;
+            right: 5%;
+            background-color: $black;
+            border-radius: 20px;
+            @include media-breakpoint-down(md) {
+                bottom: -100px;
+            }
+            @include media-breakpoint-down(sm) {
+                left: -12%;
+                right: -12%;
+            }
+            @include media-breakpoint-down(xs) {
+                position: static;
+                border-radius: 0px;
+            }
+            .row {
+                align-items: center;
+                justify-content: flex-end;
+            }
+        }
+        &-button {
+            position: absolute;
+            width: 150px;
+            text-align: center;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+        }
+    }
+    .button {
+        a {
+            color: $black;
+            transition: all .5s;
+        }
+        &-slide {
+            color: $black;
+            &::after {
+            background-color: $biwacha;
+            }
+            &:hover {
+            color: rgba($white, 1);
+            border: 1px solid $momoshiocha;
+                a {
+                    color: rgba($white, 1);
+                }
+            }
+        }
+    }
+    .form {
+        width: 50%;
+        margin: 0 auto;
+        @include media-breakpoint-down(md) {
+            width: 80%;
+        }
+        @include media-breakpoint-down(sm) {
+            width: 100%;
+        }
+    }
+}

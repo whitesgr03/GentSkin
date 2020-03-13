@@ -18,24 +18,40 @@
       }
     }
   }
-  &-img {
-    width: 100%;
-    background-position: center center;
-    background-size: cover;
-    transition: all 0.35s;
-    &:hover {
-      transform: scale(1.2);
+}
+.delay {
+  &-2 {
+    transition-delay: .3s;
+    @include media-breakpoint-down(xs) {
+      transition-delay: 0s;
+    }
+  }&-3 {
+    transition-delay: .6s;
+    @include media-breakpoint-down(md) {
+      transition-delay: 0s;
     }
   }
-  &-title {
-    text-align: center;
-    padding: 5%;
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    p {
-      margin: 0;
+  &-4 {
+    transition-delay: 0s;
+    @include media-breakpoint-down(md) {
+      transition-delay: .3s;
+    }
+    @include media-breakpoint-down(xs) {
+      transition-delay: 0s;
+    }
+  }&-5 {
+    transition-delay: .3s;
+    @include media-breakpoint-down(md) {
+      transition-delay: 0s;
+    }
+  }
+  &-6 {
+    transition-delay: .6s;
+    @include media-breakpoint-down(md) {
+      transition-delay: .3s;
+    }
+    @include media-breakpoint-down(xs) {
+      transition-delay: 0s;
     }
   }
 }

@@ -60,8 +60,8 @@ export default {
   },
   created() {
     const vm = this;
-    vm.$bus.$on('alert', (message, status = 'danger') => {
-      vm.updateMessage(message, status);
+    vm.$bus.$on('alert', (message) => {
+      vm.updateMessage(message);
     });
   },
 };

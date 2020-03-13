@@ -13,7 +13,7 @@ $placeholder-color : rgba(126, 121, 113, 0.5);
       letter-spacing: 0.5px;
       padding: 10px 10px;
       color: $momoshiocha;
-      background-color: $main-bg;
+      background-color: $main;
       transition: all 0.3s;
       @include media-breakpoint-down(xs) {
         font-size: 1rem;
@@ -42,7 +42,7 @@ $placeholder-color : rgba(126, 121, 113, 0.5);
         width: 98%;
         outline: 0;
         border: 0;
-        background-color: $main-bg;
+        background-color: $main;
         color: white;
         &::placeholder {
           color: $label-color;
@@ -62,7 +62,7 @@ $placeholder-color : rgba(126, 121, 113, 0.5);
         width: 100%;
         outline: 0;
         border: 0;
-        background-color: $main-bg;
+        background-color: $main;
         color: white;
         &::placeholder {
           color: $label-color;

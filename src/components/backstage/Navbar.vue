@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav class="navbar bg-dark title">
-      <router-link to="/home" class="logo">
+      <router-link to="/" class="logo">
         GentSkin
         <i class="fas fa-user-tie fa-lg"></i>
       </router-link>
@@ -37,7 +37,6 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}/logout`;
       const vm = this;
       this.$http.post(api).then(() => {
-        // console.log(response.data)
         $('#signoutModal').modal('show');
         setTimeout(() => {
           $('#signoutModal').modal('hide');

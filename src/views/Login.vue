@@ -23,16 +23,13 @@
           placeholder="Password"
         />
         </label>
-        <button class="button bg-biwacha w-100 my-3">
+        <a href="#" class="d-block button button-slide p-2 my-3 w-100 text-center"
+        @click.prevent="signin">
           登入
-        </button>
-        <button
-          class="button bg-biwacha w-100"
-          type="button"
-          @click.prevent="home"
-        >
+        </a>
+        <router-link to="/" class="d-block button button-slide p-2 w-100 text-center">
           回首頁
-        </button>
+        </router-link>
       </form>
     </div>
         <!-- 登入提示Modal -->
@@ -75,12 +72,12 @@ export default {
     signin() {
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
-      vm.isLoading = true;
-      this.$http.post(api, vm.user).then((response) => {
-        vm.isLoading = false;
-        // console.log(response.data)
-        setTimeout(() => {
+      if (vm.user.username !== '' && vm.user.password !== '') {
+        vm.isLoading = true;
+        this.$http.post(api, vm.user).then((response) => {
+          // console.log(response.data)
           if (response.data.success) {
+            vm.isLoading = false;
             $('#SigninModal').modal('show');
             setTimeout(() => {
               $('#SigninModal').modal('hide');
@@ -89,15 +86,13 @@ export default {
               vm.$router.push('/admin/products');
             });
           } else if (!response.data.success) {
-            this.$bus.$emit('alert', '帳號密碼輸入錯誤');
+            this.$bus.$emit('alert', '帳號或密碼輸入錯誤');
             vm.isLoading = false;
           }
-        }, 1);
-      });
-    },
-    home() {
-      const vm = this;
-      vm.$router.push('/');
+        });
+      } else {
+        this.$bus.$emit('alert', '欄位不能留空');
+      }
     },
   },
   components: {

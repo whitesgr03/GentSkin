@@ -1,0 +1,93 @@
+.helper {
+    &-bg {
+        height: 650px;
+        display: flex;
+        text-align: center;
+        background-size: cover;
+        background-position: left center;
+        background-image: url(assets/images/helper/helper.jpg);
+        @include media-breakpoint-down(sm) {
+            height: 50vh;
+        }
+        h2 {
+            font-size: $font-size-base * 3.5;
+            text-transform: uppercase;
+                @include media-breakpoint-down(sm) {
+                    font-size: $font-size-base * 2;
+                }
+            }
+    }
+    .nav {
+        flex-direction: column;
+        margin-bottom: 5rem;
+        @include media-breakpoint-down(md) {
+            margin-bottom: 2rem;
+        }
+        &-underline {
+            position: relative;
+            &::before {
+                content: '';
+                position: absolute;
+                display: inline-block;
+                width: 70px;
+                border-bottom: 3px solid white;
+                border-radius: 10px;
+                bottom: -10px;
+            }
+        }
+    }
+    .btn {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        &:hover {
+            background-color: $secondary;
+        }
+    }
+    .collapse {
+        &-text {
+            width: 90%;
+            padding: 1.25rem;
+            background-color: transparent;
+        }
+    }
+}
+
+.plus {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    border: solid 2px white;
+    .vertical {
+        position: absolute;
+        background-color: white;
+        width: 3px;
+        height: 17px;
+        left: 9px;
+        top: 2px;
+        transition: all 0.3s ease-in-out;
+        transform: rotate(-90deg);
+    }
+    .horizontal {
+        position: absolute;
+        background-color: white;
+        width: 17px;
+        height: 3px;
+        top: 9px;
+        left: 2px;
+        transition: all 0.3s ease-in-out;
+        transform: rotate(-90deg);
+        opacity: 1;
+    }
+}
+
+.minus {
+    .vertical {
+        transform: rotate(90deg);
+    }
+    .horizontal {
+        transform: rotate(90deg);
+        opacity: 0;
+    }
+}

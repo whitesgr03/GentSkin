@@ -1,268 +1,464 @@
 <template>
   <div>
-    <Modal :navCart="cart" @signIn="login" @userLogin="getLogin" :orderList="orderData"/>
-    <Header class="sticky-top" :navCartItem="cartItem" :menu="dropdownMenu"
-      :categorie="categories" :moveData="moveDown" @move="moveAnimate" @searchInput="searchItem"
-      @menuItem="changeItem" :navSignin="loginStatus" @signIn="login" @order="getOrder"
-      :orderButton="orderStatus"/>
-    <div class="product container py-3 py-md-5">
-      <div class="row">
-        <ul class="category nav justify-content-around d-md-none"
-        :class="{ 'category-moveDown': moveDown == true, 'category-moveUp': categories != ''}">
-          <li class="nav-item">
-            <button type="button" class="nav-link"
-              :class="{ 'nav-active': categories == '' }"
-              @click.prevent="categories = '', search = '', moveDown = false">
-              ALL
-            </button>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#top"
-              :class="{ 'nav-active': categories == '上衣' }"
-              @click.prevent="categories = '上衣', search = '', moveDown = false">
-              上衣
-              <i class="far fa-xs fa-plus-square"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#bottom"
-              :class="{ 'nav-active': categories == '下身' }"
-              @click.prevent="categories = '下身', search = '', moveDown = false">下身
-              <i class="far fa-xs fa-plus-square"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#accessorie"
-              :class="{ 'nav-active': categories == '配件' }"
-              @click.prevent="categories = '配件', search = '', moveDown = false">
-            配件
-              <i class="far fa-xs fa-plus-square"></i></a>
-          </li>
-        </ul>
-        <ul id="top" class="item nav justify-content-around d-md-none animated"
-          :class="{ 'item-display': categories == '上衣' }">
-          <li class="nav-item">
-            <a class="" href="#">短TEE</a>
-          </li>
-          <li class="nav-item">
-            <a class="" href="#">襯衫</a>
-          </li>
-          <li class="nav-item">
-            <a class="" href="#">外套</a>
-          </li>
-        </ul>
-        <ul id="bottom" class="item nav justify-content-around d-md-none animated"
-          :class="{ 'item-display': categories == '下身' }">
-          <li class="nav-item">
-            <a class="" href="#">長褲</a>
-          </li>
-          <li class="nav-item">
-            <a class="" href="#">西裝褲</a>
-          </li>
-          <li class="nav-item">
-            <a class="" href="#">牛仔褲</a>
-          </li>
-        </ul>
-        <ul id="accessorie" class="item nav justify-content-around d-md-none animated"
-          :class="{ 'item-display': categories == '配件' }">
-          <li class="nav-item">
-            <a class="" href="#">帽子</a>
-          </li>
-          <li class="nav-item">
-            <a class="" href="#">包包</a>
-          </li>
-          <li class="nav-item">
-            <a class="" href="#">鞋類</a>
-          </li>
-        </ul>
-        <div class="col-6 col-md-4 my-3" v-for="item in filterItem[pages]" :key="item.id">
-          <!--透過pagination[pages]使類別在All時頁面會顯示頁碼-->
-          <div v-if="item.is_enabled">
-            <img :src="item.imageUrl" class="product-img" alt="product-photo"
-              @click.prevent="getContent(item.id)" />
-            <div class="product-content">
-              <div class="d-md-flex justify-content-between align-items-end">
-                <p class="product-title h5" @click.prevent="getContent(item.id)">
-                  {{ item.title }}
+    <loading :active.sync="isLoading" loader="dots"></loading>
+    <div class="product py-3 py-lg-5">
+      <!-- 導覽列 -->
+      <div class="container-sm">
+        <div class="product-navbar">
+          <div class="row py-5">
+            <ul class="nav pb-3 py-md-0">
+              <li class="nav-item">
+                <a href="#" class="nav-link" @click.prevent="$bus.$emit('routerLink','/')">
+                  首頁
+                </a>
+              </li>
+              <li class="nav-item">
+                <p class="nav-link m-0 px-0">/</p>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link"
+                @click.prevent="getCategorie('collections')">
+                  分類
+                </a>
+              </li>
+              <li class="nav-item"  v-if="mainItem">
+                <p class="nav-link m-0 px-0">/</p>
+              </li>
+              <li class="nav-item"  v-if="mainItem">
+                <a href="#" class="nav-link"
+                @click.prevent="getCategorie(routerName), item = '';">
+                  {{ mainItem }}
+                </a>
+              </li>
+              <li class="nav-item"  v-if="item">
+                <p class="nav-link m-0 px-0">/</p>
+              </li>
+              <li class="nav-item"  v-if="item">
+                <p class="m-0 nav-link">
+                  {{ item }}
                 </p>
-                <p class="product-origin h6 text-muted" v-if="item.origin_price > 0">
-                  <del>原價 {{ item.origin_price | currency }} 元</del>
-                </p>
+              </li>
+            </ul>
+            <!-- 搜尋欄 -->
+            <div class="search">
+              <div class="search-border">
+                <input type="text"
+                  class="form-control border-0"
+                  placeholder="Search..."
+                  v-model="search"
+                  @keyup.enter="searchItems = search, getCategorie('search')"
+                >
               </div>
-                <p class="product-price h5"> {{ item.price | currency }}元</p>
             </div>
           </div>
         </div>
       </div>
-      <div class="pagination justify-content-center d-none d-md-flex" >
-        <ul class="nav">
-          <li class="mx-2" v-for="page in filterItem.length" :key="page"
-          @click.prevent="pagination">
-            <button type="button" class="btn"
-              @click.prevent="pages = page - 1"
-              :class="{ btnColor: pages === page - 1 }">
-              {{ page }}
-            </button>
-          </li>
-        </ul>
+      <!-- 分類列表 -->
+      <div class="collections" v-if="$route.params.item === 'collections'">
+        <div class="row m-0 mb-5">
+          <div class="col-12 pb-5 px-0">
+            <div class="collections-warp">
+              <div class="collections-img collections-img-tops w-50">
+                <div class="collections-content">
+                  <h4>上衣</h4>
+                  <button type="button" class="button button-slide"
+                  @click.prevent="getCategorie('tops')">
+                    開始選購
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-4 pl-lg-0">
+            <div class="wrap">
+              <a href="#" class="collections-img collections-img-tshirt"
+              @click.prevent="getCategorie('tops', 't-shirt')">
+                <div class="wrap-shadow">
+                  <div class="text-content">
+                    <p class="underline m-0">T-shirt</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="col-6 col-lg-4">
+            <div class="wrap">
+              <a href="#" class="collections-img collections-img-shirt"
+              @click.prevent="getCategorie('tops', 'shirt')">
+                <div class="wrap-shadow">
+                  <div class="text-content">
+                    <p class="underline m-0">襯衫</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="col-6 col-lg-4 pr-lg-0">
+            <div class="wrap">
+              <a href="#" class="collections-img collections-img-outer"
+              @click.prevent="getCategorie('tops', 'outer')">
+                <div class="wrap-shadow">
+                  <div class="text-content">
+                  <p class="underline m-0">外套</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="row m-0 mb-5">
+          <div class="col-12 pb-5 px-0">
+            <div class="collections-warp">
+              <div class="collections-img collections-img-bottoms w-50">
+                <div class="collections-content">
+                  <h4>下身</h4>
+                  <button type="button" class="button button-slide"
+                  @click.prevent="getCategorie('bottoms')">
+                    開始選購
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-4 pl-lg-0">
+            <div class="wrap">
+              <a href="#" class="collections-img collections-img-shorts"
+              @click.prevent="getCategorie('bottoms', 'shorts')">
+                <div class="wrap-shadow">
+                  <div class="text-content">
+                    <p class="underline m-0">短褲</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="col-6 col-lg-4">
+            <div class="wrap">
+              <a href="#" class="collections-img collections-img-pants"
+              @click.prevent="getCategorie('bottoms', 'pants')">
+                <div class="wrap-shadow">
+                  <div class="text-content">
+                    <p class="underline m-0">長褲</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="col-6 col-lg-4 pr-lg-0">
+            <div class="wrap">
+              <a href="#" class="collections-img collections-img-jeans"
+              @click.prevent="getCategorie('bottoms', 'jeans')">
+                <div class="wrap-shadow">
+                  <div class="text-content">
+                    <p class="underline m-0">牛仔褲</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="row m-0 mb-5">
+          <div class="col-12 pb-5 px-0">
+            <div class="collections-warp">
+              <div class="collections-img collections-img-accessories w-50">
+                <div class="collections-content">
+                  <h4>配件</h4>
+                  <button type="button" class="button button-slide"
+                  @click.prevent="getCategorie('accessories')">
+                    開始選購
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-4 pl-lg-0">
+            <div class="wrap">
+              <a href="#" class="collections-img collections-img-hat"
+              @click.prevent="getCategorie('accessories', 'hat')">
+                <div class="wrap-shadow">
+                  <div class="text-content">
+                    <p class="underline m-0">帽子</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="col-6 col-lg-4">
+            <div class="wrap">
+              <a href="#" class="collections-img collections-img-bag"
+              @click.prevent="getCategorie('accessories', 'bag')">
+                <div class="wrap-shadow">
+                  <div class="text-content">
+                    <p class="underline m-0">背包</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="col-6 col-lg-4 pr-lg-0">
+            <div class="wrap">
+              <a href="#" class="collections-img collections-img-shoes"
+              @click.prevent="getCategorie('accessories', 'shoes')">
+                <div class="wrap-shadow">
+                  <div class="text-content">
+                    <p class="underline m-0">鞋子</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <!-- 商品顯示 -->
+      <div class="container" v-if="$route.params.item !== 'collections'">
+        <div class="product-item">
+          <div class="row">
+            <div class="col-6 col-sm-4 col-md-3 my-3 " v-for="(item, i) in itemList" :key="i">
+              <div :id="i"  class="product-item-wrap fadein-up" v-if="item.is_enabled"
+              :style="{ transitionDelay: item.delay + 's' }">
+                <router-link class="wrap d-block"
+                :to ="{ path: `/content/${item.category}/${item.Item}`,
+                query: { id :`${item.id}` }}">
+                <img :src="item.imageUrl" alt="product-photo">
+                </router-link>
+
+                <div class="content">
+                  <router-link class="d-inline-block underline"
+                  :to ="{ path: `/content/${item.category}/${item.Item}`,
+                  query: { id :`${item.id}` }}">
+                    {{ item.title }}
+                  </router-link>
+
+                  <div class="text">
+                    <p class="m-0 mr-3" v-if="item.origin_price > 0">
+                      <del>{{ item.origin_price | currency }}</del>
+                    </p>
+                    <p class="m-0" :class="{'text-danger' : item.origin_price > 0}">
+                      {{ item.price | currency }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <infinite-loading spinner="waveDots" class="loading"
+      v-if="$route.params.item !== 'collections'"
+      :identifier="infiniteId" @infinite="infiniteHandler">
+        <span slot="no-more"></span>
+        <span slot="no-results"></span>
+      </infinite-loading>
     </div>
   </div>
 </template>
 
 <script>
 import $ from 'jquery';
-import Modal from '@/components/forestage/Modal.vue';
-import Header from '@/components/forestage/Header.vue';
+import InfiniteLoading from 'vue-infinite-loading';
 
 export default {
   data() {
     return {
-      products: [],
-      cart: [],
-      cartItem: [],
-      item: [],
-      orderData: [],
+      index: 0,
+      itemList: [],
+      active: false,
+      product: [],
+      allProduct: [],
+      infiniteId: +new Date(),
       status: {
         loadingItem: '',
       },
-      categories: '',
+      collections: '',
+      mainItem: '',
+      item: '',
+      routerName: '',
       search: '',
-      orderStatus: '',
-      pages: 0,
-      dropdownMenu: true,
-      moveDown: false,
-      loginStatus: false,
+      searchItems: '',
       isLoading: false,
     };
   },
   methods: {
     getProducts() {
+      // 取得所有商品
       const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
       vm.isLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
       this.$http.get(api).then((response) => {
-        vm.products = response.data.products;
-        vm.isLoading = false;
-        // console.log('販賣的物品', response.data.products);
+        if (response.data.success) {
+          vm.allProduct = response.data.products;
+          vm.getitem(vm.allProduct);
+          vm.isLoading = false;
+        }
       });
     },
-    getContent(id) {
+    infiniteHandler($state) {
+      // 讀取商品
       const vm = this;
-      vm.$router.push(`content/${id}`);
+      if (vm.product.length >= vm.index + 1) {
+        setTimeout(() => {
+          vm.itemList.push(...vm.product[vm.index]);
+          vm.index += 1;
+          $state.loaded();
+          $('.loading').removeClass('loading-height');
+        }, 500);
+        setTimeout(() => {
+          $('.fadein-up').addClass('fadein-up-show');
+          // eslint-disable-next-line
+          $('.product-item-wrap').mousemove(function () {
+            const hashtag = '#';
+            const targetId = $(this).attr('id');
+            $(hashtag + targetId).find('.underline').addClass('underline-active');
+          });
+          // eslint-disable-next-line
+          $('.product-item-wrap').mouseout(function () {
+            const hashtag = '#';
+            const targetId = $(this).attr('id');
+            $(hashtag + targetId).find('.underline').removeClass('underline-active');
+          });
+          // 捲動頁面執行動畫
+        }, 550);
+      } else {
+        $state.complete();
+      }
     },
-    getCart() {
+    getitem(allData) {
       const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      this.$http.get(api).then((response) => {
-        vm.cart = response.data.data;
-        vm.cartItem = response.data.data.carts.length;
-        // console.log('購物車資料', response.data.data.carts);
-      });
-    },
-    getLogin() {
-      const vm = this;
-      const getAccount = JSON.parse(sessionStorage.getItem('myAccount'));
-      if (getAccount !== null) {
-        const verify = getAccount.find(item => item.login === true);
-        if (verify !== undefined) {
-          vm.loginStatus = true;
-          vm.orderStatus = verify.orderID;
+      vm.isLoading = true;
+      $('.loading').addClass('loading-height');
+      const items = vm.$route.params.item;
+      let product = [];
+      if (items === 'all') {
+        vm.mainItem = 'All';
+        vm.routerName = 'all';
+        vm.item = '';
+        vm.search = '';
+        product = allData;
+        $('html, body').animate({ scrollTop: 0 }, 1);
+      } else if (items === 'search') {
+        product = allData.filter((item) => {
+          vm.mainItem = 'All';
+          vm.routerName = 'all';
+          vm.item = '';
+          $('html, body').animate({ scrollTop: 0 }, 1);
+          return item.title.indexOf(vm.searchItems) > -1;
+        });
+      } else {
+        if (vm.$route.query.item !== undefined) {
+          vm.collections = vm.$route.query.item;
+        } else {
+          vm.collections = items;
+        }
+        product = allData.filter((item) => {
+          vm.search = '';
+          $('html, body').animate({ scrollTop: 0 }, 1);
+          return item.category === vm.collections || item.Item === vm.collections;
+        });
+        if (product.length !== 0) {
+          vm.routerName = items;
+          if (items === 'tops') {
+            vm.mainItem = '上衣';
+            if (vm.collections === 't-shirt') {
+              vm.item = 'T-shirt';
+            } else if (vm.collections === 'shirt') {
+              vm.item = '襯衫';
+            } else if (vm.collections === 'outer') {
+              vm.item = '外套';
+            } else if (vm.collections === 'suit') {
+              vm.item = '西裝';
+            }
+          } else if (items === 'bottoms') {
+            vm.mainItem = '下身';
+            if (vm.collections === 'shorts') {
+              vm.item = '短褲';
+            } else if (vm.collections === 'pants') {
+              vm.item = '長褲';
+            } else if (vm.collections === 'jeans') {
+              vm.item = '牛仔褲';
+            }
+          } else if (items === 'accessories') {
+            vm.mainItem = '配件';
+            if (vm.collections === 'hat') {
+              vm.item = '帽子';
+            } else if (vm.collections === 'bag') {
+              vm.item = '背包';
+            } else if (vm.collections === 'shoes') {
+              vm.item = '鞋類';
+            }
+          }
+        } else {
+          vm.mainItem = '';
+          vm.item = '';
         }
       }
+      const productItem = [];
+      let seconds = 0;
+      product.forEach((item, i) => {
+        const element = item;
+        if (i % 4 === 0) {
+          productItem.push([]);
+        }
+        const index = parseInt(i / 4, 10);
+        if (seconds === 0.3 * 4) {
+          seconds = 0.3;
+        } else {
+          seconds += 0.3;
+        }
+        element.delay = seconds;
+        productItem[index].push(element);
+      });
+      vm.product = productItem;
+      vm.index = 0;
+      vm.itemList = [];
+      vm.infiniteId += 1;
+      vm.isLoading = false;
     },
-    login(item) {
+    getCategorie(item, item2) {
+      // 執行路由變更和商品篩選
       const vm = this;
-      setTimeout(() => {
-        vm.loginStatus = item;
-      }, 1);
-    },
-    getOrder() {
-      const vm = this;
-      const accountData = JSON.parse(sessionStorage.getItem('myAccount'));
-      const verify = accountData.filter(item => item.login === true);
-      if (verify[0].orderID !== undefined) {
-        vm.orderData = [];
-        verify[0].orderID.forEach((item) => {
-          const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${item}`;
-          this.$http.get(api).then((response) => {
-            vm.orderData.push(response.data.order);
-          });
-        });
-        // console.log(vm.orderData);
+      if (item === 'collections') {
+        vm.$router.push('/').catch(err => err);
+        setTimeout(() => {
+          vm.$router.push({ path: `/shop/${item}`, query: { item: item2 } }).catch(err => err);
+        }, 1);
+      } else {
+        vm.$router.push({ path: `/shop/${item}`, query: { item: item2 } }).catch(err => err);
+        vm.getitem(vm.allProduct);
       }
-    },
-    pagination() {
-      const vm = this;
-      if (vm.pages >= 0) {
-        $('html, body').animate({ scrollTop: 0 }, 1);
-      }
-    },
-    changeItem(item) {
-      const vm = this;
-      vm.categories = item;
-      vm.search = '';
-    },
-    searchItem(item) {
-      const vm = this;
-      vm.search = item;
-    },
-    moveAnimate(item) {
-      const vm = this;
-      vm.moveDown = item;
-      vm.categories = '';
     },
   },
-  computed: {
-    filterItem() {
-      const vm = this;
-      const width = $(window).width();
-      let product = [];
-      if (vm.categories !== '' && vm.search === '') {
-        product = vm.products.filter((item) => {
-          vm.pages = 0;
-          $('html, body').animate({ scrollTop: 0 }, 1);
-          return item.category === vm.categories;
-        });
-        // console.log('categories', product)
-      } else if (vm.search !== '') {
-        product = vm.products.filter((item) => {
-          vm.pages = 0;
-          return item.title.indexOf(vm.search) > -1;
-        });
-        // console.log('search', product)
-      } else {
-        product = vm.products;
+  mounted() {
+    // search欄動畫
+    $('.form-control').focusin(() => {
+      $('.search').addClass('search-border-LR');
+      $('.search-border').addClass('search-border-TB');
+    });
+    $('.form-control').focusout(() => {
+      $('.search').removeClass('search-border-LR');
+      $('.search-border').removeClass('search-border-TB');
+    });
+    const symbol = '#';
+    const scrollPos = $(window).scrollTop();
+    const windowHeight = $(window).height();
+    $('.fadein-up').each((i, item) => {
+      const target = symbol + $(item).attr('id');
+      const targerPos = $(target).offset().top;
+      if (targerPos <= scrollPos + windowHeight) {
+        $(item).addClass('fadein-up-show');
       }
-      const pagination = [];
-      product.forEach((item, i) => {
-        if (width >= 768) {
-          if (i % 6 === 0) {
-            pagination.push([]);
-          } // i % 6 = 3 代表想要新增幾頁分頁
-          const page = parseInt(i / 6, 10); // 6代表每頁分頁要放幾筆資料
-          pagination[page].push(item);
-        } else {
-          if (i % product.length === 0) {
-            pagination.push([]);
-          }
-          const page = parseInt(i / product.length, 10);
-          pagination[page].push(item);
-        }
-      });
-      // console.log(pagination);
-      return pagination;
-    },
+    });
   },
   created() {
-    this.getProducts();
-    this.getCart();
-    this.getLogin();
     $('html, body').animate({ scrollTop: 0 }, 1);
+    this.getProducts();
+    this.$bus.$on('getCategorie', (item, item2) => {
+      // 手機板modal登出執行
+      this.getCategorie(item, item2);
+    });
   },
   components: {
-    Modal,
-    Header,
+    InfiniteLoading,
   },
 };
 </script>

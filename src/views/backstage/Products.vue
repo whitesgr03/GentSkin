@@ -1,16 +1,16 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" style="z-index: 9999;"></loading>
-    <div class="products" v-if="products.length !== 0">
+    <loading :active.sync="isLoading" style="z-index:9999;"></loading>
+    <div class="products">
       <div class="text-right mb-4">
-        <button class="button bg-biwacha" @click.prevent="openModal(true)">
+        <button type="button" class="button bg-biwacha" @click.prevent="openModal(true)">
           新增商品
         </button>
       </div>
       <table class="table mb-5">
         <thead>
           <tr>
-            <th width="150">
+            <th width="200">
               <form>
                 <label for="sort" class="mr-2 mb-0">分類</label>
                 <select v-model="category" id="sort" class="custom-select align-baseline">
@@ -42,10 +42,10 @@
           <tr v-for="item in sortProducts" :key="item.id">
             <td>{{ item.category }}</td>
             <td>{{ item.title }}</td>
-            <td class="text-center" v-if="item.origin_price != ''">
+            <td class="text-center" v-if="item.origin_price !== '0'">
               {{ item.origin_price | currency }}
             </td>
-            <td class="text-center" v-if="item.origin_price == ''">----</td>
+            <td class="text-center" v-if="item.origin_price === '0'">----</td>
             <td class="text-center">{{ item.price | currency }}</td>
             <td>
               <span v-if="item.is_enabled" class="text-success"  style="cursor: pointer;"
@@ -76,8 +76,6 @@
           </tr>
         </tbody>
       </table>
-
-      <!-- <Pagination :paginations="pagination" @getPage="getProducts" /> -->
 
       <!--新增及編輯的Modal-->
       <div class="modal animated fadeIn" id="productModal" tabindex="-1" role="dialog">
@@ -228,14 +226,14 @@
             <div class="modal-footer">
               <button
                 type="button"
-                class="button bg-momoshiocha"
+                class="button bg-secondary"
                 data-dismiss="modal"
               >
                 取消
               </button>
               <button
                 type="button"
-                class="button bg-konjyo"
+                class="button bg-biwacha"
                 @click.prevent="updataProduct"
               >
                 確認
@@ -245,7 +243,7 @@
         </div>
       </div>
 
-      <!--刪除的模板-->
+      <!--刪除Modal-->
       <div
         class="modal animated bounceInDown"
         id="delProductModal"
@@ -285,13 +283,11 @@
 
 <script>
 import $ from 'jquery';
-// import Pagination from '@/components/backstage/Pagination.vue';
 
 export default {
   data() {
     return {
       products: [],
-      // pagination: {},
       tempProduct: {},
       reverse: false,
       sortData: '',
@@ -306,12 +302,10 @@ export default {
     };
   },
   methods: {
-    getProducts(Loading) {
+    getProducts() {
       const vm = this;
+      vm.isLoading = true;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products/all`;
-      if (Loading) {
-        vm.isLoading = true;
-      }
       this.$http.get(api).then((response) => {
         if (response.data.success) {
           const newArray = [];
@@ -325,8 +319,6 @@ export default {
           vm.categorys = Array.from(new Set(sort));
           vm.newData = '';
           vm.isLoading = false;
-          // console.log(vm.categorys);
-          // vm.pagination = response.data.pagination;
         } else {
           vm.$router.push('/login');
         }
@@ -342,7 +334,6 @@ export default {
       } else if (!isEnabled) {
         vm.tempProduct.is_enabled = 0;
       }
-      // console.log(vm.tempProduct);
       this.$http.put(api, { data: vm.tempProduct }).then(() => {
         vm.getProducts(false);
       });
@@ -396,10 +387,9 @@ export default {
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;
       this.$http.delete(api).then(() => {
-        //  console.log(response, vm.tempProduct)
-        this.$bus.$emit('alert', '已刪除商品');
         $('#delProductModal').modal('hide');
         vm.getProducts();
+        this.$bus.$emit('alert', '已刪除商品');
       });
     },
     uploadFile() {
@@ -450,10 +440,7 @@ export default {
     },
   },
   created() {
-    this.getProducts(true);
+    this.getProducts();
   },
-  // components: {
-  //   Pagination,
-  // },
 };
 </script>

@@ -1,0 +1,176 @@
+.f-sidebar {
+    position: fixed;
+    width: 100%;
+    max-width: 16.66667%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    background-color: $black;
+    color:white;
+    border-right: 1px solid black;
+    @include media-breakpoint-down(md) {
+      background-color: $layout;
+      display: flex;
+      flex-direction: column;
+      z-index: 2;
+      max-width: 100%;
+      bottom: auto;
+      right: 0;
+    }
+
+    .dropright {
+      position: absolute;
+      background-color: $black;
+      top: 0;
+      bottom: 0;
+      left: 100%;
+      overflow: hidden;
+      width: 100%;
+      opacity: 0;
+      max-width: 0px;
+      transition: all 1s, opacity .5s;
+      &-display {
+        opacity: 1;
+        transition: all .5s, opacity 1s;
+        overflow: visible;
+        max-width: 100%;
+      }
+      .nav {
+        align-items: center;
+        margin-top: 235px;
+        flex-direction: column;
+      }
+      button {
+        border-radius: 20px;
+        margin: 5px 0;
+        &:hover {
+          color : rgba($white, .5);
+        }
+      }
+      .active {
+        background-color: #5a5a5a;
+        &:hover {
+          color: $white;
+        }
+      }
+    }
+
+    .option {
+      display: flex;
+      flex-direction: column-reverse;
+      @include media-breakpoint-down(md) {
+        flex-direction: row;
+        justify-content: center;
+        position: relative;
+        padding: $spacer * .5 0;
+      }
+      .menu {
+        display: none;
+          @include media-breakpoint-down(md) {
+              display: block;
+              width: 30px;
+              height: 45px;
+              left: 23px;
+              background-color: transparent;
+              border: none;
+              position: absolute;
+              cursor: pointer;
+              span {
+                  display: block;
+                  position: absolute;
+                  height: 3px;
+                  width: 100%;
+                  background: white;
+                  border-radius: 9px;
+                  left: 0;
+                  transition: all .25s;
+                  &:nth-child(1) {
+                      top: 10px;
+                  }
+                  &:nth-child(2),&:nth-child(3) {
+                      top: 20px;
+                  }
+                  &:nth-child(4) {
+                      top: 30px;
+                  }
+              }
+              &-active {
+                  span {
+                      &:nth-child(1) {
+                      top: 20px;
+                      width: 0%;
+                      left: 50%;
+                      }
+                      &:nth-child(2) {
+                          -webkit-transform: rotate(45deg);
+                          -moz-transform: rotate(45deg);
+                          -o-transform: rotate(45deg);
+                          transform: rotate(45deg);
+                      }
+                      &:nth-child(3) {
+                          -webkit-transform: rotate(-45deg);
+                          -moz-transform: rotate(-45deg);
+                          -o-transform: rotate(-45deg);
+                          transform: rotate(-45deg);
+                      }
+                      &:nth-child(4) {
+                          top: 20px;
+                          width: 0%;
+                          left: 50%;
+                      }
+                  }
+              }
+          }
+      }
+      .logo {
+        font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+        font-size: $h2-font-size;
+      }
+      .nav {
+        justify-content: space-around;
+        @include media-breakpoint-down(md) {
+          position: absolute;
+          right: 10px;
+        }
+        &-item {
+          &-hide {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 1s;
+          }
+          &-visible {
+            opacity: 1;
+            visibility: visible;
+          }
+        }
+        .badge {
+          position: absolute;
+          top: 0;
+          right: -5px;
+        }
+      }
+    }
+
+    .menuList {
+      padding: 40px 0;
+      text-align: center;
+      @include media-breakpoint-down(md) {
+      } 
+
+      .nav {
+        @include media-breakpoint-down(md) {
+        }
+        &-link {
+          &:hover {
+            color : rgba($white, .5);
+          }
+        }
+      }
+      i {
+        position: absolute;
+        right: 20%;
+        top: 12px;
+      }
+    }
+}

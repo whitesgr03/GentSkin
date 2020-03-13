@@ -16,7 +16,7 @@ $gray-700: #495057 !default;
 $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
 $black:    #000 !default;
-$main-bg:  #181a1b;
+$main:  #181a1b;
 
 $grays: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
@@ -103,15 +103,11 @@ $theme-colors: map-merge(
     "dark":       $dark,
     "black":      $black,
     'white':      $white,
-    'eerie':      $eerie,
     'tohoh':      $tohoh,
     'momoshiocha':$momoshiocha,
-    'rikyunezumi':$rikyunezumi,
     'midori':     $midori,
     'biwacha':    $biwacha,
-    'kogecha':  #563F2E,
-    'konjyo':   #1f468c,
-    'transparent':transparent,
+    'konjyo':     $konjyo,
     
   ),
   $theme-colors
@@ -188,7 +184,7 @@ $sizes: map-merge(
 //
 // Settings for the `<body>` element.
 
-$body-bg:                   $main-bg !default;
+$body-bg:                   $main !default;
 $body-color:                $white !default;
 
 
@@ -219,10 +215,10 @@ $link-hover-decoration:                   none !default;
 
 $grid-breakpoints: (
   xs: 0,
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  xl: 1200px
+  sm: 577px,
+  md: 769px,
+  lg: 1025px,
+  xl: 1367px
 ) !default;
 
 @include _assert-ascending($grid-breakpoints, "$grid-breakpoints");
@@ -304,7 +300,7 @@ $font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberati
 $font-family-base:            $font-family-sans-serif !default;
 // stylelint-enable value-keyword-case
 
-$font-size-base:              1.2rem !default; // Assumes the browser default, typically `16px`
+$font-size-base:              1rem !default; // Assumes the browser default, typically `16px`
 $font-size-lg:                $font-size-base * 1.25 !default;
 $font-size-sm:                $font-size-base * .875 !default;
 
@@ -1023,8 +1019,8 @@ $progress-bar-transition:           width .6s ease !default;
 // List group
 
 $list-group-color:                  null !default;
-$list-group-bg:                     $main-bg !default;
-$list-group-border-color:           $main-bg !default;
+$list-group-bg:                     $main !default;
+$list-group-border-color:           $main !default;
 $list-group-border-width:           $border-width !default;
 $list-group-border-radius:          $border-radius !default;
 
@@ -1081,14 +1077,14 @@ $breadcrumb-border-radius:          $border-radius !default;
 // Carousel
 
 $carousel-control-color:             $white !default;
-$carousel-control-width:             15% !default;
+$carousel-control-width:             5% !default;
 $carousel-control-opacity:           .5 !default;
 $carousel-control-hover-opacity:     .9 !default;
 $carousel-control-transition:        opacity .15s ease !default;
 
 $carousel-indicator-width:           30px !default;
 $carousel-indicator-height:          3px !default;
-$carousel-indicator-hit-area-height: 10px !default;
+$carousel-indicator-hit-area-height: 0px !default;
 $carousel-indicator-spacer:          3px !default;
 $carousel-indicator-active-bg:       $white !default;
 $carousel-indicator-transition:      opacity .6s ease !default;
@@ -1120,7 +1116,7 @@ $spinner-border-width-sm: .2em !default;
 
 $close-font-size:                   $font-size-base * 2.5 !default;
 $close-font-weight:                 $font-weight-bolder !default;
-$close-color:                       $black !default;
+$close-color:                       $white !default;
 $close-text-shadow:                 none !default;
 
 

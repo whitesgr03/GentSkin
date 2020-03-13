@@ -2,81 +2,94 @@
   <div>
     <div class="footer">
       <div class="container">
-        <div class="row justify-content-around mb-4 mb-md-5">
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <p class="nav-link h5">購物須知</p>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-color" href="#">購買流程</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-color" href="#">支付方式</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-color" href="#">退貨政策</a>
-            </li>
-          </ul>
-          <ul class="nav flex-column">
-            <li class="nav-item">
-              <p class="nav-link h5">用戶協助</p>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-color" href="#">客戶服務</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-color" href="#">人才招募</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-color" href="#">連絡我們</a>
-            </li>
-          </ul>
-          <ul class="nav flex-column justify-content-between mt-4 m-md-0">
-            <li class="nav-item">
-              <p class="nav-link h5 mb-4">訂閱我們以取得最新優惠資訊</p>
-            </li>
-            <li class="nav-item align-self-center mb-4">
-              <div class="input-group">
-                <input type="email" class="form-control"
-                placeholder="email@example.com" >
-                <div class="input-group-append">
-                  <button class="btn btn-konjyo" type="button">
-                    訂閱
-                  </button>
-                </div>
-              </div>
-            </li>
-            <li class="nav-item">
-              <ul class="nav justify-content-around">
+        <!-- 介紹與服務 -->
+        <div class="row mb-5">
+          <div class="col-lg-6 d-none d-lg-block">
+            <div class="d-flex flex-column">
+              <h4 class="mb-5">
+                關於GentSkin
+              </h4>
+              <p>
+                我們的故事始於1990年，在一個小工作室裡，
+                我們的品牌誕生了，我們採購最頂級的材料，聘請最卓越的手工藝師傅，
+                為的就是使顧客在 GentSkin 能夠找到最合適的商品，
+                我們對獨特設計和協作的熱情將我們的願景和產品帶入了生活。
+              </p>
+            </div>
+          </div>
+          <div class="col col-lg-6">
+            <div class="row justify-content-around">
+              <ul class="nav flex-column">
                 <li class="nav-item">
-                  <a href="#"><img src="../../assets/images/footer/facebook.png"
-                  alt="facebook"/></a>
+                  <h4 class="mb-4">
+                    問題協助
+                  </h4>
                 </li>
                 <li class="nav-item">
-                  <a href="#"><img src="../../assets/images/footer/line.png"
-                  alt="line"/></a>
+                  <a href="#" class="nav-link"
+                  @click.prevent="$bus.$emit('routerLink','/helper')">
+                    購買及支付
+                  </a>
                 </li>
                 <li class="nav-item">
-                  <a href="#"><img src="../../assets/images/footer/Instagram.png"
-                  alt="instagram"/></a>
+                  <a href="#" class="nav-link"
+                  @click.prevent="$bus.$emit('routerLink','Helper', '#Q2' )">
+                    訂單及物流
+                  </a>
                 </li>
                 <li class="nav-item">
-                  <a href="#"><img src="../../assets/images/footer/youtube.png"
-                  alt="youtube"/></a>
+                  <a href="#" class="nav-link"
+                  @click.prevent="$bus.$emit('routerLink','Helper', '#Q3' )">
+                    售後服務
+                  </a>
                 </li>
               </ul>
-            </li>
-          </ul>
+              <ul class="nav flex-column">
+                <li class="nav-item">
+                  <h4 class="mb-4">
+                    客戶服務
+                  </h4>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link"
+                  @click.prevent="$bus.$emit('routerLink','/contact')">
+                    聯繫我們
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link"
+                  @click.prevent="$bus.$emit('routerLink','Contact', '.location' )">
+                    店面查詢
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div class="text-center">
-          <p>個人練習作品 無商業用途</p>
-          <p>&copy;Copyright 2019
+        <!-- 個人連結 -->
+        <div class="d-flex flex-column align-items-center">
+            <ul class="nav">
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="fab fa-lg fa-github"></i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="fab fa-lg fa-linkedin"></i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="fab fa-lg fa-codepen"></i>
+                </a>
+              </li>
+            </ul>
             <!-- 員工登入 -->
             <router-link to="/admin/products" class="d-md-inline-block d-none" >
-            GentSkin
-            <i class="fas fa-user-tie fa-lg"></i>
+              &copy; 2020 - GentSkin
+              <i class="fas fa-user-tie"></i>
             </router-link>
-          </p>
         </div>
       </div>
     </div>
