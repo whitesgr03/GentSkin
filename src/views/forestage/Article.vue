@@ -8,7 +8,7 @@
     <div class="container-md py-5">
       <div class="theme" style="height: auto;">
         <div class="row">
-          <div class="col-12 col-sm-6 col-lg-4">
+          <div class="col-12 col-sm-6 col-lg-4 mb-lg-5">
             <div id="20191001" class="theme-wrap fadein-up">
               <div class="wrap">
                 <img
@@ -33,7 +33,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-6 col-lg-4">
+          <div class="col-12 col-sm-6 col-lg-4 mb-lg-5">
             <div id="20190917" class="theme-wrap fadein-up delay-2">
               <div class="wrap">
                 <img
@@ -58,7 +58,7 @@
               </div>
             </div>
           </div>
-          <div class="col-12 col-sm-6 col-lg-4">
+          <div class="col-12 col-sm-6 col-lg-4 mb-lg-5">
             <div id="20190830" class="theme-wrap fadein-up delay-3">
               <div class="wrap">
                 <img
