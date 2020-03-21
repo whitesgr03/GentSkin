@@ -394,6 +394,18 @@
             font-size: $font-size-base * 1.2;
         }
     }
+    .button {
+        &-slide {
+            color:  $white;
+            &::after {
+            background-color:  $black;
+            }
+            &:hover {
+            color: $black;
+            background-color: $biwacha;
+            }
+        }
+    }
 }
 
 #payModal {
