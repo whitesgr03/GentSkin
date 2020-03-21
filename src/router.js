@@ -109,29 +109,5 @@ export default new Router({
         },
       ],
     },
-
-    // {
-    //   path: '/customer',
-    //   name: 'Customer',
-    //   // 測試購物
-    //   component: () => import('@/views/Dashboard.vue'),
-    //   meta: { requiresAuth: true },
-    //   children: [
-    //     {
-    //       path: 'orders',
-    //       name: 'CustomerOrder',
-    //       // 商品
-    //       component: () => import('@/views/backstage/CustomerOrder.vue'),
-    //       meta: { requiresAuth: true },
-    //     },
-    //     {
-    //       path: 'check/:orderId',
-    //       name: 'CustomerCheck',
-    //       // 結帳
-    //       component: () => import('@/views/backstage/CustomerCheck.vue'),
-    //       meta: { requiresAuth: true },
-    //     },
-    //   ],
-    // },
   ],
 });

@@ -346,6 +346,8 @@
 import $ from 'jquery';
 import { ValidationProvider, ValidationObserver } from 'vee-validate'; // 驗證功能
 import twzipcode from 'twzipcode-data';
+// import cityName from '@/assets/TWcityName.json';
+
 
 export default {
   data() {
@@ -355,6 +357,7 @@ export default {
       addCoupon: false,
       coupon_code: '',
       removeItem: '',
+      // cityName,
       cart: [],
       delivery: 'COD',
       cities: '',

@@ -46,10 +46,6 @@ export default {
         });
       });
     },
-    home() {
-      const vm = this;
-      vm.$router.push('/');
-    },
   },
 };
 </script>

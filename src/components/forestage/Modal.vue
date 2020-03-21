@@ -600,6 +600,21 @@ export default {
     };
   },
   methods: {
+    checkLogin() {
+      const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/api/user/check`;
+      vm.$http.post(api).then((response) => {
+        if (response.data.success) {
+          vm.newAccount.forEach((item) => {
+            vm.user.signUp.username = item.username;
+            vm.user.signUp.password = item.password;
+          });
+          vm.accountData.push(vm.user.signUp);
+          vm.loginInput = '請先選擇帳號';
+          vm.loginStatus = true;
+        }
+      });
+    },
     signUp() {
       // 註冊
       const vm = this;
@@ -636,20 +651,20 @@ export default {
       vm.isLoading = true;
       const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
       if (vm.user.signIn.username !== '' && vm.user.signIn.password !== '') {
-        this.$http.post(api, vm.user.signIn).then((response) => {
+        vm.$http.post(api, vm.user.signIn).then((response) => {
           if (response.data.success) {
             $('#loginModal').modal('hide');
             vm.loginStatus = true;
             vm.$bus.$emit('loginStatus', true);
-            this.$bus.$emit('alert', '測試會員，您已成功登入！');
+            vm.$bus.$emit('alert', '測試會員，您已成功登入！');
             vm.isLoading = false;
           } else {
-            this.$bus.$emit('alert', '您的帳號密碼有誤！');
+            vm.$bus.$emit('alert', '您的帳號密碼有誤！');
             vm.isLoading = false;
           }
         });
       } else {
-        this.$bus.$emit('alert', '您尚未註冊帳號！');
+        vm.$bus.$emit('alert', '您尚未註冊帳號！');
         vm.isLoading = false;
       }
     },
@@ -721,8 +736,8 @@ export default {
           || vm.$router.history.current.name === 'Order') {
             vm.$router.push('/');
           }
+          this.loginStatus = false;
           vm.$bus.$emit('loginStatus', false);
-          vm.loginStatus = false;
           $('#loginOutModal').modal('hide');
           vm.$bus.$emit('alert', '您已成功登出！');
         }
@@ -767,6 +782,7 @@ export default {
     });
   },
   created() {
+    this.checkLogin();
     setTimeout(() => {
       const getSite = sessionStorage.getItem('couponModal');
       const api = `${process.env.VUE_APP_APIPATH}/logout`;
@@ -775,7 +791,6 @@ export default {
         sessionStorage.setItem('couponModal', 'coupon');
         this.$http.post(api).then((response) => {
           if (response.data.success) {
-            this.loginStatus = false;
             this.$bus.$emit('loginStatus', false);
           }
         });

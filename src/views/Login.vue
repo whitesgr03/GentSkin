@@ -75,7 +75,6 @@ export default {
       if (vm.user.username !== '' && vm.user.password !== '') {
         vm.isLoading = true;
         this.$http.post(api, vm.user).then((response) => {
-          // console.log(response.data)
           if (response.data.success) {
             vm.isLoading = false;
             $('#SigninModal').modal('show');

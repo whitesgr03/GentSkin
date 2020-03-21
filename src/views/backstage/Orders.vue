@@ -12,7 +12,7 @@
               <i v-if="sortData == 'buyData'" class="fas fa-sort-up ml-1 text-tohoh"
               :class="{'reverse': reverse}"></i>
             </th>
-            <th width="200">Email</th>
+            <th width="200">購買人</th>
             <th>購買項目</th>
             <th width="150">訂單金額</th>
             <th width="120" @click.prevent="reverse = !reverse, sortData = 'payment'"
@@ -32,7 +32,7 @@
             :class="{ 'text-secondary': !item.is_paid }"
           >
             <td>{{ item.create_at | date}}</td>
-            <td>{{ item.user.email }}</td>
+            <td>{{ item.user.recipient.name }}</td>
             <td>
               <ul class="list-unstyled">
                 <li v-for="(product, i) in item.products" :key="i">
