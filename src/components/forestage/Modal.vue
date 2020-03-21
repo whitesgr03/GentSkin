@@ -782,7 +782,6 @@ export default {
     });
   },
   created() {
-    this.checkLogin();
     setTimeout(() => {
       const getSite = sessionStorage.getItem('couponModal');
       const api = `${process.env.VUE_APP_APIPATH}/logout`;
@@ -795,6 +794,7 @@ export default {
           }
         });
       }
+      this.checkLogin();
     }, 500);
     this.$bus.$on('orderId', (item) => {
       this.getOrder(item);
