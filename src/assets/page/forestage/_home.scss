@@ -10,7 +10,7 @@
 }
 
 .underline {
-  transition: transform 3s;
+  transition: transform .5s;
   padding-bottom: 3px;
   position: relative;
   @include media-breakpoint-down(md) {
@@ -24,7 +24,7 @@
     left: 0;
     bottom: 0;
     border-bottom: $border-width * 2 solid $black;
-    transition: width .5s, border 2s;
+    transition: width .5s, border .5s;
     @include media-breakpoint-down(md) {
       display: none;
     }
@@ -40,7 +40,7 @@
   &:hover {
     .underline::after {
       width: 100%;
-      transition: width 1s;
+      transition: width .5s;
     }
   }
   &-shadow {
@@ -203,7 +203,7 @@
     &-img {
         background-position: center center;
         background-size: cover;
-        transition: all 3s;
+        transition: all .5s;
         height: 100%;
         &:hover {
           transform: scale(1.1);
@@ -386,7 +386,7 @@
     height: 100%;
     color: $black;
     font-size: $font-size-base * 2;
-    transition: transform 3s;
+    transition: transform .5s;
     @include media-breakpoint-down(md) {
       color: $white;
     }
@@ -453,7 +453,7 @@
       .underline::after {
         width: 100%;
         border-color: white;
-        transition: width 1s;
+        transition: width .5s;
       }
     }
   }
@@ -468,7 +468,7 @@
   &-img {
     background-position: center center;
     background-size: cover;
-    transition: all 3s;
+    transition: all .5s;
     height: 100%;
     width: 100%;
     &:hover {
@@ -500,11 +500,17 @@
 
     }
   }
+  h5 {
+    cursor: pointer;
+  }
+  .wrap {
+    cursor: pointer;
+  }
 }
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity .5s;
+  transition: opacity .3s;
 }
 
 .fade-enter,

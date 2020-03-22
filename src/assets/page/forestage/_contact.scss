@@ -19,47 +19,31 @@
     }
     .location {
         position: relative;
-        margin: 0 auto 6rem;
+        margin: 0 auto;
         width: 80%;
         @include media-breakpoint-down(md) {
             width: 100%;
-            margin: 0 auto 8rem;
-        }
-        @include media-breakpoint-down(xs) {
-            margin: 0 auto 1rem;
         }
         &-map {
             width: 100%;
-            height: 450px;
-            @include media-breakpoint-down(sm) {
-                height: 400px;
-            }
+            height: 400px;
             @include media-breakpoint-down(xs) {
                 height: 250px;
             }
         }
         &-info {
-            position: absolute;
             padding: 2rem 2rem 3rem;
-            bottom: -80px;
-            left: 5%;
-            right: 5%;
             background-color: $black;
             border-radius: 20px;
-            @include media-breakpoint-down(md) {
-                bottom: -100px;
-            }
-            @include media-breakpoint-down(sm) {
-                left: -12%;
-                right: -12%;
-            }
             @include media-breakpoint-down(xs) {
-                position: static;
                 border-radius: 0px;
             }
             .row {
                 align-items: center;
                 justify-content: flex-end;
+                @include media-breakpoint-down(md) {
+                    flex-direction: column;
+                }
             }
         }
         &-button {

@@ -26,7 +26,7 @@
                 </p>
               </div>
             </div>
-            <div class="col-12 col-md-7">
+            <div class="col-md-7">
               <img src="../../assets/images/about/about-quality.jpg"
                 id="quality-photo"
                 alt="quality"
@@ -34,7 +34,7 @@
             </div>
           </div>
           <div class="row mb-5">
-            <div class="col-12 col-md-7">
+            <div class="col-md-7">
               <img src="../../assets/images/about/about-design.jpg"
                 id="design-photo"
                 alt="design"

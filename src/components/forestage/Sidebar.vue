@@ -50,7 +50,8 @@
             <span></span>
             <span></span>
         </button>
-        <a href="#" class="logo mt-lg-5 text-center" @click.prevent="routerPush('/')">
+        <a href="#" class="logo mt-lg-5 text-center" @click.prevent="$bus.$emit('closeMenu'),
+        $router.push('/')">
           GentSkin
         </a>
         <ul class="nav">
@@ -107,7 +108,8 @@
       <div class="menuList d-none d-lg-block">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a href="#" class="nav-link" @click.prevent="routerPush('/')">
+            <a href="#" class="nav-link" @click.prevent="$bus.$emit('closeMenu'),
+            $router.push('/')">
               首頁
             </a>
           </li>
@@ -120,12 +122,14 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" @click.prevent="routerPush('/article')">
+            <a href="#" class="nav-link" @click.prevent="$bus.$emit('closeMenu'),
+            $router.push('/article')">
               主題
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" @click.prevent="routerPush('/about')">
+            <a href="#" class="nav-link" @click.prevent="$bus.$emit('closeMenu'),
+            $router.push('/about')">
               關於
             </a>
           </li>
@@ -161,9 +165,19 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       this.$http.get(api).then((response) => {
         if (response.data.success) {
-          vm.cart = response.data.data;
-          vm.cartAmount = response.data.data.carts.length;
-          vm.$bus.$emit('getCart', vm.cart);
+          const getSite = sessionStorage.getItem('couponModal');
+          if (getSite == null) {
+            response.data.data.carts.forEach((item) => {
+              const removeItem = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${item.id}`;
+              this.$http.delete(removeItem).then(() => {});
+            });
+            vm.$bus.$emit('getCart', vm.cart);
+            sessionStorage.setItem('couponModal', 'coupon');
+          } else {
+            vm.cart = response.data.data;
+            vm.cartAmount = response.data.data.carts.length;
+            vm.$bus.$emit('getCart', vm.cart);
+          }
         }
       });
     },
@@ -178,17 +192,6 @@ export default {
       $('#menuModal').modal('hide');
       vm.collections = item;
       vm.menu = true;
-    },
-    routerPush(path, p) {
-      // 轉換分頁(代參數)
-      const vm = this;
-      $('#menuModal').modal('hide');
-      vm.menu = false;
-      if (p !== undefined) {
-        vm.$router.push({ name: path, params: { scroll: p } }).catch(err => err);
-      } else {
-        vm.$router.push(path).catch(err => err);
-      }
     },
     loginCheck() {
       // 認證是否登入狀態
@@ -237,9 +240,10 @@ export default {
       // 篩選商品
       this.getCategorie(item, item2);
     });
-    this.$bus.$on('routerLink', (path, params) => {
-      // 轉換分頁
-      this.routerPush(path, params);
+    this.$bus.$on('closeMenu', () => {
+      // 關閉menu選單
+      $('#menuModal').modal('hide');
+      this.menu = false;
     });
     this.$bus.$on('menuButton', () => {
       // 手機板漢堡選單動畫

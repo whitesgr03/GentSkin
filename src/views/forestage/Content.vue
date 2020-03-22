@@ -1,12 +1,13 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" loader="dots"></loading>
+    <loading :active.sync="isLoading" loader="dots" style="z-index:0;"></loading>
     <div class="content py-3 py-lg-5" :class="{'loading-height' : isLoading}">
       <div class="container" v-if="sameProduct.length !== 0">
         <!-- 導覽列 -->
         <ul class="nav py-5">
           <li class="nav-item">
-            <a href="#" class="nav-link" @click.prevent="$bus.$emit('routerLink','/')">
+            <a href="#" class="nav-link" @click.prevent="$bus.$emit('closeMenu'),
+                $router.push('/')">
               首頁
             </a>
           </li>
@@ -300,7 +301,8 @@ export default {
               setTimeout(() => {
                 vm.isLoading = false;
                 vm.$bus.$emit('alert', '商品已加入購物車');
-                vm.$bus.$emit('routerLink', '/order');
+                vm.$bus.$emit('closeMenu');
+                vm.$router.push('/order');
               }, 1000);
             }
           });
@@ -319,7 +321,8 @@ export default {
                     vm.$bus.$emit('getAmount');
                     vm.isLoading = false;
                     vm.$bus.$emit('alert', '商品已加入購物車');
-                    vm.$bus.$emit('routerLink', '/order');
+                    vm.$bus.$emit('closeMenu');
+                    vm.$router.push('/order');
                   }, 1000);
                 }
               });

@@ -4,19 +4,19 @@
     <div class="order container-fluid">
       <div class="row" v-if="cart.total !== 0">
         <!-- 寄件資訊 -->
-          <div class="col-12 col-md-6" >
+          <div class="col-md-6" >
             <div class="receiver">
               <p class="h3 text-center">取件人資訊</p>
               <div class="delivery mb-5">
                 <p>配送方式</p>
                 <div class="delivery-option">
-                  <button type="button"  class="button bg-black"
+                  <button type="button"  class="button bg-black text-white"
                   @click.prevent="delivery = 'CVS', form.user.fee.shipping = 60,
                   form.user.recipient.transport = '門市取貨', form.user.fee.payment = '門市取貨付款'"
                   >
                     超商取貨
                   </button>
-                  <button type="button" class="button bg-black"
+                  <button type="button" class="button bg-black text-white"
                     @click.prevent="delivery = 'COD', form.user.fee.shipping = 80,
                     form.user.recipient.transport = '宅配到府', form.user.fee.payment = '宅配貨到付款'">
                     宅配到府
@@ -26,8 +26,7 @@
               <ValidationObserver tag="form"
                 ref="observer" v-slot="{ valid }" @submit.prevent="creatOrder">
                 <div>
-                  <div class="form-row hide justify-content-center"
-                  :class="{'visible': delivery !== ''}">
+                  <div class="form-row hide justify-content-center">
                     <div class="col-6">
                       <ValidationProvider id="name" class="form"
                         rules="required" v-slot="{ valid, errors }">
@@ -65,15 +64,13 @@
                     </div>
                     <div class="col-6 my-5" v-if="delivery == 'CVS'">
                       <button type="button"
-                      class="button bg-black hide w-100"
-                      :class="{'visible': delivery == 'CVS'}"
+                      class="button bg-black w-100 text-white"
                       data-toggle="modal" data-target="#testModal">
                           選擇超商門市
                       </button>
                     </div>
                   </div>
-                  <div class="form-row hide mb-5" v-if="delivery === 'COD'"
-                  :class="{'visible': delivery == 'COD'}">
+                  <div class="form-row hide mb-5" v-if="delivery === 'COD'">
                     <div class="col-6">
                       <ValidationProvider class="form" rules="required" v-slot="{ valid, errors }">
                         <label for="userCountry" class="label"
@@ -158,7 +155,7 @@
                         </label>
                       </ValidationProvider>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check ml-2">
                       <input
                         type="checkbox"
                         class="form-check-input"
@@ -171,21 +168,18 @@
                     </div>
                   </div>
                 </div>
-                <button type="submit" class="button button-slide hide"
-                  :class="{'visible': delivery !== ''}">
+                <a href="#" class="button button-slide p-2 text-center"
+                @click.prevent="$bus.$emit('categorie', 'all')">
+                  繼續選購
+                </a>
+                <button type="submit" class="button button-slide">
                   送出訂單
-                </button>
-                <button type="button" class="hide button button-slide"
-                :class="{'visible': delivery !== ''}">
-                  <a href="#" @click.prevent="$bus.$emit('categorie', 'all')">
-                    繼續選購
-                  </a>
                 </button>
               </ValidationObserver>
             </div>
           </div>
         <!-- 購物車內容 -->
-        <div class="col-12 col-md-6">
+        <div class="col-md-6">
           <div class="cart">
             <p class="h3 text-center mb-3">購物車</p>
             <div class="overflow mb-3">
@@ -346,7 +340,6 @@
 import $ from 'jquery';
 import { ValidationProvider, ValidationObserver } from 'vee-validate'; // 驗證功能
 import twzipcode from 'twzipcode-data';
-// import cityName from '@/assets/TWcityName.json';
 
 
 export default {
@@ -357,7 +350,6 @@ export default {
       addCoupon: false,
       coupon_code: '',
       removeItem: '',
-      // cityName,
       cart: [],
       delivery: 'COD',
       cities: '',
@@ -461,7 +453,6 @@ export default {
           }
           vm.isLoading = false;
           vm.isDisable = false;
-          // console.log('優惠卷', response)
         });
       } else {
         this.$bus.$emit('alert', '未符合優惠條件');

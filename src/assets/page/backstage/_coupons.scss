@@ -13,6 +13,12 @@
             width: auto;
             height: auto;
             color: $black;
+            &:hover {
+                opacity: .5;
+            }
+        }
+        i {
+            color: $tohoh;
         }
     }
     .form {

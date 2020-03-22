@@ -15,7 +15,7 @@
         </div>
         <div class="check-cartInfo">
           <div class="row justify-content-center py-md-3">
-            <div class="col-12 col-md-8 mb-5 mb-md-0">
+            <div class="col-md-8 mb-5 mb-md-0">
               <div class="overflow">
                 <div class="row m-0 py-3 align-items-center"
                 v-for="item in order.products" :key="item.id">
@@ -38,7 +38,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 col-md-4">
+            <div class="col-md-4">
               <div class="row flex-column justify-content-center h-100 px-5">
                 <div class="d-flex justify-content-between">
                   <p >小計</p>
@@ -64,7 +64,7 @@
         </div>
         <div class="check-receiverInfo">
           <div class="row py-3">
-            <div class="col-12 col-md-6">
+            <div class="col-md-6">
               <ul class="list-group" v-if="order.user.recipient">
                 <li class="h3 list-group-item text-success">聯絡資訊</li>
                 <li class="list-group-item">姓名： {{ order.user.recipient.name }} </li>
@@ -80,13 +80,13 @@
                 </li>
               </ul>
             </div>
-            <div class="col-12 col-md-3">
+            <div class="col-md-3">
               <ul class="list-group" v-if="order.user.fee">
                 <li class="h3 list-group-item text-biwacha">付款方式</li>
                 <li class="list-group-item">{{  order.user.fee.payment }}</li>
               </ul>
             </div>
-            <div class="col-12 col-md-3">
+            <div class="col-md-3">
               <ul class="list-group" v-if="order.user.recipient">
                 <li class="h3 list-group-item text-biwacha">配送方式</li>
                 <li class="list-group-item">{{ order.user.recipient.transport }}</li>
@@ -179,9 +179,11 @@ export default {
       $('#serviceModal').modal('hide');
       $('#serviceModal').on('hidden.bs.modal', () => {
         if (value === 'delivery' || value === 'receipt') {
-          vm.$bus.$emit('routerLink', 'Helper', '#Q2');
+          vm.$router.push('/order');
+          vm.$bus.$emit('closeMenu');
+          vm.$router.push({ name: 'Helper', params: { scroll: '#Q2' } }).catch(err => err);
         } else {
-          vm.$bus.$emit('routerLink', 'Helper', value);
+          vm.$router.push({ name: 'Helper', params: { scroll: value } }).catch(err => err);
         }
       });
     },

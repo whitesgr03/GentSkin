@@ -13,10 +13,17 @@
             width: auto;
             height: auto;
             color: $black;
+            &:hover {
+                opacity: .5;
+            }
+        }
+        i {
+            color: $tohoh;
         }
     }
     .form {
         width: 100%;
+        display: flex;
     }
     .uploadImage {
         position: absolute;
@@ -31,9 +38,6 @@
         height: auto;
         width: auto;
         padding: 0 1.75rem 0 0.75rem;
-    }
-    form {
-        display: flex;
     }
     .reverse {
         transform: rotate(180deg);

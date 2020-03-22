@@ -1,6 +1,6 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" loader="dots"></loading>
+    <loading :active.sync="isLoading" loader="dots" style="z-index:0;"></loading>
     <div class="product py-3 py-lg-5">
       <!-- 導覽列 -->
       <div class="container-sm">
@@ -8,7 +8,8 @@
           <div class="row py-5">
             <ul class="nav pb-3 py-md-0">
               <li class="nav-item">
-                <a href="#" class="nav-link" @click.prevent="$bus.$emit('routerLink','/')">
+                <a href="#" class="nav-link" @click.prevent="$bus.$emit('closeMenu'),
+                $router.push('/')">
                   首頁
                 </a>
               </li>
@@ -297,28 +298,24 @@ export default {
       // 讀取商品
       const vm = this;
       if (vm.product.length >= vm.index + 1) {
-        setTimeout(() => {
-          vm.itemList.push(...vm.product[vm.index]);
-          vm.index += 1;
-          $state.loaded();
-          $('.loading').removeClass('loading-height');
-        }, 500);
+        vm.itemList.push(...vm.product[vm.index]);
+        vm.index += 1;
+        $state.loaded();
+        $('.loading').removeClass('loading-height');
         setTimeout(() => {
           $('.fadein-up').addClass('fadein-up-show');
-          // eslint-disable-next-line
-          $('.product-item-wrap').mousemove(function () {
+          $('.product-item-wrap').mousemove(function hover() {
             const hashtag = '#';
             const targetId = $(this).attr('id');
             $(hashtag + targetId).find('.underline').addClass('underline-active');
           });
-          // eslint-disable-next-line
-          $('.product-item-wrap').mouseout(function () {
+          $('.product-item-wrap').mouseout(function hover() {
             const hashtag = '#';
             const targetId = $(this).attr('id');
             $(hashtag + targetId).find('.underline').removeClass('underline-active');
           });
           // 捲動頁面執行動畫
-        }, 550);
+        }, 1);
       } else {
         $state.complete();
       }

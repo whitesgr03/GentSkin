@@ -24,15 +24,15 @@
             <th width="150" @click.prevent="reverse = !reverse, sortData = 'price'"
               style="cursor: pointer;">
               售價
-              <i class="fas fa-sort text-tohoh" v-if="sortData == '' || sortData !== 'price'"></i>
-              <i v-if="sortData == 'price'" class="fas fa-sort-up ml-1 text-tohoh"
+              <i class="fas fa-sort" v-if="sortData == '' || sortData !== 'price'"></i>
+              <i v-if="sortData == 'price'" class="fas fa-sort-up ml-1"
               :class="{'reverse': reverse}"></i>
             </th>
             <th width="150" @click.prevent="reverse = !reverse, sortData = 'release'"
               style="cursor: pointer;">
               是否上架
-              <i class="fas fa-sort text-tohoh" v-if="sortData == '' || sortData !== 'release'"></i>
-              <i v-if="sortData == 'release'" class="fas fa-sort-up text-tohoh"
+              <i class="fas fa-sort" v-if="sortData == '' || sortData !== 'release'"></i>
+              <i v-if="sortData == 'release'" class="fas fa-sort-up"
               :class="{'reverse': reverse}"></i>
             </th>
             <th width="150">編輯</th>
@@ -61,13 +61,13 @@
             </td>
             <td>
               <button
-                class="button bg-konjyo"
+                class="button" style="background-color: #1f468c;"
                 @click.prevent="openModal(false, item)"
               >
                 編輯
               </button>
               <button
-                class="button bg-momoshiocha"
+                class="button" style="background-color: #724938;"
                 @click.prevent="deleteModal(item)"
               >
                 刪除

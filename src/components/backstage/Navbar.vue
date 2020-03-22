@@ -1,10 +1,11 @@
 <template>
   <div>
     <nav class="navbar bg-dark title">
-      <router-link to="/" class="logo">
+      <a href="#" class="logo" @click.prevent="
+      $router.push({ name: 'Home', params: { data: 'check' }}).catch(err => err)">
         GentSkin
         <i class="fas fa-user-tie fa-lg"></i>
-      </router-link>
+      </a>
       <a class="nav-link" href="#" @click.prevent="signout">管理員登出</a>
     </nav>
 
@@ -43,6 +44,7 @@ export default {
         }, 1000);
         $('#signoutModal').on('hidden.bs.modal', () => {
           vm.$router.push('/');
+          vm.$bus.$emit('checkLogin');
         });
       });
     },

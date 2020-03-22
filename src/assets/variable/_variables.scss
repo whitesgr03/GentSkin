@@ -53,7 +53,6 @@ $biwacha: #b17844 !default;
 $momoshiocha: #724938 !default;
 $rikyunezumi: #91989F !default;
 $midori:      #227D51 !default;
-$konjyo:      #1f468c !default;
 
 
 $colors: () !default;
@@ -103,11 +102,7 @@ $theme-colors: map-merge(
     "dark":       $dark,
     "black":      $black,
     'white':      $white,
-    'tohoh':      $tohoh,
-    'momoshiocha':$momoshiocha,
-    'midori':     $midori,
     'biwacha':    $biwacha,
-    'konjyo':     $konjyo,
     
   ),
   $theme-colors

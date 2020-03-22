@@ -10,6 +10,12 @@
             height: auto;
             width: auto;
             color: $black;
+            &:hover {
+                opacity: .5;
+            }
+        }
+        i {
+            color: $tohoh;
         }
     }
 }

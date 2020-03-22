@@ -16,7 +16,7 @@
     &::after {
       width: 100%;
       border-bottom: $border-width * 1 solid $white;
-      transition: width 1s;
+      transition: width .5s;
     }
   }
   &-navbar {
@@ -206,7 +206,7 @@
     img {
       width: 100%;
       cursor: pointer;
-      transition: all 3s;
+      transition: all .5s;
       &:hover {
         transform: scale(1.1);
         @include media-breakpoint-down(md) {

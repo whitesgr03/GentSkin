@@ -24,7 +24,7 @@
               </ul>
             </div>
           </div>
-          <div class="col-12 col-lg-8">
+          <div class="col-lg-8">
             <ul class="nav">
               <li id="Q1" class="nav-item nav-underline h3 mb-5">
                 購買及支付
@@ -224,7 +224,7 @@ export default {
   },
   mounted() {
     this.scroll();
-    $('.helper .btn').click(function (e) {
+    $('.helper .btn').click(function dropdowns(e) {
       e.preventDefault();
       if ($(this).find('.plus').hasClass('minus')) {
         $(this).find('.plus').removeClass('minus');
@@ -234,7 +234,7 @@ export default {
         $(this).addClass('bg-secondary');
       }
     });
-    $('.helper .scrollTop').click(function (e) {
+    $('.helper .scrollTop').click(function dropdowns(e) {
       e.preventDefault();
       const target = $(this).attr('href');
       const targerPos = $(target).offset().top;

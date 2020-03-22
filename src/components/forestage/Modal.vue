@@ -22,7 +22,7 @@
               <i class="fas fa-times"></i>
             </button>
             <div class="d-none d-md-block col-md-6 p-0 modal-img"></div>
-            <div class="col-12 col-md-6">
+            <div class="col-md-6">
               <div class="h1 text-center mt-3">
                 我的訂單
               </div>
@@ -81,7 +81,7 @@
             >
               <i class="fas fa-times"></i>
             </button>
-            <div class="col-12 col-md-6 p-0">
+            <div class="col-md-6 p-0">
               <div class="panel-signIn align-items-center justify-content-center">
                 <div class="h1 mb-5">會員登入</div>
                 <form class="form d-flex flex-column align-items-center" @submit.prevent="signIn">
@@ -230,9 +230,9 @@
       <div
         class="modal-dialog"
         role="document"
-        :class="{'modal-dialog-scrollable' : cartItem.carts != ''}"
-      >
-        <form class="modal-content bg-black" @submit.prevent="payment" v-if="cartItem.carts != ''">
+        :class="{'modal-dialog-scrollable' : cartItem.length !== 0}">
+        <form class="modal-content bg-black" @submit.prevent="payment"
+        v-if="cartItem.length !== 0">
           <button type="button" class="close position-absolute text-white"
           style="right: 10px; top: 0px; opacity: 1;" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -273,7 +273,7 @@
           </div>
         </form>
         <div class="modal-content bg-black justify-content-center"
-        v-if="cartItem.carts == ''">
+        v-if="cartItem.length === 0">
         <h5 class="m-0 text-center">
           您還沒有選購任何商品
         </h5>
@@ -341,7 +341,8 @@
               <ul class="nav flex-column">
                 <li class="nav-item border-bottom">
                 <a href="#" class="nav-link"
-                @click.prevent="$bus.$emit('routerLink', ('/'))">
+                @click.prevent="$bus.$emit('closeMenu'),
+                $router.push('/')">
                   首頁
                 </a>
                 </li>
@@ -495,13 +496,15 @@
                 </li>
                 <li class="nav-item border-bottom">
                 <a href="#" class="nav-link"
-                @click.prevent="$bus.$emit('routerLink', ('/article'))">
+                @click.prevent="$bus.$emit('closeMenu'),
+                $router.push('/article')">
                   主題
                 </a>
                 </li>
                 <li class="nav-item border-bottom">
                 <a href="#" class="nav-link"
-                @click.prevent="$bus.$emit('routerLink', ('/about'))">
+                @click.prevent="$bus.$emit('closeMenu'),
+                $router.push('/about')">
                   關於
                 </a>
                 </li>
@@ -518,6 +521,13 @@
       aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
+          <button
+            type="button"
+            class="button-close position-absolute"
+            data-dismiss="modal"
+            aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
           <div class="modal-border">
               <h3 class="stroke">
                 季節限定特價
@@ -579,6 +589,7 @@ export default {
       isLoading: false,
       loginStatus: false,
       loginInput: '註冊完畢後即可選擇帳號',
+      removeItem: '',
       cartItem: [],
       orderList: [],
       accountData: [],
@@ -601,6 +612,7 @@ export default {
   },
   methods: {
     checkLogin() {
+      // 確認是否登入
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/api/user/check`;
       vm.$http.post(api).then((response) => {
@@ -656,6 +668,7 @@ export default {
             $('#loginModal').modal('hide');
             vm.loginStatus = true;
             vm.$bus.$emit('loginStatus', true);
+            vm.$bus.$emit('getLogin');
             vm.$bus.$emit('alert', '測試會員，您已成功登入！');
             vm.isLoading = false;
           } else {
@@ -700,7 +713,8 @@ export default {
       const vm = this;
       if (vm.loginStatus === true) {
         $('#cartModal').modal('hide');
-        vm.$bus.$emit('routerLink', '/order');
+        vm.$bus.$emit('closeMenu');
+        vm.$router.push('/order');
       } else {
         $('#cartModal').modal('hide');
         $('#loginModal').modal('show');
@@ -746,8 +760,7 @@ export default {
   },
   mounted() {
     // 首次瀏覽顯示優惠資訊
-    // eslint-disable-next-line
-    $('.mobileList .shopList').click(function (e) {
+    $('.mobileList .shopList').click(function menu(e) {
       e.preventDefault();
       if ($(this).find('.plus').hasClass('minus')) {
         $(this).find('.plus').removeClass('minus');
@@ -756,8 +769,7 @@ export default {
         $(this).find('.plus').addClass('minus');
       }
     });
-    // eslint-disable-next-line
-    $('#shop').click(function (e) {
+    $('#shop').click(function menu(e) {
       e.preventDefault();
       this.ckickList = true;
       if ($(this).find('.plus').hasClass('minus')) {
@@ -770,8 +782,7 @@ export default {
         $(this).find('.plus').addClass('minus');
       }
     });
-    // eslint-disable-next-line
-    $('#menuModal').on('hidden.bs.modal', function (e) {
+    $('#menuModal').on('hidden.bs.modal', function menu(e) {
       e.preventDefault();
       setTimeout(() => {
         if (!$(this).hasClass('show')) {
@@ -783,25 +794,30 @@ export default {
   },
   created() {
     setTimeout(() => {
+      // 首次進入網站顯示廣告並初始化帳號
       const getSite = sessionStorage.getItem('couponModal');
-      const api = `${process.env.VUE_APP_APIPATH}/logout`;
       if (getSite == null) {
-        $('#saleModal').modal('show');
-        sessionStorage.setItem('couponModal', 'coupon');
-        this.$http.post(api).then((response) => {
+        const logout = `${process.env.VUE_APP_APIPATH}/logout`;
+        this.$http.post(logout).then((response) => {
           if (response.data.success) {
+            this.loginStatus = false;
             this.$bus.$emit('loginStatus', false);
           }
         });
+        $('#saleModal').modal('show');
       }
-      this.checkLogin();
     }, 500);
-    this.$bus.$on('orderId', (item) => {
-      this.getOrder(item);
-    });
     this.$bus.$on('getCart', (item) => {
       this.cartItem = item;
       // 取得購物車資料
+    });
+    this.$bus.$on('checkLogin', () => {
+      // 檢查是否登入
+      this.checkLogin();
+    });
+    this.$bus.$on('orderId', (item) => {
+      // 取得訂單資料
+      this.getOrder(item);
     });
   },
 };

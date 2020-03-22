@@ -123,7 +123,7 @@ button:focus {
         right:-10%;
         z-index: -1;
         background-color: black;
-        transition: all .3s, height 1s;
+        transition: all .3s, height .3s;
       }
       &::before {
         position: absolute;
@@ -139,7 +139,7 @@ button:focus {
       &:hover {
         background-color: transparent;
         color: black;
-        transition: all 1s;
+        transition: all .5s;
         &:after {
           height:0px;
           right:0%;

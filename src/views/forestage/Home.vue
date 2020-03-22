@@ -27,7 +27,7 @@
                 Selfhood Style
               </h3>
               <router-link to="/article" class="carousel-button">
-                閱讀更多
+                主題文章
               </router-link>
             </div>
           </div>
@@ -177,7 +177,7 @@
                   </a>
                 </div>
               </div>
-              <div class="col-12 col-md-6 pl-md-0 category-wrap-h35">
+              <div class="col-md-6 pl-md-0 category-wrap-h35">
                 <div class="wrap">
                   <a href="#" class="category-img category-img-shoes"
                   @click.prevent="$bus.$emit('categorie', 'accessories', 'shoes')">
@@ -187,7 +187,7 @@
                   </a>
                 </div>
               </div>
-              <div class="col-12 col-md-6 category-wrap-h35">
+              <div class="col-md-6 category-wrap-h35">
                 <div class="wrap">
                   <a href="#" class="category-img category-img-bottoms"
                   @click.prevent="$bus.$emit('categorie', 'bottoms')">
@@ -201,7 +201,7 @@
           </div>
           <div class="col-6">
             <div class="row">
-              <div class="col-12 col-md-6 category-wrap-h35">
+              <div class="col-md-6 category-wrap-h35">
                 <div class="wrap">
                   <a href="#" class="category-img category-img-coat"
                   @click.prevent="$bus.$emit('categorie', 'tops', 'outer')">
@@ -211,7 +211,7 @@
                   </a>
                 </div>
               </div>
-              <div class="col-12 col-md-6 pr-md-0 category-wrap-h35">
+              <div class="col-md-6 pr-md-0 category-wrap-h35">
                 <div class="wrap">
                   <a href="#" class="category-img category-img-accessories"
                   @click.prevent="$bus.$emit('categorie', 'accessories', 'hat')">
@@ -241,7 +241,7 @@
         <div class="theme">
           <h3 class="text-center m-0">主題文章</h3>
           <div class="row">
-            <div class="col-12 col-sm-6 col-lg-4">
+            <div class="col-sm-6 col-lg-4">
               <div class="theme-wrap">
                 <div class="wrap">
                   <router-link to="/article" class="theme-img theme-img-1"></router-link>
@@ -262,7 +262,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 col-sm-6 col-lg-4">
+            <div class="col-sm-6 col-lg-4">
               <div class="theme-wrap">
                 <div class="wrap">
                   <router-link to="/article" class="theme-img theme-img-2"></router-link>
@@ -283,7 +283,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 col-sm-6 col-lg-4">
+            <div class="col-sm-6 col-lg-4">
               <div class="theme-wrap">
                 <div class="wrap">
                   <router-link to="/article" class="theme-img theme-img-3"></router-link>
@@ -327,6 +327,9 @@ export default {
       // 取得所有商品
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
+      if (this.$route.params.data === 'check') {
+        this.$bus.$emit('checkLogin');
+      }
       this.$http.get(api).then((response) => {
         if (response.data.success) {
           vm.products = response.data.products.filter(item => item.Item === 'suit');

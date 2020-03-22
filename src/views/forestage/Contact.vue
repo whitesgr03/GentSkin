@@ -14,7 +14,7 @@
           </iframe>
           <div class="location-info">
             <div class="row">
-              <div class="col-12 col-sm-6">
+              <div class="col-lg-6">
                 <p>
                   <i class="fas fa-map-marker-alt mr-3"></i>
                   台北市大安區忠孝東路四段182號
@@ -24,7 +24,7 @@
                   0916628955
                 </p>
               </div>
-              <div class="col-12 col-sm-6 pl-5">
+              <div class="col-lg-6 pl-5 text-center">
                 <p>營業時間：</p>
                 <p>周一 - 周五 , 8:30am - 10:30pm</p>
                 <p>周六 , 周日 8:30am - 11:00pm</p>

@@ -8,8 +8,8 @@
             <th width="120" @click.prevent="reverse = !reverse, sortData = 'buyData'"
               style="cursor: pointer;">
               下單日期
-              <i class="fas fa-sort text-tohoh" v-if="sortData == '' || sortData !== 'buyData'"></i>
-              <i v-if="sortData == 'buyData'" class="fas fa-sort-up ml-1 text-tohoh"
+              <i class="fas fa-sort" v-if="sortData == '' || sortData !== 'buyData'"></i>
+              <i v-if="sortData == 'buyData'" class="fas fa-sort-up ml-1"
               :class="{'reverse': reverse}"></i>
             </th>
             <th width="200">購買人</th>
@@ -18,8 +18,8 @@
             <th width="120" @click.prevent="reverse = !reverse, sortData = 'payment'"
               style="cursor: pointer;">
               付款狀態
-              <i class="fas fa-sort text-tohoh" v-if="sortData == '' || sortData !== 'payment'"></i>
-              <i v-if="sortData == 'payment'" class="fas fa-sort-up ml-1 text-tohoh"
+              <i class="fas fa-sort" v-if="sortData == '' || sortData !== 'payment'"></i>
+              <i v-if="sortData == 'payment'" class="fas fa-sort-up ml-1"
               :class="{'reverse': reverse}"></i>
             </th>
             <th width="100">編輯</th>
@@ -47,7 +47,7 @@
               <span v-else class="text-warning">未付款</span>
             </td>
             <td>
-              <button class="button bg-konjyo">編輯</button>
+              <button class="button" style="background-color: #1f468c;">編輯</button>
             </td>
           </tr>
         </tbody>

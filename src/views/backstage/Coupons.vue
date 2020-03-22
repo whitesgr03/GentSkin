@@ -14,22 +14,22 @@
             <th width="200" @click.prevent="reverse = !reverse, sortData = 'percent'"
               style="cursor: pointer;">
               折扣百分比
-              <i class="fas fa-sort text-tohoh" v-if="sortData == '' || sortData !== 'percent'"></i>
-              <i v-if="sortData == 'percent'" class="fas fa-sort-up ml-1 text-tohoh"
+              <i class="fas fa-sort" v-if="sortData == '' || sortData !== 'percent'"></i>
+              <i v-if="sortData == 'percent'" class="fas fa-sort-up ml-1"
               :class="{'reverse': reverse}"></i>
             </th>
             <th width="200" @click.prevent="reverse = !reverse, sortData = 'date'"
               style="cursor: pointer;">
               到期日
-              <i class="fas fa-sort text-tohoh" v-if="sortData == '' || sortData !== 'date'"></i>
-              <i v-if="sortData == 'date'" class="fas fa-sort-up ml-1 text-tohoh"
+              <i class="fas fa-sort" v-if="sortData == '' || sortData !== 'date'"></i>
+              <i v-if="sortData == 'date'" class="fas fa-sort-up ml-1"
               :class="{'reverse': reverse}"></i>
             </th>
             <th width="150" @click.prevent="reverse = !reverse, sortData = 'enables'"
               style="cursor: pointer;">
               是否啟用
-              <i class="fas fa-sort text-tohoh" v-if="sortData == '' || sortData !== 'enables'"></i>
-              <i v-if="sortData == 'enables'" class="fas fa-sort-up ml-1 text-tohoh"
+              <i class="fas fa-sort" v-if="sortData == '' || sortData !== 'enables'"></i>
+              <i v-if="sortData == 'enables'" class="fas fa-sort-up ml-1"
               :class="{'reverse': reverse}"></i>
             </th>
             <th width="150">編輯</th>
@@ -53,13 +53,13 @@
             </td>
             <td>
               <button
-                class="button bg-konjyo"
+                class="button" style="background-color: #1f468c;"
                 @click.prevent="openModal(false, item)"
               >
                 編輯
               </button>
               <button
-                class="button bg-momoshiocha"
+                class="button" style="background-color: #724938;"
                 @click.prevent="deleteModal(item)"
               >
                 刪除
