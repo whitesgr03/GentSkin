@@ -248,7 +248,7 @@
                 </div>
                 <div class="theme-content p-3">
                   <div>
-                    <h5>男士必學的「燈芯絨穿搭」</h5>
+                    <router-link to="/article" class="h5">男士必學的「燈芯絨穿搭」</router-link>
                     <p class="theme-text">
                       除非您沒有穿著西裝的習慣，否則您會注意到西裝剪裁正在經歷歷史上最大的一次翻新。
                       因為越來越少的人需要正式西裝來工作，所以選擇一套西裝變得越來越著重於風格，
@@ -269,7 +269,7 @@
                 </div>
                 <div class="theme-content p-3">
                   <div>
-                    <h5>讓西裝成為日常穿搭選項！</h5>
+                    <router-link to="/article" class="h5">讓西裝成為日常穿搭選項！</router-link>
                     <p class="theme-text">
                       無論我們從事什麼職業，我們都從事自我銷售業務。
                       每天，我們都致力於將自己推銷給雇主，客戶和潛在的合作夥伴（無論是專業的人還是浪漫的人）。
@@ -290,7 +290,7 @@
                 </div>
                 <div class="theme-content p-3">
                   <div>
-                    <h5>打造成熟時髦的紳士品格！</h5>
+                    <router-link to="/article" class="h5">打造成熟時髦的紳士品格！</router-link>
                     <p class="theme-text">
                       他們說，在生活中，您必須發揮自己的能力，這是事實。但是，您也可以通過一些穿搭方式將風格建立層次。
                       一套合適的西裝可以修飾（隱藏）自身的缺點：就像戴著Instagram濾鏡，
