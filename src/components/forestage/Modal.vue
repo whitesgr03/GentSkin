@@ -595,8 +595,8 @@ export default {
       accountData: [],
       newAccount:
       [{
-        username: 'GentSkinTest01@gmail.com',
-        password: 'GentSkin',
+        username: '',
+        password: '',
       }],
       user: {
         signUp: {
