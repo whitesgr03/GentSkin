@@ -81,7 +81,7 @@
             >
               <i class="fas fa-times"></i>
             </button>
-            <div class="col-md-6 p-0">
+            <div class="col-md-6 p-0 h-100">
               <div class="panel-signIn align-items-center justify-content-center">
                 <div class="h1 mb-5">會員登入</div>
                 <form class="form d-flex flex-column align-items-center" @submit.prevent="signIn">
