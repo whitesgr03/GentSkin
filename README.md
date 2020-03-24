@@ -27,7 +27,9 @@
 </p>
 
 <img src="https://i.imgur.com/t4VrmH9.jpg">
-* <a href="https://whitebf.github.io/GentSkin/#/">Demo</a>
+<h1>
+  <a href="https://whitebf.github.io/GentSkin/#/">Demo</a>
+</h1>
 
 
 ## 作品介紹
