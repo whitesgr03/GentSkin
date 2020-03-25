@@ -2,281 +2,32 @@
   <div>
     <loading :active.sync="isLoading" loader="dots" style="z-index: 9999;"></loading>
 
-    <!-- 訂單查詢 Modal -->
-    <div
-      class="modal animated bounceInDown"
-      id="orderModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div
-        class="modal-dialog modal-dialog-centered" >
-        <div class="modal-content bg-dark">
-          <div class="row m-0 h-100">
-            <button
+    <!-- 優惠提示 Modal -->
+    <div class="modal animated rollIn" id="saleModal"
+      tabindex="-1" role="dialog" data-backdrop="static"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <button
             type="button"
             class="button-close position-absolute"
             data-dismiss="modal"
             aria-label="Close">
-              <i class="fas fa-times"></i>
-            </button>
-            <div class="d-none d-md-block col-md-6 p-0 modal-img"></div>
-            <div class="col-md-6">
-              <div class="h1 text-center mt-3">
-                我的訂單
-              </div>
-              <div class="table-overflow">
-                <table v-for="item in orderList" :key="item.id"
-                  class="table border border-secondary text-center my-2">
-                  <thead>
-                    <tr>
-                      <th>訂單編號</th>
-                      <th>日期</th>
-                      <th>總金額</th>
-                      <th class="d-none d-md-block">訂單狀態</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <a class="text-primary" href="#" @click.prevent="order(item.id)">
-                          {{ item.create_at }} </a>
-                      </td>
-                      <td>
-                        {{ item.create_at | date }}
-                      </td>
-                      <td>
-                        {{ (item.total + item.user.fee.shipping) | currency }}
-                      </td>
-                      <td class="d-none d-md-block">
-                        <span class="text-warning">準備出貨</span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 會員 Modal -->
-    <div
-      class="modal animated bounceInDown"
-      id="loginModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content bg-dark" :class="{ 'panel-slide': sign == true }">
-          <div class="row panel m-0">
-            <button
-              type="button"
-              class="button-close position-absolute"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <i class="fas fa-times"></i>
-            </button>
-            <div class="col-md-6 p-0 h-100">
-              <div class="panel-signIn align-items-center justify-content-center">
-                <div class="h1 mb-5">會員登入</div>
-                <form class="form d-flex flex-column align-items-center" @submit.prevent="signIn">
-                  <label for="loginAccount" class="label"
-                  >帳號
-                    <select id="loginAccount"
-                    :class="{'select': accountData.length === 0,
-                    'text-danger' : accountData.length === 0}"
-                    :disabled="accountData.length === 0"
-                    class="form-control" v-model="user.signIn.username"
-                    @change="changeData(user.signIn.username)">
-                      <option selected disabled value="" v-if="accountData.length === 0">
-                        請先進行註冊
-                      </option>
-                      <option selected disabled value="" v-else>
-                        請選取任一測試帳號
-                      </option>
-                      <option v-for="(item, i) in accountData"
-                      :key="i" :value="item.username"
-                      >
-                      GentSkinTest 0{{ i + 1}}
-                      </option>
-                    </select>
-                  </label>
-                  <label for="loginPassword" class="label"
-                    >密碼
-                  <input
-                    type="password"
-                    disabled
-                    id="loginPassword"
-                    class="input"
-                    :placeholder="loginInput"
-                    v-model="user.signIn.password"
-                  />
-                  </label>
-                  <p class="text-center">
-                    註冊完畢後請登入帳號
-                  </p>
-                  <button type="submit" class="button button-slide"
-                  :disabled="user.signIn.username === ''">
-                    登入
-                  </button>
-                </form>
-                <p class="mt-3 mb-0 d-md-none">還沒有註冊嗎？
-                  <a href="#" class="text-info" @click.prevent="sign = true">
-                    點此註冊
-                  </a>
-                </p>
-              </div>
-            </div>
-            <div class="col col-md-6 p-0 h-100" :class="{ 'z-index': sign == true }">
-              <div class="panel-signUp align-items-center justify-content-center">
-                <div class="h1 mb-4">註冊會員</div>
-                <form class="form mb-3 d-flex flex-column align-items-center"
-                  @submit.prevent="signUp">
-                  <label for="registerAccount" class="label"
-                  >帳號
-                    <select id="registerAccount"
-                    class="form-control" v-model="user.signUp.username"
-                    @change="changeData(user.signUp.username, true)">
-                      <option selected disabled value="">請選取任一測試帳號</option>
-                      <option v-for="(item, i) in newAccount"
-                      :key="i" :value="item.username"
-                      >
-                        GentSkinTest 0{{ i + 1}}
-                      </option>
-                    </select>
-                  </label>
-                  <label for="registerPassword" class="label"
-                    >密碼
-                  <input
-                    type="password"
-                    disabled
-                    id="registerPassword"
-                    class="input"
-                    placeholder="請先選擇帳號"
-                    v-model="user.signUp.password"
-                  />
-                  </label>
-                  <p class="text-center">
-                    立即加入會員即可享更多優惠！
-                  </p>
-                  <button type="submit" class="button button-slide"
-                  :disabled="user.signUp.username === ''">
-                    註冊
-                  </button>
-                </form>
-                  <p class="mt-3 d-md-none">已經註冊了？
-                    <a href="#" class="text-info" @click.prevent="sign = false">
-                      點此登入
-                    </a>
-                  </p>
-              </div>
-            </div>
-          </div>
-          <div class="overlay position-absolute" style="left:50%;">
-            <div class="row m-0 overlay-bgc position-relative" style="left:-100%;">
-              <div class="col-6 p-0">
-                <div class="overlay-left align-items-center justify-content-center">
-                  <div class="overlay-button text-white">
-                    <p>
-                      已經註冊過了？
-                    </p>
-                    <button
-                      class="button button-pull button-pull-right"
-                      type="button"
-                      id="signIn"
-                      @click.prevent="sign = false"
-                    >
-                      點此登入
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="col-6 p-0">
-                <div class="overlay-right align-items-center justify-content-center">
-                  <div class="overlay-button">
-                    <p style="font-size: 1rem;">
-                      還沒有註冊嗎？
-                    </p>
-                    <button
-                      class="button button-pull button-pull-left"
-                      type="button"
-                      id="signUp"
-                      @click.prevent="sign = true"
-                    >
-                      點此註冊
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 購物車 Modal -->
-    <div
-      class="modal animated fadeInRight faster p-0"
-      id="cartModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div
-        class="modal-dialog"
-        role="document"
-        :class="{'modal-dialog-scrollable' : cartItem.length !== 0}">
-        <form class="modal-content bg-black" @submit.prevent="payment"
-        v-if="cartItem.length !== 0">
-          <button type="button" class="close position-absolute text-white"
-          style="right: 10px; top: 0px; opacity: 1;" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+            <i class="fas fa-times"></i>
           </button>
-          <div class="modal-title text-center">
-            <h5 class="my-4">
-              購物車
-            </h5>
-          </div>
-          <div class="modal-body">
-            <div class="row" v-for="item in cartItem.carts" :key="item.id">
-              <div class="col-5">
-                <img class="w-100 border p-1" :src="item.product.imageUrl" />
-              </div>
-              <div class="col-7">
-                <p>
-                  {{ item.product.title }}
-                </p>
-                <div>
-                  <p>
-                    {{ item.final_total | currency }}
-                  </p>
-                  <p class="m-0">
-                    {{ item.qty }}/{{ item.product.unit }}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="modal-footer justify-content-around">
-            <div class="h5 m-0">
-              <span class="mr-3">總金額</span> {{ cartItem.total | currency }}
-            </div>
-              <button type="submit" class="button button-slide">
-                結帳
+          <div class="modal-border">
+              <h3 class="stroke">
+                季節限定特價
+                <br>
+                <span>
+                  全館購物即可享有以下折扣
+                </span>
+              </h3>
+              <p>10% OFF</p>
+              <button type="button" data-dismiss="modal" class="button button-slide">
+                開始購物
               </button>
           </div>
-        </form>
-        <div class="modal-content bg-black justify-content-center"
-        v-if="cartItem.length === 0">
-        <h5 class="m-0 text-center">
-          您還沒有選購任何商品
-        </h5>
         </div>
       </div>
     </div>
@@ -515,31 +266,280 @@
       </div>
     </div>
 
-    <!-- 優惠提示 Modal -->
-    <div class="modal animated rollIn" id="saleModal"
-      tabindex="-1" role="dialog" data-backdrop="static"
-      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- 購物車 Modal -->
+    <div
+      class="modal animated fadeInRight faster p-0"
+      id="cartModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div
+        class="modal-dialog"
+        role="document"
+        :class="{'modal-dialog-scrollable' : cartItem.length !== 0}">
+        <form class="modal-content bg-black" @submit.prevent="payment"
+        v-if="cartItem.length !== 0">
+          <button type="button" class="close position-absolute text-white"
+          style="right: 10px; top: 0px; opacity: 1;" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="modal-title text-center">
+            <h5 class="my-4">
+              購物車
+            </h5>
+          </div>
+          <div class="modal-body">
+            <div class="row" v-for="item in cartItem.carts" :key="item.id">
+              <div class="col-5">
+                <img class="w-100 border p-1" :src="item.product.imageUrl" />
+              </div>
+              <div class="col-7">
+                <p>
+                  {{ item.product.title }}
+                </p>
+                <div>
+                  <p>
+                    {{ item.final_total | currency }}
+                  </p>
+                  <p class="m-0">
+                    {{ item.qty }}/{{ item.product.unit }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="modal-footer justify-content-around">
+            <div class="h5 m-0">
+              <span class="mr-3">總金額</span> {{ cartItem.total | currency }}
+            </div>
+              <button type="submit" class="button button-slide">
+                結帳
+              </button>
+          </div>
+        </form>
+        <div class="modal-content bg-black justify-content-center"
+        v-if="cartItem.length === 0">
+        <h5 class="m-0 text-center">
+          您還沒有選購任何商品
+        </h5>
+        </div>
+      </div>
+    </div>
+
+    <!-- 會員 Modal -->
+    <div
+      class="modal animated bounceInDown"
+      id="loginModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <button
+        <div class="modal-content bg-dark" :class="{ 'panel-slide': sign == true }">
+          <div class="row panel m-0">
+            <button
+              type="button"
+              class="button-close position-absolute"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+            <div class="col-md-6 p-0 h-100">
+              <div class="panel-signIn align-items-center justify-content-center">
+                <div class="h1 mb-5">會員登入</div>
+                <form class="form d-flex flex-column align-items-center" @submit.prevent="signIn">
+                  <label for="loginAccount" class="label"
+                  >帳號
+                    <select id="loginAccount"
+                    :class="{'select': accountData.length === 0,
+                    'text-danger' : accountData.length === 0}"
+                    :disabled="accountData.length === 0"
+                    class="form-control" v-model="user.signIn.username"
+                    @change="changeData(user.signIn.username)">
+                      <option selected disabled value="" v-if="accountData.length === 0">
+                        請先進行註冊
+                      </option>
+                      <option selected disabled value="" v-else>
+                        請選取任一測試帳號
+                      </option>
+                      <option v-for="(item, i) in accountData"
+                      :key="i" :value="item.username"
+                      >
+                      GentSkinTest 0{{ i + 1}}
+                      </option>
+                    </select>
+                  </label>
+                  <label for="loginPassword" class="label"
+                    >密碼
+                  <input
+                    type="password"
+                    disabled
+                    id="loginPassword"
+                    class="input"
+                    :placeholder="loginInput"
+                    v-model="user.signIn.password"
+                  />
+                  </label>
+                  <p class="text-center">
+                    註冊完畢後請登入帳號
+                  </p>
+                  <button type="submit" class="button button-slide"
+                  :disabled="user.signIn.username === ''">
+                    登入
+                  </button>
+                </form>
+                <p class="mt-3 mb-0 d-md-none">還沒有註冊嗎？
+                  <a href="#" class="text-info" @click.prevent="sign = true">
+                    點此註冊
+                  </a>
+                </p>
+              </div>
+            </div>
+            <div class="col col-md-6 p-0 h-100" :class="{ 'z-index': sign == true }">
+              <div class="panel-signUp align-items-center justify-content-center">
+                <div class="h1 mb-4">註冊會員</div>
+                <form class="form mb-3 d-flex flex-column align-items-center"
+                  @submit.prevent="signUp">
+                  <label for="registerAccount" class="label"
+                  >帳號
+                    <select id="registerAccount"
+                    class="form-control" v-model="user.signUp.username"
+                    @change="changeData(user.signUp.username, true)">
+                      <option selected disabled value="">請選取任一測試帳號</option>
+                      <option v-for="(item, i) in newAccount"
+                      :key="i" :value="item.username"
+                      >
+                        GentSkinTest 0{{ i + 1}}
+                      </option>
+                    </select>
+                  </label>
+                  <label for="registerPassword" class="label"
+                    >密碼
+                  <input
+                    type="password"
+                    disabled
+                    id="registerPassword"
+                    class="input"
+                    placeholder="請先選擇帳號"
+                    v-model="user.signUp.password"
+                  />
+                  </label>
+                  <p class="text-center">
+                    立即加入會員即可享更多優惠！
+                  </p>
+                  <button type="submit" class="button button-slide"
+                  :disabled="user.signUp.username === ''">
+                    註冊
+                  </button>
+                </form>
+                  <p class="mt-3 d-md-none">已經註冊了？
+                    <a href="#" class="text-info" @click.prevent="sign = false">
+                      點此登入
+                    </a>
+                  </p>
+              </div>
+            </div>
+          </div>
+          <div class="overlay position-absolute" style="left:50%;">
+            <div class="row m-0 overlay-bgc position-relative" style="left:-100%;">
+              <div class="col-6 p-0">
+                <div class="overlay-left align-items-center justify-content-center">
+                  <div class="overlay-button text-white">
+                    <p>
+                      已經註冊過了？
+                    </p>
+                    <button
+                      class="button button-pull button-pull-right"
+                      type="button"
+                      id="signIn"
+                      @click.prevent="sign = false"
+                    >
+                      點此登入
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 p-0">
+                <div class="overlay-right align-items-center justify-content-center">
+                  <div class="overlay-button">
+                    <p style="font-size: 1rem;">
+                      還沒有註冊嗎？
+                    </p>
+                    <button
+                      class="button button-pull button-pull-left"
+                      type="button"
+                      id="signUp"
+                      @click.prevent="sign = true"
+                    >
+                      點此註冊
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 訂單查詢 Modal -->
+    <div
+      class="modal animated bounceInDown"
+      id="orderModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div
+        class="modal-dialog modal-dialog-centered" >
+        <div class="modal-content bg-dark">
+          <div class="row m-0 h-100">
+            <button
             type="button"
             class="button-close position-absolute"
             data-dismiss="modal"
             aria-label="Close">
-            <i class="fas fa-times"></i>
-          </button>
-          <div class="modal-border">
-              <h3 class="stroke">
-                季節限定特價
-                <br>
-                <span>
-                  全館購物即可享有以下折扣
-                </span>
-              </h3>
-              <p>10% OFF</p>
-              <button type="button" data-dismiss="modal" class="button button-slide">
-                開始購物
-              </button>
+              <i class="fas fa-times"></i>
+            </button>
+            <div class="d-none d-md-block col-md-6 p-0 modal-img"></div>
+            <div class="col-md-6">
+              <div class="h1 text-center mt-3">
+                我的訂單
+              </div>
+              <div class="table-overflow">
+                <table v-for="item in orderList" :key="item.id"
+                  class="table border border-secondary text-center my-2">
+                  <thead>
+                    <tr>
+                      <th>訂單編號</th>
+                      <th>日期</th>
+                      <th>總金額</th>
+                      <th class="d-none d-md-block">訂單狀態</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <a class="text-primary" href="#" @click.prevent="order(item.id)">
+                          {{ item.create_at }} </a>
+                      </td>
+                      <td>
+                        {{ item.create_at | date }}
+                      </td>
+                      <td>
+                        {{ (item.total + item.user.fee.shipping) | currency }}
+                      </td>
+                      <td class="d-none d-md-block">
+                        <span class="text-warning">準備出貨</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -575,6 +575,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -590,6 +591,8 @@ export default {
       loginStatus: false,
       loginInput: '註冊完畢後即可選擇帳號',
       removeItem: '',
+      counter: 0,
+      num: 0,
       cartItem: [],
       orderList: [],
       accountData: [],
@@ -775,6 +778,10 @@ export default {
     });
   },
   created() {
+    setTimeout(() => {
+      $('#loadingModal').modal('show');
+      this.load();
+    }, 1);
     setTimeout(() => {
       // 首次進入網站顯示廣告並登出管理員帳號
       const getSite = sessionStorage.getItem('coupon');

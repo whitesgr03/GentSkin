@@ -3,7 +3,7 @@
     <div class="home">
       <!-- 輪播 -->
       <div id="carouselControls" class="carousel slide carousel-fade"
-      data-ride="carousel" style="height: 100vh;">
+      data-ride="carousel vh-100">
         <ol class="carousel-indicators">
           <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
           <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
