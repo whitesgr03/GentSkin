@@ -56,7 +56,6 @@
 import $ from 'jquery';
 import Alert from '@/components/backstage/AlertMassage.vue';
 
-
 export default {
   name: 'Login',
   data() {
@@ -70,18 +69,19 @@ export default {
   },
   methods: {
     signin() {
+      // 登入
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
       if (vm.user.username !== '' && vm.user.password !== '') {
         vm.isLoading = true;
         this.$http.post(api, vm.user).then((response) => {
           if (response.data.success) {
-            vm.isLoading = false;
             $('#SigninModal').modal('show');
             setTimeout(() => {
               $('#SigninModal').modal('hide');
             }, 1000);
             $('#SigninModal').on('hidden.bs.modal', () => {
+              vm.isLoading = false;
               vm.$router.push('/admin/products');
             });
           } else if (!response.data.success) {

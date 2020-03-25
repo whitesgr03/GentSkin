@@ -118,7 +118,7 @@
                   />
                   </label>
                   <p class="text-center">
-                    請點選<span class="text-info">點此註冊</span>即可註冊帳號
+                    註冊完畢後請登入帳號
                   </p>
                   <button type="submit" class="button button-slide"
                   :disabled="user.signIn.username === ''">
@@ -595,8 +595,8 @@ export default {
       accountData: [],
       newAccount:
       [{
-        username: '',
-        password: '',
+        username: 'GenSkin',
+        password: 'Test',
       }],
       user: {
         signUp: {
@@ -614,71 +614,52 @@ export default {
     checkLogin() {
       // 確認是否登入
       const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/user/check`;
-      vm.$http.post(api).then((response) => {
-        if (response.data.success) {
-          vm.newAccount.forEach((item) => {
-            vm.user.signUp.username = item.username;
-            vm.user.signUp.password = item.password;
-          });
-          vm.accountData.push(vm.user.signUp);
-          vm.loginInput = '請先選擇帳號';
-          vm.loginStatus = true;
-        }
-      });
+      const getSite = sessionStorage.getItem('sign');
+      if (getSite != null) {
+        vm.newAccount.forEach((item) => {
+          vm.user.signUp.username = item.username;
+          vm.user.signUp.password = item.password;
+        });
+        vm.accountData.push(vm.user.signUp);
+        vm.loginInput = '請先選擇帳號';
+        vm.$bus.$emit('loginStatus', true);
+        vm.loginStatus = true;
+      }
     },
     signUp() {
       // 註冊
       const vm = this;
       vm.isLoading = true;
-      if (vm.accountData.length === 0) {
+      const getSite = sessionStorage.getItem('sign');
+      if (getSite == null) {
         setTimeout(() => {
+          sessionStorage.setItem('sign', vm.user.signUp.username);
           vm.accountData.push(vm.user.signUp);
-          this.$bus.$emit('alert', '測試帳號已註冊成功');
+          vm.$bus.$emit('alert', '測試帳號已註冊成功');
           vm.loginInput = '請先選擇帳號';
           vm.sign = false;
           vm.isLoading = false;
         }, 1000);
-      } else if (vm.accountData.length > 0) {
-        const verify = vm.accountData.find(item => item.account === vm.user.signUp.account
-        && item.password === vm.user.signUp.password);
-        if (verify === undefined) {
-          setTimeout(() => {
-            vm.accountData.push(vm.user.signUp);
-            this.$bus.$emit('alert', '測試帳號已註冊成功');
-            vm.isLoading = false;
-            vm.sign = false;
-          }, 1000);
-        } else {
-          setTimeout(() => {
-            vm.isLoading = false;
-            this.$bus.$emit('alert', '此帳號已被註冊');
-          }, 1000);
-        }
+      } else {
+        setTimeout(() => {
+          vm.isLoading = false;
+          this.$bus.$emit('alert', '此帳號已被註冊');
+        }, 1000);
       }
     },
     signIn() {
       // 登入
       const vm = this;
       vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
       if (vm.user.signIn.username !== '' && vm.user.signIn.password !== '') {
-        vm.$http.post(api, vm.user.signIn).then((response) => {
-          if (response.data.success) {
-            $('#loginModal').modal('hide');
-            vm.loginStatus = true;
-            vm.$bus.$emit('loginStatus', true);
-            vm.$bus.$emit('getLogin');
-            vm.$bus.$emit('alert', '測試會員，您已成功登入！');
-            vm.isLoading = false;
-          } else {
-            vm.$bus.$emit('alert', '您的帳號密碼有誤！');
-            vm.isLoading = false;
-          }
-        });
-      } else {
-        vm.$bus.$emit('alert', '您尚未註冊帳號！');
-        vm.isLoading = false;
+        setTimeout(() => {
+          $('#loginModal').modal('hide');
+          vm.loginStatus = true;
+          vm.$bus.$emit('loginStatus', true);
+          vm.$bus.$emit('getLogin');
+          vm.$bus.$emit('alert', '測試會員，您已成功登入！');
+          vm.isLoading = false;
+        }, 1000);
       }
     },
     getOrder(id) {
@@ -759,6 +740,7 @@ export default {
     },
   },
   mounted() {
+    this.checkLogin();
     // 首次瀏覽顯示優惠資訊
     $('.mobileList .shopList').click(function menu(e) {
       e.preventDefault();
@@ -794,8 +776,8 @@ export default {
   },
   created() {
     setTimeout(() => {
-      // 首次進入網站顯示廣告並初始化帳號
-      const getSite = sessionStorage.getItem('couponModal');
+      // 首次進入網站顯示廣告並登出管理員帳號
+      const getSite = sessionStorage.getItem('coupon');
       if (getSite == null) {
         const logout = `${process.env.VUE_APP_APIPATH}/logout`;
         this.$http.post(logout).then((response) => {
@@ -810,10 +792,6 @@ export default {
     this.$bus.$on('getCart', (item) => {
       this.cartItem = item;
       // 取得購物車資料
-    });
-    this.$bus.$on('checkLogin', () => {
-      // 檢查是否登入
-      this.checkLogin();
     });
     this.$bus.$on('orderId', (item) => {
       // 取得訂單資料

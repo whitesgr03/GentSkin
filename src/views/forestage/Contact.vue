@@ -37,6 +37,7 @@
             </a>
           </div>
         </div>
+
         <!-- 聯繫表單 -->
         <form class="form">
           <div class="pt-5 text-center">
@@ -91,6 +92,7 @@ export default {
   },
   methods: {
     scroll() {
+      // 從Footer點選後下拉至目標
       let height = 0;
       const w = window.innerWidth;
       if (w <= 1023) {

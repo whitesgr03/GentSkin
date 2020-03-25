@@ -1,15 +1,13 @@
 <template>
   <div>
-    <nav class="navbar bg-dark title">
-      <a href="#" class="logo" @click.prevent="
-      $router.push({ name: 'Home', params: { data: 'check' }}).catch(err => err)">
+    <nav class="navbar bg-dark title sticky-top">
+      <router-link to="/" class="logo">
         GentSkin
         <i class="fas fa-user-tie fa-lg"></i>
-      </a>
+      </router-link>
       <a class="nav-link" href="#" @click.prevent="signout">管理員登出</a>
     </nav>
-
-    <!-- 登出提示Modal -->
+            <!-- 登出提示Modal -->
     <div
       class="modal animated fadeIn"
       id="signoutModal"
@@ -37,14 +35,15 @@ export default {
     signout() {
       const api = `${process.env.VUE_APP_APIPATH}/logout`;
       const vm = this;
-      this.$http.post(api).then(() => {
-        $('#signoutModal').modal('show');
-        setTimeout(() => {
-          $('#signoutModal').modal('hide');
-        }, 1000);
+      this.$http.post(api).then((response) => {
+        if (response.data.success) {
+          $('#signoutModal').modal('show');
+          setTimeout(() => {
+            $('#signoutModal').modal('hide');
+          }, 1000);
+        }
         $('#signoutModal').on('hidden.bs.modal', () => {
           vm.$router.push('/');
-          vm.$bus.$emit('checkLogin');
         });
       });
     },

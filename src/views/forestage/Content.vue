@@ -1,7 +1,7 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" loader="dots" style="z-index:0;"></loading>
-    <div class="content py-3 py-lg-5" :class="{'loading-height' : isLoading}">
+    <loading :active.sync="isLoading" loader="dots" style="z-index: 1;"></loading>
+    <div class="content py-3 py-lg-5" :class="{'vh-100' : sameProduct.length === 0}">
       <div class="container" v-if="sameProduct.length !== 0">
         <!-- 導覽列 -->
         <ul class="nav py-5">
@@ -38,6 +38,7 @@
             </p>
           </li>
         </ul>
+
         <!-- 商品資訊 -->
         <div class="row pb-5 mb-5">
           <div class="col-lg-6 pr-lg-5">
@@ -117,6 +118,7 @@
             </div>
           </div>
         </div>
+
         <!-- 類似商品 -->
         <h4 class="text-center my-5">你可能會喜歡</h4>
         <carousel :per-page="page" :paginationEnabled="false" :scrollPerPage="false"
@@ -150,6 +152,7 @@
                 </div>
             </slide>
         </carousel>
+
       </div>
     </div>
   </div>
@@ -231,6 +234,7 @@ export default {
       });
     },
     getAmount(item) {
+      // 數量選擇範圍
       const vm = this;
       if (item === 'plus' && vm.amount < 5) {
         vm.amount += 1;
@@ -342,6 +346,7 @@ export default {
       vm.getProduct(id);
     },
     winWidth() {
+      // 變更商品顯示的數量
       const vm = this;
       const w = window.innerWidth;
       if (w <= 767) {
@@ -362,7 +367,7 @@ export default {
     });
     this.$bus.$on('getLogin', () => {
       this.login = true;
-      // 取得購物車資料
+      // 取得登入資訊
     });
     this.$bus.$emit('getAmount');
     this.winWidth();

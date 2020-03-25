@@ -165,14 +165,14 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       this.$http.get(api).then((response) => {
         if (response.data.success) {
-          const getSite = sessionStorage.getItem('couponModal');
+          const getSite = sessionStorage.getItem('coupon');
           if (getSite == null) {
             response.data.data.carts.forEach((item) => {
               const removeItem = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${item.id}`;
               this.$http.delete(removeItem).then(() => {});
             });
             vm.$bus.$emit('getCart', vm.cart);
-            sessionStorage.setItem('couponModal', 'coupon');
+            sessionStorage.setItem('coupon', true);
           } else {
             vm.cart = response.data.data;
             vm.cartAmount = response.data.data.carts.length;
@@ -193,21 +193,8 @@ export default {
       vm.collections = item;
       vm.menu = true;
     },
-    loginCheck() {
-      // 認證是否登入狀態
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/user/check`;
-      vm.$http.post(api).then((response) => {
-        if (response.data.success) {
-          vm.loginStatus = true;
-        } else {
-          vm.loginStatus = false;
-        }
-      });
-    },
   },
   mounted() {
-    this.loginCheck();
     // 桌機板進入服飾頁面時執行
     $('#menu').hover(() => {
       // hover服飾按鈕顯示下拉選單

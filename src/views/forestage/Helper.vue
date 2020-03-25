@@ -216,6 +216,7 @@ export default {
   },
   methods: {
     scroll() {
+      // 從Footer點選後下拉至目標
       if (this.$route.params.scroll !== undefined) {
         const targerPos = $(`${this.$route.params.scroll}`).offset().top;
         $('html, body').animate({ scrollTop: (targerPos - 60) }, 400);
@@ -225,6 +226,7 @@ export default {
   mounted() {
     this.scroll();
     $('.helper .btn').click(function dropdowns(e) {
+      // 選單+和-動畫
       e.preventDefault();
       if ($(this).find('.plus').hasClass('minus')) {
         $(this).find('.plus').removeClass('minus');
@@ -235,6 +237,7 @@ export default {
       }
     });
     $('.helper .scrollTop').click(function dropdowns(e) {
+      // 左側快速移動
       e.preventDefault();
       const target = $(this).attr('href');
       const targerPos = $(target).offset().top;

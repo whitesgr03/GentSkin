@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar class="sticky-top"/>
+    <Navbar />
     <Alert />
     <div class="container-fluid">
       <div class="row">

@@ -1,7 +1,8 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" loader="dots" style="z-index:0;"></loading>
-    <div class="product py-3 py-lg-5">
+    <loading :active.sync="isLoading" loader="dots" style="z-index: 1;"></loading>
+    <div class="product py-3 py-lg-5" :class="{'vh-100' : isLoading}">
+
       <!-- 導覽列 -->
       <div class="container-sm">
         <div class="product-navbar">
@@ -54,6 +55,7 @@
           </div>
         </div>
       </div>
+
       <!-- 分類列表 -->
       <div class="collections" v-if="$route.params.item === 'collections'">
         <div class="row m-0 mb-5">
@@ -245,12 +247,15 @@
           </div>
         </div>
       </div>
+
+      <!-- 商品滾動加載 -->
       <infinite-loading spinner="waveDots" class="loading"
       v-if="$route.params.item !== 'collections'"
       :identifier="infiniteId" @infinite="infiniteHandler">
         <span slot="no-more"></span>
         <span slot="no-results"></span>
       </infinite-loading>
+
     </div>
   </div>
 </template>
@@ -301,7 +306,7 @@ export default {
         vm.itemList.push(...vm.product[vm.index]);
         vm.index += 1;
         $state.loaded();
-        $('.loading').removeClass('loading-height');
+        $('.loading').removeClass('vh-100');
         setTimeout(() => {
           $('.fadein-up').addClass('fadein-up-show');
           $('.product-item-wrap').mousemove(function hover() {
@@ -321,9 +326,10 @@ export default {
       }
     },
     getitem(allData) {
+      // 篩選商品
       const vm = this;
       vm.isLoading = true;
-      $('.loading').addClass('loading-height');
+      $('.loading').addClass('vh-100');
       const items = vm.$route.params.item;
       let product = [];
       if (items === 'all') {
@@ -412,7 +418,7 @@ export default {
       vm.isLoading = false;
     },
     getCategorie(item, item2) {
-      // 執行路由變更和商品篩選
+      // 路由變更使商品重新篩選
       const vm = this;
       if (item === 'collections') {
         vm.$router.push('/').catch(err => err);

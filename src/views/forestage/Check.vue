@@ -1,9 +1,8 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" loader="dots"></loading>
+    <loading :active.sync="isLoading" loader="dots" style="z-index: 1;"></loading>
     <div class="check py-5">
       <div class="container">
-        <!-- 訂單內容 -->
         <h3 class="text-center mb-5">訂單資訊</h3>
         <p>訂單ID：<span class="text-success">{{ order.id }}</span></p>
         <div class="d-flex justify-content-between align-items-center">
@@ -175,6 +174,7 @@ export default {
       });
     },
     getHelper(value) {
+      // 客服選項跳轉頁面
       const vm = this;
       $('#serviceModal').modal('hide');
       $('#serviceModal').on('hidden.bs.modal', () => {

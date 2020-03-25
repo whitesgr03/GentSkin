@@ -327,9 +327,6 @@ export default {
       // 取得所有商品
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
-      if (this.$route.params.data === 'check') {
-        this.$bus.$emit('checkLogin');
-      }
       this.$http.get(api).then((response) => {
         if (response.data.success) {
           vm.products = response.data.products.filter(item => item.Item === 'suit');
@@ -337,6 +334,7 @@ export default {
       });
     },
     winWidth() {
+      // 變更商品顯示的數量
       const vm = this;
       const w = window.innerWidth;
       if (w <= 767) {
@@ -349,6 +347,7 @@ export default {
     },
   },
   mounted() {
+    // 輪播設定
     $('.carousel').carousel({
       interval: 5000,
       pause: false,

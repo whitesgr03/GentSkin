@@ -1,6 +1,6 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" style="z-index:9999;"></loading>
+    <loading :active.sync="isLoading"></loading>
     <div class="products">
       <div class="text-right mb-4">
         <button type="button" class="button bg-biwacha" @click.prevent="openModal(true)">
@@ -303,6 +303,7 @@ export default {
   },
   methods: {
     getProducts() {
+      // 取得所有商品資訊
       const vm = this;
       vm.isLoading = true;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products/all`;
@@ -325,6 +326,7 @@ export default {
       });
     },
     updataEnabled(isEnabled, item) {
+      // 是否啟動商品
       const vm = this;
       vm.tempProduct = Object.assign({}, item);
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;
@@ -340,13 +342,12 @@ export default {
     },
     openModal(isNew, item) {
       const vm = this;
-      //  新增資料
       if (isNew) {
-        // 傳入true參數 就開啟空模板 建立新的資料
+        // 啟空模板 建立新的資料
         vm.tempProduct = {};
         vm.isNew = true;
       } else {
-        // 否則就帶入item載入資料模板
+        // 帶入已有的資料
         vm.tempProduct = Object.assign({}, item);
         // Object.assign()為 ES6寫法 將item寫入前方的{}空物件中 避免 tempProduct = item 的傳參考特性
         vm.isNew = false;

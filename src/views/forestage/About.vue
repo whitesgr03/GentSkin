@@ -114,7 +114,7 @@ export default {
       const symbol = '#';
       const scrollPos = $(window).scrollTop();
       const windowHeight = $(window).height();
-      // 左
+      // 往左
       $('.fadein-left').each((i, item) => {
         const target = symbol + $(item).attr('id');
         const targerPos = $(target).offset().top;
@@ -122,7 +122,7 @@ export default {
           $(item).addClass('fadein-left-show');
         }
       });
-      // 右
+      // 往右
       $('.fadein-right').each((i, item) => {
         const target = symbol + $(item).attr('id');
         const targerPos = $(target).offset().top;
@@ -130,7 +130,7 @@ export default {
           $(item).addClass('fadein-right-show');
         }
       });
-      // 上
+      // 往上
       if ($('.fadein-up').offset().top <= scrollPos + windowHeight) {
         $('.fadein-up').addClass('fadein-up-show');
       }

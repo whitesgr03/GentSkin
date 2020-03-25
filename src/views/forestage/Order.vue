@@ -1,8 +1,9 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" loader="dots"></loading>
-    <div class="order container-fluid">
-      <div class="row" v-if="cart.total !== 0">
+    <loading :active.sync="isLoading" loader="dots" style="z-index: 1;"></loading>
+    <div class="order container-fluid" :class="{'vh-100' : cart.length === 0}">
+
+      <div class="row" v-if="cart.total > 0">
         <!-- 寄件資訊 -->
           <div class="col-md-6" >
             <div class="receiver">
@@ -254,8 +255,9 @@
             </form>
           </div>
         </div>
-        <!-- 無商品時內容 -->
       </div>
+
+      <!-- 無商品時內容 -->
       <div class="col empty" v-if="cart.total === 0">
         <p class="h5 py-5">
           購物車目前無任何商品
@@ -265,7 +267,9 @@
           繼續選購商品
         </a>
       </div>
+
     </div>
+
     <!-- 刪除提示 Modal -->
     <div
       class="modal animated bounceInDown" id="removeCart"
@@ -333,6 +337,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -377,7 +382,7 @@ export default {
 
   methods: {
     autoCoupon() {
-      // 全館優惠自動折購
+      // 自動折購
       const coupon = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
       const code = {
         code: 'discount',
@@ -481,13 +486,16 @@ export default {
     },
   },
   mounted() {
+    // 優惠碼提醒
     $('[data-toggle="tooltip"]').tooltip();
   },
   created() {
     $('html, body').animate({ scrollTop: 0 }, 1);
+    this.isLoading = true;
     this.$bus.$emit('getAmount');
     this.$bus.$on('getCart', (item) => {
       this.cart = item;
+      this.isLoading = false;
       // 取得購物車資料
     });
     this.autoCoupon();
