@@ -37,7 +37,10 @@ button:focus {
         transition: transform .5s;
       }
       &:hover {
-        color: rgba($black, 1);
+        color: $black;
+        @include media-breakpoint-down(md) {
+          color: $white;
+        }
         &::after {
           right: -100%;
           transform: none;

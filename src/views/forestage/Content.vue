@@ -95,8 +95,7 @@
                     :disabled="isDisable"
                   >
                     加入購物車
-                    <i class="fas fa-spinner fa-spin mr-1"
-                    style="font-size:15px"
+                    <i class="fas fa-xs fa-spinner fa-spin mr-1"
                       v-if="status.loadingItem === product.id">
                     </i>
                   </button>
