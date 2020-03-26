@@ -3,7 +3,7 @@
     <div class="home">
       <!-- 輪播 -->
       <div id="carouselControls" class="carousel slide carousel-fade"
-      data-ride="carousel vh-100">
+      data-ride="carousel">
         <ol class="carousel-indicators">
           <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
           <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -136,7 +136,8 @@
                           </p>
                         </div>
                         <router-link :to ="{ path: `/content/${item.category}/${item.Item}`,
-                        query: { id :`${item.id}` }}" class="button button-slide p-2">
+                        query: { id :`${item.id}` }}" class="button button-slide text-center
+                        h-auto p-2">
                           查看商品
                         </router-link>
                       </div>

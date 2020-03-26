@@ -277,9 +277,9 @@
       <div
         class="modal-dialog"
         role="document"
-        :class="{'modal-dialog-scrollable' : cartItem.length !== 0}">
+        :class="{'modal-dialog-scrollable' : cartItem.carts.length !== 0}">
         <form class="modal-content bg-black" @submit.prevent="payment"
-        v-if="cartItem.length !== 0">
+        v-if="cartItem.carts.length !== 0">
           <button type="button" class="close position-absolute text-white"
           style="right: 10px; top: 0px; opacity: 1;" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -320,7 +320,7 @@
           </div>
         </form>
         <div class="modal-content bg-black justify-content-center"
-        v-if="cartItem.length === 0">
+        v-if="cartItem.carts.length === 0">
         <h5 class="m-0 text-center">
           您還沒有選購任何商品
         </h5>
@@ -778,10 +778,6 @@ export default {
     });
   },
   created() {
-    setTimeout(() => {
-      $('#loadingModal').modal('show');
-      this.load();
-    }, 1);
     setTimeout(() => {
       // 首次進入網站顯示廣告並登出管理員帳號
       const getSite = sessionStorage.getItem('coupon');

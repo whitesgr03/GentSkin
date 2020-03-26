@@ -169,7 +169,7 @@
                     </div>
                   </div>
                 </div>
-                <a href="#" class="button button-slide p-2 text-center"
+                <a href="#" class="button button-slide text-center h-auto p-2"
                 @click.prevent="$bus.$emit('categorie', 'all')">
                   繼續選購
                 </a>
@@ -262,7 +262,7 @@
         <p class="h5 py-5">
           購物車目前無任何商品
         </p>
-        <a href="#" class="button button-slide bg-biwacha p-2"
+        <a href="#" class="button button-slide bg-biwacha text-center h-auto p-2"
         @click.prevent="$bus.$emit('categorie', 'all')">
           繼續選購商品
         </a>

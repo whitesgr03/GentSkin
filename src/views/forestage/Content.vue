@@ -96,6 +96,7 @@
                   >
                     加入購物車
                     <i class="fas fa-spinner fa-spin mr-1"
+                    style="font-size:15px"
                       v-if="status.loadingItem === product.id">
                     </i>
                   </button>
@@ -142,7 +143,7 @@
                           </span>
                         </p>
                       </div>
-                      <a href="#" class="button button-slide p-2"
+                      <a href="#" class="button button-slide text-center h-auto p-2"
                       @click.prevent="getContent(item.category,
                       item.Item, item.id)">
                         查看商品

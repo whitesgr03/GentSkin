@@ -169,9 +169,12 @@ export default {
           if (getSite == null) {
             response.data.data.carts.forEach((item) => {
               const removeItem = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${item.id}`;
-              this.$http.delete(removeItem).then(() => {});
+              this.$http.delete(removeItem).then(() => {
+                this.$http.get(api).then(() => {
+                  vm.$bus.$emit('getCart', response.data.data);
+                });
+              });
             });
-            vm.$bus.$emit('getCart', vm.cart);
             sessionStorage.setItem('coupon', true);
           } else {
             vm.cart = response.data.data;
