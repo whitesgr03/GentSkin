@@ -23,11 +23,10 @@
           placeholder="Password"
         />
         </label>
-        <a href="#" class="d-block button button-slide p-2 my-3 w-100 text-center"
-        @click.prevent="signin">
+        <button type="submit" class="button button-slide my-3 w-100">
           登入
-        </a>
-        <router-link to="/" class="d-block button button-slide p-2 w-100 text-center">
+        </button>
+        <router-link to="/" class="d-block button button-slide text-center w-100 h-auto p-2">
           回首頁
         </router-link>
       </form>
