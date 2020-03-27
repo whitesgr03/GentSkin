@@ -593,7 +593,9 @@ export default {
       removeItem: '',
       counter: 0,
       num: 0,
-      cartItem: [],
+      cartItem: {
+        carts: [],
+      },
       orderList: [],
       accountData: [],
       newAccount:

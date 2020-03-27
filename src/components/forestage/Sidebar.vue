@@ -167,14 +167,18 @@ export default {
         if (response.data.success) {
           const getSite = sessionStorage.getItem('coupon');
           if (getSite == null) {
-            response.data.data.carts.forEach((item) => {
-              const removeItem = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${item.id}`;
-              this.$http.delete(removeItem).then(() => {
-                this.$http.get(api).then(() => {
-                  vm.$bus.$emit('getCart', response.data.data);
+            if (response.data.data.carts.length === 0) {
+              vm.$bus.$emit('getCart', response.data.data);
+            } else {
+              response.data.data.carts.forEach((item) => {
+                const removeItem = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${item.id}`;
+                this.$http.delete(removeItem).then(() => {
+                  this.$http.get(api).then((responses) => {
+                    vm.$bus.$emit('getCart', responses.data.data);
+                  });
                 });
               });
-            });
+            }
             sessionStorage.setItem('coupon', true);
           } else {
             vm.cart = response.data.data;
