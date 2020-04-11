@@ -1,3 +1,6 @@
 module.exports = {
-  publicPath: '/GentSkin/'
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/GentSkin/'
+    : '/',
+  // outputDir: 'docs'
 }
