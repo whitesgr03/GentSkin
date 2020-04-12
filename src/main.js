@@ -35,7 +35,7 @@ Vue.component('Loading', Loading); //  全螢幕讀取動畫
 Vue.filter('currency', currencyFilter); //  千分號
 Vue.filter('date', dateFilter); //  日期轉換
 
-axios.defaults.withCredentials = true; //  跨域請求攜帶Cookie
+// axios.defaults.withCredentials = true; //  跨域請求攜帶Cookie
 
 new Vue({
   el: '#app',

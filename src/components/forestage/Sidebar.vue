@@ -77,6 +77,7 @@
               <i class="fas fa-2x fa-shopping-bag"></i>
               <span
                 class="badge badge-pill badge-danger"
+                style="background-color: #dc3545"
                 v-if="cartAmount != 0">
                 {{ cartAmount }}
               </span>

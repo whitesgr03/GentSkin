@@ -321,6 +321,7 @@ export default {
   data() {
     return {
       products: [],
+      ppp: [],
     };
   },
   methods: {
