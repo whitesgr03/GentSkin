@@ -1,6 +1,6 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" loader="dots" style="z-index: 9999;"></loading>
+    <loading :active.sync="isLoading" loader="dots" style="z-index: 99999;"></loading>
 
     <!-- 優惠提示 Modal -->
     <div class="modal animated rollIn" id="saleModal"
