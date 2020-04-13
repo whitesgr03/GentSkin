@@ -308,7 +308,6 @@ export default {
       vm.isLoading = true;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products/all`;
       this.$http.get(api).then((response) => {
-        console.log(response);
         if (response.data.success) {
           const newArray = [];
           Object.keys(response.data.products)

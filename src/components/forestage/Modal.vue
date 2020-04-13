@@ -635,10 +635,8 @@ export default {
       // 註冊
       const vm = this;
       vm.isLoading = true;
-      const getSite = sessionStorage.getItem('sign');
-      if (getSite == null) {
+      if (vm.accountData.length === 0) {
         setTimeout(() => {
-          sessionStorage.setItem('sign', vm.user.signUp.username);
           vm.accountData.push(vm.user.signUp);
           vm.$bus.$emit('alert', '測試帳號已註冊成功');
           vm.loginInput = '請先選擇帳號';
@@ -659,6 +657,7 @@ export default {
       if (vm.user.signIn.username !== '' && vm.user.signIn.password !== '') {
         setTimeout(() => {
           $('#loginModal').modal('hide');
+          sessionStorage.setItem('sign', vm.user.signUp.username);
           vm.loginStatus = true;
           vm.$bus.$emit('loginStatus', true);
           vm.$bus.$emit('getLogin');
@@ -728,20 +727,31 @@ export default {
       // 登出
       const vm = this;
       vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}/logout`;
-      this.$http.post(api).then((response) => {
-        if (response.data.success) {
-          vm.isLoading = false;
-          if (vm.$router.history.current.name === 'Check'
+      setTimeout(() => {
+        sessionStorage.removeItem('sign');
+        this.loginStatus = false;
+        vm.$bus.$emit('loginStatus', false);
+        vm.isLoading = false;
+        if (vm.$router.history.current.name === 'Check'
           || vm.$router.history.current.name === 'Order') {
-            vm.$router.push('/');
-          }
-          this.loginStatus = false;
-          vm.$bus.$emit('loginStatus', false);
-          $('#loginOutModal').modal('hide');
-          vm.$bus.$emit('alert', '您已成功登出！');
+          vm.$router.push('/');
         }
-      });
+        $('#loginOutModal').modal('hide');
+        vm.$bus.$emit('alert', '您已成功登出！');
+      }, 1000);
+      // // this.$http.post(api).then((response) => {
+      //   // if (response.data.success) {
+      //     vm.isLoading = false;
+      //     if (vm.$router.history.current.name === 'Check'
+      //     || vm.$router.history.current.name === 'Order') {
+      //       vm.$router.push('/');
+      //     }
+      //     this.loginStatus = false;
+      //     vm.$bus.$emit('loginStatus', false);
+      //     $('#loginOutModal').modal('hide');
+      //     vm.$bus.$emit('alert', '您已成功登出！');
+      //   // }
+      // // });
     },
   },
   mounted() {
