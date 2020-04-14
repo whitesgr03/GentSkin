@@ -40,7 +40,7 @@
       role="dialog"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
-      @click.prevent="$bus.$emit('menuButton');">
+      @click.prevent="$bus.$emit('closeMenu')">
       <div
         class="modal-dialog"
         role="document"
@@ -91,17 +91,19 @@
             <div class="mobileList">
               <ul class="nav flex-column">
                 <li class="nav-item border-bottom">
-                <a href="#" class="nav-link"
-                @click.prevent="$bus.$emit('closeMenu'),
-                $router.push('/')">
+                <a href="#" class="nav-link" data-dismiss="modal"
+                @click.prevent="$router.push('/')">
                   首頁
                 </a>
                 </li>
                 <li class="nav-item position-relative border-bottom">
-                  <button id="shop" class="nav-link btn w-100 text-left" type="button"
+                  <button id="shop" class="btn w-100 text-left py-0" type="button"
                   data-toggle="collapse" data-target="#product"
                   aria-expanded="false" aria-controls="product">
-                    服飾
+                    <a href="#" class="nav-link d-inline-block w-100 px-0"
+                    @click="$router.push({ path: `/shop/all` }).catch(err => err)">
+                      服飾
+                    </a>
                     <div class="plus border-0 position-absolute"
                     style="right:0; top:12px;">
                       <div class="horizontal" style="width:12px; height:2px; left:4px;" ></div>
@@ -116,8 +118,8 @@
                             <button class="nav-link w-100 btn text-left shopList" type="button"
                             data-toggle="collapse" data-target="#tops"
                             aria-expanded="false" aria-controls="tops">
-                            <a href="#"
-                            @click.prevent="$bus.$emit('categorie', 'tops')">
+                            <a href="#" data-dismiss="modal"
+                            @click.prevent="$bus.$emit('getCategorie', 'tops')">
                               上衣
                             </a>
                               <div class="plus border-0 position-absolute"
@@ -132,20 +134,23 @@
                               <div class="collapse-text">
                                 <ul class="nav flex-column">
                                   <li class="nav-item">
-                                    <a href="#" class="nav-link"
-                                    @click.prevent="$bus.$emit('categorie', 'tops', 't-shirt')">
-                                      T-shirt
+                                    <a href="#" class="nav-link" data-dismiss="modal"
+                                    @click.prevent="
+                                    $bus.$emit('getCategorie', 'tops', 't-shirt')">
+                                      短袖
                                     </a>
                                   </li>
                                   <li class="nav-item">
-                                    <a href="#" class="nav-link"
-                                    @click.prevent="$bus.$emit('categorie', 'tops', 'shirt')">
+                                    <a href="#" class="nav-link" data-dismiss="modal"
+                                    @click.prevent="
+                                    $bus.$emit('getCategorie', 'tops', 'shirt')">
                                       襯衫
                                     </a>
                                   </li>
                                   <li class="nav-item">
-                                    <a href="#" class="nav-link"
-                                    @click.prevent="$bus.$emit('categorie', 'tops', 'outer')">
+                                    <a href="#" class="nav-link" data-dismiss="modal"
+                                    @click.prevent="
+                                    $bus.$emit('getCategorie', 'tops', 'outer')">
                                       外套
                                     </a>
                                   </li>
@@ -157,8 +162,8 @@
                             <button class="nav-link w-100 btn text-left shopList" type="button"
                             data-toggle="collapse" data-target="#bottoms"
                             aria-expanded="false" aria-controls="bottoms">
-                            <a href="#"
-                            @click.prevent="$bus.$emit('categorie', 'bottoms')">
+                            <a href="#" data-dismiss="modal"
+                            @click.prevent="$bus.$emit('getCategorie', 'bottoms')">
                               下身
                             </a>
                               <div class="plus border-0 position-absolute"
@@ -173,20 +178,23 @@
                               <div class="collapse-text">
                                 <ul class="nav flex-column">
                                   <li class="nav-item">
-                                    <a href="#" class="nav-link"
-                                    @click.prevent="$bus.$emit('categorie', 'bottoms', 'short')">
+                                    <a href="#" class="nav-link" data-dismiss="modal"
+                                    @click.prevent="
+                                    $bus.$emit('getCategorie', 'bottoms', 'shorts')">
                                       短褲
                                     </a>
                                   </li>
                                   <li class="nav-item">
-                                    <a href="#" class="nav-link"
-                                    @click.prevent="$bus.$emit('categorie', 'bottoms', 'pants')">
+                                    <a href="#" class="nav-link" data-dismiss="modal"
+                                    @click.prevent="
+                                    $bus.$emit('getCategorie', 'bottoms', 'pants')">
                                       長褲
                                     </a>
                                   </li>
                                   <li class="nav-item">
-                                    <a href="#" class="nav-link"
-                                    @click.prevent="$bus.$emit('categorie', 'bottoms', 'jeans')">
+                                    <a href="#" class="nav-link" data-dismiss="modal"
+                                    @click.prevent="
+                                    $bus.$emit('getCategorie', 'bottoms', 'jeans')">
                                       牛仔褲
                                     </a>
                                   </li>
@@ -198,8 +206,9 @@
                             <button class="nav-link w-100 btn text-left shopList" type="button"
                             data-toggle="collapse" data-target="#accessories"
                             aria-expanded="false" aria-controls="accessories">
-                            <a href="#"
-                            @click.prevent="$bus.$emit('categorie', 'accessories')">
+                            <a href="#" data-dismiss="modal"
+                            @click.prevent="
+                            $bus.$emit('getCategorie', 'accessories')">
                               配件
                             </a>
                               <div class="plus border-0 position-absolute"
@@ -214,21 +223,23 @@
                               <div class="collapse-text">
                                 <ul class="nav flex-column">
                                   <li class="nav-item">
-                                    <a href="#" class="nav-link"
-                                    @click.prevent="$bus.$emit('categorie', 'accessories', 'hat')">
+                                    <a href="#" class="nav-link" data-dismiss="modal"
+                                    @click.prevent="
+                                    $bus.$emit('getCategorie', 'accessories', 'hat')">
                                       帽子
                                     </a>
                                   </li>
                                   <li class="nav-item">
-                                    <a href="#" class="nav-link"
-                                    @click.prevent="$bus.$emit('categorie', 'accessories', 'bag')">
+                                    <a href="#" class="nav-link" data-dismiss="modal"
+                                    @click.prevent="
+                                    $bus.$emit('getCategorie', 'accessories', 'bag')">
                                       背包
                                     </a>
                                   </li>
                                   <li class="nav-item">
-                                    <a href="#" class="nav-link"
+                                    <a href="#" class="nav-link" data-dismiss="modal"
                                     @click.prevent="
-                                    $bus.$emit('categorie', 'accessories', 'shoes')">
+                                    $bus.$emit('getCategorie', 'accessories', 'shoes')">
                                       鞋子
                                     </a>
                                   </li>
@@ -237,8 +248,10 @@
                             </div>
                           </li>
                           <li class="nav-item">
-                            <a href="#" class="nav-link"
-                            @click.prevent="$bus.$emit('categorie', 'all')">All</a>
+                            <a href="#" class="nav-link" data-dismiss="modal"
+                            @click.prevent="$bus.$emit('getCategorie', 'all')">
+                              All
+                            </a>
                           </li>
                         </ul>
                       </div>
@@ -246,16 +259,14 @@
                   </div>
                 </li>
                 <li class="nav-item border-bottom">
-                <a href="#" class="nav-link"
-                @click.prevent="$bus.$emit('closeMenu'),
-                $router.push('/article')">
+                <a href="#" class="nav-link" data-dismiss="modal"
+                @click.prevent="$router.push('/article')">
                   主題
                 </a>
                 </li>
                 <li class="nav-item border-bottom">
-                <a href="#" class="nav-link"
-                @click.prevent="$bus.$emit('closeMenu'),
-                $router.push('/about')">
+                <a href="#" class="nav-link" data-dismiss="modal"
+                @click.prevent="$router.push('/about')">
                   關於
                 </a>
                 </li>
@@ -660,7 +671,6 @@ export default {
           sessionStorage.setItem('sign', vm.user.signUp.username);
           vm.loginStatus = true;
           vm.$bus.$emit('loginStatus', true);
-          vm.$bus.$emit('getLogin');
           vm.$bus.$emit('alert', '測試會員，您已成功登入！');
           vm.isLoading = false;
         }, 1000);
@@ -682,6 +692,7 @@ export default {
       $('#orderModal').modal('hide');
       $('#orderModal').on('hidden.bs.modal', () => {
         $('#menuModal').modal('hide');
+        vm.$bus.$emit('closeIcon');
         if (vm.$router.history.current.name === 'Check') {
           vm.$router.push('/');
           setTimeout(() => {
@@ -698,7 +709,7 @@ export default {
       const vm = this;
       if (vm.loginStatus === true) {
         $('#cartModal').modal('hide');
-        vm.$bus.$emit('closeMenu');
+        vm.$bus.$emit('closeIcon');
         vm.$router.push('/order');
       } else {
         $('#cartModal').modal('hide');
@@ -739,19 +750,6 @@ export default {
         $('#loginOutModal').modal('hide');
         vm.$bus.$emit('alert', '您已成功登出！');
       }, 1000);
-      // // this.$http.post(api).then((response) => {
-      //   // if (response.data.success) {
-      //     vm.isLoading = false;
-      //     if (vm.$router.history.current.name === 'Check'
-      //     || vm.$router.history.current.name === 'Order') {
-      //       vm.$router.push('/');
-      //     }
-      //     this.loginStatus = false;
-      //     vm.$bus.$emit('loginStatus', false);
-      //     $('#loginOutModal').modal('hide');
-      //     vm.$bus.$emit('alert', '您已成功登出！');
-      //   // }
-      // // });
     },
   },
   mounted() {
@@ -791,14 +789,14 @@ export default {
   },
   created() {
     setTimeout(() => {
-      // 首次進入網站顯示廣告並登出管理員帳號
+      // 首次進入網站顯示折扣廣告並登出管理員帳號
       const getSite = sessionStorage.getItem('coupon');
       if (getSite == null) {
         const logout = `${process.env.VUE_APP_APIPATH}/logout`;
         this.$http.post(logout).then((response) => {
           if (response.data.success) {
             this.loginStatus = false;
-            this.$bus.$emit('loginStatus', false);
+            this.$bus.$emit('loginStatus', false); // 改變sidebar的登入圖示
           }
         });
         $('#saleModal').modal('show');
@@ -806,10 +804,10 @@ export default {
     }, 500);
     this.$bus.$on('getCart', (item) => {
       this.cartItem = item;
-      // 取得購物車資料
+      // 從siderbar取得資料帶給購物車modal
     });
     this.$bus.$on('orderId', (item) => {
-      // 取得訂單資料
+      // order建立訂單後取得資料帶給訂單modal
       this.getOrder(item);
     });
   },

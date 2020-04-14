@@ -9,7 +9,7 @@
           <div class="row py-5">
             <ul class="nav pb-3 py-md-0">
               <li class="nav-item">
-                <a href="#" class="nav-link" @click.prevent="$bus.$emit('closeMenu'),
+                <a href="#" class="nav-link" @click.prevent="$bus.$emit('closeIcon'),
                 $router.push('/')">
                   首頁
                 </a>
@@ -78,7 +78,7 @@
               @click.prevent="getCategorie('tops', 't-shirt')">
                 <div class="wrap-shadow">
                   <div class="text-content">
-                    <p class="underline m-0">T-shirt</p>
+                    <p class="underline m-0">短袖</p>
                   </div>
                 </div>
               </a>
@@ -363,7 +363,7 @@ export default {
           if (items === 'tops') {
             vm.mainItem = '上衣';
             if (vm.collections === 't-shirt') {
-              vm.item = 'T-shirt';
+              vm.item = '短袖';
             } else if (vm.collections === 'shirt') {
               vm.item = '襯衫';
             } else if (vm.collections === 'outer') {

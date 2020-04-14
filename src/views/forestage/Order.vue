@@ -170,7 +170,7 @@
                   </div>
                 </div>
                 <a href="#" class="button button-slide text-center h-auto p-2"
-                @click.prevent="$bus.$emit('categorie', 'all')">
+                @click.prevent="$router.push({ path: `/shop/all` }).catch(err => {})">
                   繼續選購
                 </a>
                 <button type="submit" class="button button-slide">
@@ -263,7 +263,7 @@
           購物車目前無任何商品
         </p>
         <a href="#" class="button button-slide bg-biwacha text-center h-auto p-2"
-        @click.prevent="$bus.$emit('categorie', 'all')">
+        @click.prevent="$router.push({ path: `/shop/all` }).catch(err => {})">
           繼續選購商品
         </a>
       </div>
@@ -383,11 +383,17 @@ export default {
   methods: {
     autoCoupon() {
       // 自動折購
+      const vm = this;
+      vm.isLoading = true;
       const coupon = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
       const code = {
         code: 'discount',
       };
-      this.$http.post(coupon, { data: code }).then(() => {});
+      this.$http.post(coupon, { data: code }).then((response) => {
+        if (response.data.success) {
+          vm.isLoading = false;
+        }
+      });
     },
     getZipCode() {
       // 取得台灣縣市郵遞區號
@@ -411,7 +417,7 @@ export default {
               this.$http.post(Api).then(() => {});
               setTimeout(() => {
                 $('#payModal').modal('hide');
-                this.$bus.$emit('getAmount');
+                this.$bus.$emit('updateCart');
                 this.$bus.$emit('orderId', response.data.orderId);
                 vm.$router.push({ name: 'Check', params: { orderId: response.data.orderId } });
               }, 2000);
@@ -431,7 +437,7 @@ export default {
       $('#removeCart').modal('hide');
       this.$http.delete(api).then((response) => {
         if (response.data.success) {
-          vm.$bus.$emit('getAmount');
+          vm.$bus.$emit('updateCart');
           vm.$bus.$emit('alert', '商品已被刪除');
           vm.isLoading = false;
         }
@@ -449,7 +455,7 @@ export default {
         vm.isLoading = true;
         this.$http.post(api, { data: coupon }).then((response) => {
           if (response.data.success) {
-            this.$bus.$emit('getAmount');
+            this.$bus.$emit('updateCart');
             vm.coupon_code = '';
             vm.addCoupon = true;
             this.$bus.$emit('alert', '已使用優惠碼');
@@ -491,13 +497,11 @@ export default {
   },
   created() {
     $('html, body').animate({ scrollTop: 0 }, 1);
-    this.isLoading = true;
-    this.$bus.$emit('getAmount');
     this.$bus.$on('getCart', (item) => {
       this.cart = item;
-      this.isLoading = false;
       // 取得購物車資料
     });
+    this.$bus.$emit('updateCart');
     this.autoCoupon();
     this.getZipCode();
   },

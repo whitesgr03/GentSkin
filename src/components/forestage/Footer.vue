@@ -27,21 +27,21 @@
                 </li>
                 <li class="nav-item">
                   <a href="#" class="nav-link"
-                  @click.prevent="$bus.$emit('closeMenu'),
+                  @click.prevent="$bus.$emit('closeIcon'),
                   $router.push('/helper')">
                     購買及支付
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="#" class="nav-link"
-                  @click.prevent="$bus.$emit('closeMenu'),
+                  @click.prevent="$bus.$emit('closeIcon'),
                   $router.push({ name: 'Helper', params: { scroll: '#Q2' }}).catch(err => err);">
                     訂單及物流
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="#" class="nav-link"
-                  @click.prevent="$bus.$emit('closeMenu'),
+                  @click.prevent="$bus.$emit('closeIcon'),
                   $router.push({ name: 'Helper', params: { scroll: '#Q3' }}).catch(err => err);">
 
                     售後服務
@@ -56,14 +56,14 @@
                 </li>
                 <li class="nav-item">
                   <a href="#" class="nav-link"
-                  @click.prevent="$bus.$emit('closeMenu'),
+                  @click.prevent="$bus.$emit('closeIcon'),
                   $router.push('/contact').catch(err => err);">
                     聯繫我們
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="#" class="nav-link"
-                  @click.prevent="$bus.$emit('closeMenu'),
+                  @click.prevent="$bus.$emit('closeIcon'),
                   $router.push({ name: 'Contact',
                   params: { scroll: '.location' }}).catch(err => err);">
                     店面查詢

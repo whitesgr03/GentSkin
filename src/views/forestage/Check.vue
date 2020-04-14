@@ -179,8 +179,6 @@ export default {
       $('#serviceModal').modal('hide');
       $('#serviceModal').on('hidden.bs.modal', () => {
         if (value === 'delivery' || value === 'receipt') {
-          vm.$router.push('/order');
-          vm.$bus.$emit('closeMenu');
           vm.$router.push({ name: 'Helper', params: { scroll: '#Q2' } }).catch(err => err);
         } else {
           vm.$router.push({ name: 'Helper', params: { scroll: value } }).catch(err => err);

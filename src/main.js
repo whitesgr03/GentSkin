@@ -9,6 +9,8 @@ import { extend } from 'vee-validate'; // 驗證規則
 import * as rules from 'vee-validate/dist/rules'; // 驗證規則
 import zhTW from 'vee-validate/dist/locale/zh_TW.json'; //  驗證規則中文化
 import Animate from 'animate.css/animate.min.css'; // CSS動畫套件
+import store from './store';
+
 
 //  自定義 套件內容 .
 import App from './App.vue';
@@ -22,7 +24,6 @@ import dateFilter from './filters/date';
 //  全域方式啟用
 Vue.use(VueAxios, axios);
 Vue.use(Animate);
-
 
 Object.keys(rules).forEach((rule) => { // 取的所有驗證規則
   extend(rule, {
@@ -40,6 +41,7 @@ axios.defaults.withCredentials = true; //  跨域請求攜帶Cookie
 new Vue({
   el: '#app',
   router,
+  store,
   components: {
     App,
   },

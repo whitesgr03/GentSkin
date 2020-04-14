@@ -1,12 +1,11 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" loader="dots" style="z-index: 1;"></loading>
     <div class="content py-3 py-lg-5" :class="{'vh-100' : sameProduct.length === 0}">
       <div class="container" v-if="sameProduct.length !== 0">
         <!-- 導覽列 -->
         <ul class="nav py-5">
           <li class="nav-item">
-            <a href="#" class="nav-link" @click.prevent="$bus.$emit('closeMenu'),
+            <a href="#" class="nav-link" @click.prevent="$bus.$emit('closeIcon'),
                 $router.push('/')">
               首頁
             </a>
@@ -16,7 +15,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link"
-            @click.prevent="$bus.$emit('categorie', 'collections')">
+            @click.prevent="$router.push({ path: `/shop/collections` }).catch(err => {})">
               分類
             </a>
           </li>
@@ -25,7 +24,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link"
-            @click.prevent="$bus.$emit('categorie', product.category)">
+            @click.prevent="$router.push({ path: `/shop/${product.category}` }).catch(err => {})">
               {{ mainItem }}
             </a>
           </li>
@@ -169,9 +168,7 @@ export default {
       sameProduct: [],
       cart: [],
       amount: 1,
-      isLoading: false,
       isDisable: false,
-      login: false,
       mainItem: '',
       item: '',
       page: 0,
@@ -184,7 +181,7 @@ export default {
     getProduct(id) {
       // 取得選定商品資料
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch('loading', true);
       vm.sameProduct = [];
       const product = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
       const mainItems = vm.$route.params.mainItem;
@@ -195,7 +192,7 @@ export default {
           if (mainItems === 'tops') {
             vm.mainItem = '上衣';
             if (items === 't-shirt') {
-              vm.item = 'T-shirt';
+              vm.item = '短袖';
             } else if (items === 'shirt') {
               vm.item = '襯衫';
             } else if (items === 'outer') {
@@ -227,7 +224,7 @@ export default {
             if (responses.data.success) {
               vm.sameProduct = responses.data.products.filter(item => item.category
               === vm.product.category && item.title !== vm.product.title);
-              vm.isLoading = false;
+              vm.$store.dispatch('loading', false);
             }
           });
         }
@@ -263,7 +260,7 @@ export default {
           if (response.data.success) {
             vm.isDisable = false;
             vm.status.loadingItem = '';
-            vm.$bus.$emit('getAmount');
+            vm.$bus.$emit('updateCart');
             vm.$bus.$emit('alert', '商品已加入購物車');
           }
         });
@@ -277,7 +274,7 @@ export default {
             };
             this.$http.post(cart, { data: cartItem }).then((responses) => {
               if (responses.data.success) {
-                vm.$bus.$emit('getAmount');
+                vm.$bus.$emit('updateCart');
                 vm.status.loadingItem = '';
                 vm.isDisable = false;
                 vm.$bus.$emit('alert', '商品已加入購物車');
@@ -290,8 +287,9 @@ export default {
     buyNow(id, amount) {
       // 立即加入購物車並結帳
       const vm = this;
-      if (vm.login === true) {
-        vm.isLoading = true;
+      const getSite = sessionStorage.getItem('sign');
+      if (getSite != null) {
+        vm.$store.dispatch('loading', true);
         const cartData = vm.cart.carts.filter(item => item.product_id === id);
         // 篩選購物車中是否有此比id的商品
         if (cartData.length === 0) {
@@ -303,9 +301,9 @@ export default {
           this.$http.post(api, { data: cart }).then((response) => {
             if (response.data.success) {
               setTimeout(() => {
-                vm.isLoading = false;
+                vm.$store.dispatch('loading', false);
                 vm.$bus.$emit('alert', '商品已加入購物車');
-                vm.$bus.$emit('closeMenu');
+                vm.$bus.$emit('closeIcon');
                 vm.$router.push('/order');
               }, 1000);
             }
@@ -322,10 +320,10 @@ export default {
               this.$http.post(Api, { data: cart }).then((responses) => {
                 if (responses.data.success) {
                   setTimeout(() => {
-                    vm.$bus.$emit('getAmount');
-                    vm.isLoading = false;
+                    vm.$bus.$emit('updateCart');
+                    vm.$store.dispatch('loading', false);
                     vm.$bus.$emit('alert', '商品已加入購物車');
-                    vm.$bus.$emit('closeMenu');
+                    vm.$bus.$emit('closeIcon');
                     vm.$router.push('/order');
                   }, 1000);
                 }
@@ -365,11 +363,11 @@ export default {
       this.cart = item;
       // 取得購物車資料
     });
-    this.$bus.$on('getLogin', () => {
-      this.login = true;
-      // 取得登入資訊
-    });
-    this.$bus.$emit('getAmount');
+    // this.$bus.$on('getLogin', () => {
+    //   this.login = true;
+    //   // 取得登入資訊
+    // });
+    this.$bus.$emit('updateCart');
     this.winWidth();
   },
   components: {

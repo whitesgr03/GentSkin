@@ -40,6 +40,7 @@ $indigo:  #6610f2 !default;
 $purple:  #6f42c1 !default;
 $pink:    #e83e8c !default;
 $red:     #ff6161 !default;
+$darkRed: #dc3545 !default;
 $orange:  #fd7e14 !default;
 $yellow:  #ffc107 !default;
 $green:   #28a745 !default;
@@ -98,6 +99,7 @@ $theme-colors: map-merge(
     "info":       $info,
     "warning":    $warning,
     "danger":     $danger,
+    "darkRed":    $darkRed,
     "light":      $light,
     "dark":       $dark,
     "black":      $black,

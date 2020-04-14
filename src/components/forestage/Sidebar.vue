@@ -39,7 +39,7 @@
           </li>
         </ul>
       </div>
-      <!-- 桌機板功能按鈕 -->
+      <!-- 功能按鈕 -->
       <div class="option">
         <button type="button" class="menu"
         data-toggle="modal" data-target="#menuModal"
@@ -50,7 +50,7 @@
             <span></span>
             <span></span>
         </button>
-        <a href="#" class="logo mt-lg-5 text-center" @click.prevent="$bus.$emit('closeMenu'),
+        <a href="#" class="logo mt-lg-5 text-center" @click.prevent="menu = false,
         $router.push('/')">
           GentSkin
         </a>
@@ -76,8 +76,7 @@
             >
               <i class="fas fa-2x fa-shopping-bag"></i>
               <span
-                class="badge badge-pill badge-danger"
-                style="background-color: #dc3545"
+                class="badge badge-pill badge-darkRed"
                 v-if="cartAmount != 0">
                 {{ cartAmount }}
               </span>
@@ -105,31 +104,32 @@
           </li>
         </ul>
       </div>
-      <!-- 導航欄 -->
+      <!-- 桌機板導航欄 -->
       <div class="menuList d-none d-lg-block">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a href="#" class="nav-link" @click.prevent="$bus.$emit('closeMenu'),
+            <a href="#" class="nav-link" @click.prevent="menu = false,
             $router.push('/')">
               首頁
             </a>
           </li>
           <li id="menu" class="nav-item position-relative">
-            <a  href="#" class="nav-link" @click.prevent="getCategorie('all'),
-            menuList = true">
+            <a  href="#" class="nav-link" @click.prevent="
+            $router.push({ path: `/shop/all` }).catch(err => err),
+            menu = true, collections = 'all', menuList = true">
               服飾
               <i class="fas fa-angle-right animated fadeInLeft text-white"
               v-if="menu"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" @click.prevent="$bus.$emit('closeMenu'),
+            <a href="#" class="nav-link" @click.prevent="menu = false,
             $router.push('/article')">
               主題
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" @click.prevent="$bus.$emit('closeMenu'),
+            <a href="#" class="nav-link" @click.prevent="menu = false,
             $router.push('/about')">
               關於
             </a>
@@ -146,14 +146,11 @@ import $ from 'jquery';
 export default {
   data() {
     return {
-      isDisable: false,
-      isLoading: false,
       loginStatus: false,
       menuList: false,
       menu: false,
       mobileMenu: false,
       product: [],
-      cart: [],
       cartAmount: 0,
       collections: '',
     };
@@ -167,10 +164,11 @@ export default {
       this.$http.get(api).then((response) => {
         if (response.data.success) {
           const getSite = sessionStorage.getItem('coupon');
-          if (getSite == null) {
+          // 透過sessionStorage可以分辨網頁是第一次開啟還是從後台轉回前台
+          if (getSite == null) { // 如果是第一次開啟網頁則執行以下檢查資料的動作
             if (response.data.data.carts.length === 0) {
-              vm.$bus.$emit('getCart', response.data.data);
-            } else {
+              vm.$bus.$emit('getCart', response.data.data); // 開起網頁後如果購物車是空的就將空的資料帶入購物車Modal
+            } else { // 開起網頁後如果購物車有資料就將每一筆資料清空然後再重新取得資料接著再帶給購物車Modal
               response.data.data.carts.forEach((item) => {
                 const removeItem = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${item.id}`;
                 this.$http.delete(removeItem).then(() => {
@@ -181,26 +179,24 @@ export default {
               });
             }
             sessionStorage.setItem('coupon', true);
-          } else {
-            vm.cart = response.data.data;
+          } else { // 如果是後台轉回前台 則更新商品數量並直接帶入購物車資料
             vm.cartAmount = response.data.data.carts.length;
-            vm.$bus.$emit('getCart', vm.cart);
+            vm.$bus.$emit('getCart', response.data.data);
           }
         }
       });
     },
-    getCategorie(item, item2) {
-      // 執行路由變更和商品篩選
-      const vm = this;
-      if (this.$router.history.current.name === 'Product') {
-        vm.$bus.$emit('getCategorie', item, item2);
-      } else {
-        vm.$router.push({ path: `/shop/${item}`, query: { item: item2 } }).catch(err => err);
-      }
-      $('#menuModal').modal('hide');
-      vm.collections = item;
-      vm.menu = true;
-    },
+    // getCategorie(item, item2) {
+    //   // 執行路由變更和商品篩選
+    //   const vm = this;
+    //   if (this.$router.history.current.name === 'Product') {
+    //     vm.$bus.$emit('getCategorie', item, item2);
+    //   } else {
+    //     vm.$router.push({ path: `/shop/${item}`, query: { item: item2 } }).catch(err => err);
+    //   }
+    //   // vm.collections = item; // 變更sidebar分類的顯示框
+    //   // vm.menu = true; // 顯示sidebar分類的箭頭動畫
+    // },
   },
   mounted() {
     // 桌機板進入服飾頁面時執行
@@ -225,22 +221,21 @@ export default {
       // modal登入執行
       this.loginStatus = item;
     });
-    this.$bus.$on('getAmount', () => {
+    this.$bus.$on('updateCart', () => {
+      // 更新sidbar購物車數量和Modal中購物車的商品顯示
       this.getCart();
-      if (this.loginStatus) {
-        this.$bus.$emit('getLogin');
-      }
     });
-    this.$bus.$on('categorie', (item, item2) => {
-      // 篩選商品
-      this.getCategorie(item, item2);
+    this.$bus.$on('activeIcon', (item) => {
+      // 轉移並變更路徑並且顯示分類的箭頭和按鈕加上框
+      // 使用到的compent有： content 的導航欄, home 的各項分類按鈕, 手機板 modal 的分類按鈕, order 的繼續選購
+      this.collections = item; // 變更sidebar分類的顯示框
+      this.menu = true; // 顯示sidebar分類的箭頭
     });
-    this.$bus.$on('closeMenu', () => {
-      // 關閉menu選單
-      $('#menuModal').modal('hide');
+    this.$bus.$on('closeIcon', () => {
+      // 關閉sidebar分類的箭頭
       this.menu = false;
     });
-    this.$bus.$on('menuButton', () => {
+    this.$bus.$on('closeMenu', () => {
       // 手機板漢堡選單動畫
       this.mobileMenu = false;
     });
