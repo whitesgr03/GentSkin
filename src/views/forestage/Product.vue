@@ -286,19 +286,6 @@ export default {
     };
   },
   methods: {
-    getProducts() {
-      // 取得所有商品
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
-      this.$http.get(api).then((response) => {
-        if (response.data.success) {
-          vm.allProduct = response.data.products;
-          vm.getitem(vm.allProduct);
-          vm.isLoading = false;
-        }
-      });
-    },
     infiniteHandler($state) {
       // 讀取商品
       const vm = this;
@@ -325,7 +312,7 @@ export default {
         $state.complete();
       }
     },
-    getitem(allData) {
+    filterItem() {
       // 篩選商品
       const vm = this;
       vm.isLoading = true;
@@ -337,14 +324,14 @@ export default {
         vm.routerName = 'all';
         vm.item = '';
         vm.search = '';
-        product = allData;
-        $('html, body').animate({ scrollTop: 0 }, 1);
+        product = this.allProduct;
+        window.scrollTo(0, 0);
       } else if (items === 'search') {
-        product = allData.filter((item) => {
+        product = this.allProduct.filter((item) => {
           vm.mainItem = 'All';
           vm.routerName = 'all';
           vm.item = '';
-          $('html, body').animate({ scrollTop: 0 }, 1);
+          window.scrollTo(0, 0);
           return item.title.indexOf(vm.searchItems) > -1;
         });
       } else {
@@ -353,9 +340,9 @@ export default {
         } else {
           vm.collections = items;
         }
-        product = allData.filter((item) => {
+        product = this.allProduct.filter((item) => {
           vm.search = '';
-          $('html, body').animate({ scrollTop: 0 }, 1);
+          window.scrollTo(0, 0);
           return item.category === vm.collections || item.Item === vm.collections;
         });
         if (product.length !== 0) {
@@ -420,15 +407,15 @@ export default {
     getCategorie(item, item2) {
       // 路由變更使商品重新篩選
       const vm = this;
-      if (item === 'collections') {
+      if (item === 'search') {
+        vm.$router.push({ path: `/shop/${item}`, query: { item: item2 } }).catch(err => err);
+      } else {
         vm.$router.push('/').catch(err => err);
         setTimeout(() => {
           vm.$router.push({ path: `/shop/${item}`, query: { item: item2 } }).catch(err => err);
         }, 1);
-      } else {
-        vm.$router.push({ path: `/shop/${item}`, query: { item: item2 } }).catch(err => err);
-        vm.getitem(vm.allProduct);
       }
+      vm.filterItem();
     },
   },
   mounted() {
@@ -453,12 +440,17 @@ export default {
     });
   },
   created() {
-    $('html, body').animate({ scrollTop: 0 }, 1);
-    this.getProducts();
-    this.$bus.$on('getCategorie', (item, item2) => {
+    this.$bus.$on('UpdateCategorie', (item, item2) => {
       // 手機板modal登出執行
       this.getCategorie(item, item2);
     });
+    this.$bus.$on('getProducts', (allData) => {
+      this.allProduct = allData;
+      this.filterItem();
+      // 取得購物車資料
+    });
+    this.isLoading = true;
+    this.$bus.$emit('updateProducts');
   },
   components: {
     InfiniteLoading,
