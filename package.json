@@ -12,7 +12,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "core-js": "^3.6.5",
-    "jquery": "^3.5.0",
+    "jquery": "^3.4.1",
     "popper.js": "^1.16.1",
     "twzipcode-data": "^1.7.1",
     "twzipcode-vue": "^1.1.1",
