@@ -81,7 +81,7 @@ export default {
             }, 1000);
             $('#SigninModal').on('hidden.bs.modal', () => {
               vm.isLoading = false;
-              vm.$router.push('/admin/products');
+              vm.$router.push('/admin/products').catch(err => err);
             });
           } else if (!response.data.success) {
             this.$bus.$emit('alert', '帳號或密碼輸入錯誤');
