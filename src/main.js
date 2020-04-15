@@ -5,9 +5,9 @@ import VueAxios from 'vue-axios';
 import Loading from 'vue-loading-overlay'; //  全螢幕讀取動畫
 import 'vue-loading-overlay/dist/vue-loading.css'; //  全螢幕讀取動畫的CSS
 import 'bootstrap'; //  載入bootstrap套件
-import { extend } from 'vee-validate'; // 驗證規則
+import { extend, localize } from 'vee-validate'; // 驗證規則
 import * as rules from 'vee-validate/dist/rules'; // 驗證規則
-import zhTW from 'vee-validate/dist/locale/zh_TW.json'; //  驗證規則中文化
+import TW from 'vee-validate/dist/locale/zh_TW.json'; //  驗證規則中文化
 import Animate from 'animate.css/animate.min.css'; // CSS動畫套件
 import store from './store';
 
@@ -25,10 +25,19 @@ import dateFilter from './filters/date';
 Vue.use(VueAxios, axios);
 Vue.use(Animate);
 
+localize({
+  TW: {
+    names: {
+      email: 'E-mail Address',
+      password: 'Password',
+    },
+  },
+});
+
 Object.keys(rules).forEach((rule) => { // 取的所有驗證規則
   extend(rule, {
     ...rules[rule],
-    message: zhTW.messages[rule], // 將規則 message 中文化
+    message: TW.messages[rule], // 將規則 message 中文化
   });
 });
 

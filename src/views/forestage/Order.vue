@@ -31,14 +31,14 @@
                     <div class="col-6">
                       <ValidationProvider id="name" class="form"
                         rules="required" v-slot="{ valid, errors }">
-                        <label for="userName" class="label"
+                        <label for="姓名" class="label"
                         :class="{'label-border-error' : !valid && form.user.recipient.name !== '',
                         'label-border-success' : valid}">
                           取件人姓名
                         <input
                           type="text"
                           class="input"
-                          id="userName"
+                          id="姓名"
                           placeholder="Name"
                           v-model="form.user.recipient.name"
                         />
@@ -50,11 +50,11 @@
                     <div class="col-6">
                       <ValidationProvider class="form" rules="required|numeric|min:8|max:10"
                         v-slot="{ valid, errors }">
-                        <label for="userTel" class="label"
+                        <label for="電話" class="label"
                         :class="{'label-border-error' : !valid && form.user.recipient.tel !== '',
                           'label-border-success' : valid}">
                           取件人電話
-                        <input id="userTel" class="input"
+                        <input id="電話" class="input"
                           v-model="form.user.recipient.tel" type="tel"
                           placeholder="Tel" />
                         <span class="text-danger" style="font-size:12px; font-weight: 400;">
@@ -74,12 +74,12 @@
                   <div class="form-row hide mb-5" v-if="delivery === 'COD'">
                     <div class="col-6">
                       <ValidationProvider class="form" rules="required" v-slot="{ valid, errors }">
-                        <label for="userCountry" class="label"
+                        <label for="居住地" class="label"
                         :class="{'label-border-error' : !valid &&
                         form.user.recipient.country !== '',
                           'label-border-success' : valid}"
-                        >選取國家
-                          <select id="userCountry" class="form-control"
+                        >選取居住地
+                          <select id="居住地" class="form-control"
                           v-model="form.user.recipient.country">
                             <option>台灣</option>
                           </select>
@@ -91,11 +91,11 @@
                     </div>
                     <div class="col-6">
                       <ValidationProvider class="form" rules="required" v-slot="{ valid, errors }">
-                        <label for="userCity" class="label"
+                        <label for="縣市" class="label"
                         :class="{'label-border-error' : !valid && form.user.recipient.city !== '',
                           'label-border-success' : valid}"
                         >選取縣市
-                          <select id="userCity" class="form-control"
+                          <select id="縣市" class="form-control"
                           v-model="form.user.recipient.city"
                           :disabled="form.user.recipient.country === ''">
                             <option v-for="(item, i) in cities" :key="i">{{ item.name }}</option>
@@ -108,12 +108,12 @@
                     </div>
                     <div class="col-6">
                       <ValidationProvider class="form" rules="required" v-slot="{ valid, errors }">
-                        <label for="userDistrict" class="label"
+                        <label for="鄉鎮市區" class="label"
                         :class="{'label-border-error' : !valid &&
                         form.user.recipient.district !== '',
                           'label-border-success' : valid}"
                         >選取鄉鎮市區
-                          <select id="userDistrict" class="form-control"
+                          <select id="鄉鎮市區" class="form-control"
                           v-model="form.user.recipient.district"
                           :disabled="form.user.recipient.city === ''">
                             <option v-for="(item, i) in filterData" :key="i">
@@ -128,11 +128,11 @@
                     </div>
                     <div class="col-6">
                       <ValidationProvider class="form" rules="required" v-slot="{ valid, errors }">
-                        <label for="userZip" class="label"
+                        <label for="郵遞區號" class="label"
                         :class="{'label-border-error' : !valid && form.user.recipient.zip !== '',
                           'label-border-success' : valid}"
                         >郵遞區號
-                        <input id="userZip" class="input"
+                        <input id="郵遞區號" class="input"
                           v-model="form.user.recipient.zip" type="text" disabled
                           placeholder="Zip" />
                           <span class="text-danger" style="font-size:12px; font-weight: 400;">
@@ -143,12 +143,12 @@
                     </div>
                     <div class="col-12">
                       <ValidationProvider class="form" rules="required" v-slot="{valid, errors }">
-                        <label for="userAddress" class="label"
+                        <label for="地址" class="label"
                         :class="{'label-border-error' : !valid &&
                         form.user.recipient.address !== '',
                           'label-border-success' : valid}"
                         >取件人地址
-                        <input id="userAddress" class="input"
+                        <input id="地址" class="input"
                           v-model="form.user.recipient.address" type="text" placeholder="Address" />
                           <span class="text-danger" style="font-size:12px; font-weight: 400;">
                             {{ errors[0] }}
