@@ -237,15 +237,12 @@ export default {
       }
     });
     $('.helper .scrollTop').click(function dropdowns(e) {
-      // 左側快速移動
+      // 左側快速移動欄
       e.preventDefault();
       const target = $(this).attr('href');
       const targerPos = $(target).offset().top;
       $('html, body').animate({ scrollTop: (targerPos - 32) }, 400);
     });
-  },
-  created() {
-    $('html, body').animate({ scrollTop: 0 }, 1);
   },
 };
 </script>

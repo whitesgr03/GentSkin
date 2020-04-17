@@ -142,7 +142,6 @@ export default {
   },
   created() {
     window.addEventListener('scroll', this.scroll);
-    $('html, body').animate({ scrollTop: 0 }, 1);
   },
   destroyed() {
     window.removeEventListener('scroll', this.scroll);

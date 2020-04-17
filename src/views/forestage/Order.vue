@@ -496,7 +496,6 @@ export default {
     $('[data-toggle="tooltip"]').tooltip();
   },
   created() {
-    $('html, body').animate({ scrollTop: 0 }, 1);
     this.$bus.$on('getCart', (item) => {
       this.cart = item;
       // 取得購物車資料

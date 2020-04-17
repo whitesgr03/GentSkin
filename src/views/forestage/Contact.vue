@@ -109,8 +109,5 @@ export default {
   mounted() {
     this.scroll();
   },
-  created() {
-    $('html, body').animate({ scrollTop: 0 }, 1);
-  },
 };
 </script>

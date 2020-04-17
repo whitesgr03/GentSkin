@@ -187,7 +187,6 @@ export default {
     },
   },
   created() {
-    $('html, body').animate({ scrollTop: 0 }, 1);
     this.getOrderData(this.$route.params.orderId);
   },
 };
