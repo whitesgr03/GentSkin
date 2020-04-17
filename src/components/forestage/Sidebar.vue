@@ -7,7 +7,7 @@
         <ul class="nav">
           <li class="nav-item">
             <button type="button" class="btn nav-link"
-            @click.prevent="$bus.$emit('getCategorie', 'tops'),
+            @click.prevent="$bus.$emit('UpdateCategorie', 'tops'),
             collections = 'tops'"
             :class="{ 'active': collections == 'tops' }">
               <strong>上衣</strong>
@@ -15,7 +15,7 @@
           </li>
           <li class="nav-item">
             <button type="button" class="btn nav-link"
-            @click.prevent="$bus.$emit('getCategorie', 'bottoms'),
+            @click.prevent="$bus.$emit('UpdateCategorie', 'bottoms'),
             collections = 'bottoms'"
             :class="{ 'active': collections == 'bottoms' }">
               <strong>下身</strong>
@@ -23,7 +23,7 @@
           </li>
           <li class="nav-item">
             <button type="button" class="btn nav-link"
-            @click.prevent="$bus.$emit('getCategorie', 'accessories'),
+            @click.prevent="$bus.$emit('UpdateCategorie', 'accessories'),
             collections = 'accessories'"
             :class="{ 'active': collections == 'accessories' }">
               <strong>配件</strong>
@@ -31,7 +31,7 @@
           </li>
           <li class="nav-item">
             <button type="button" class="btn nav-link"
-            @click.prevent="$bus.$emit('getCategorie', 'all'),
+            @click.prevent="$bus.$emit('UpdateCategorie', 'all'),
             collections = 'all'"
             :class="{ 'active': collections == 'all' }">
               <strong>ALL</strong>
@@ -186,17 +186,15 @@ export default {
         }
       });
     },
-    // getCategorie(item, item2) {
-    //   // 執行路由變更和商品篩選
-    //   const vm = this;
-    //   if (this.$router.history.current.name === 'Product') {
-    //     vm.$bus.$emit('getCategorie', item, item2);
-    //   } else {
-    //     vm.$router.push({ path: `/shop/${item}`, query: { item: item2 } }).catch(err => err);
-    //   }
-    //   // vm.collections = item; // 變更sidebar分類的顯示框
-    //   // vm.menu = true; // 顯示sidebar分類的箭頭動畫
-    // },
+    getProducts() {
+      // 取得所有商品
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
+      this.$http.get(api).then((response) => {
+        if (response.data.success) {
+          this.$bus.$emit('getProducts', response.data.products);
+        }
+      });
+    },
   },
   mounted() {
     // 桌機板進入服飾頁面時執行
@@ -216,7 +214,6 @@ export default {
     });
   },
   created() {
-    this.getCart();
     this.$bus.$on('loginStatus', (item) => {
       // modal登入執行
       this.loginStatus = item;
@@ -225,9 +222,11 @@ export default {
       // 更新sidbar購物車數量和Modal中購物車的商品顯示
       this.getCart();
     });
+    this.$bus.$on('updateProducts', () => {
+      // 更新sidbar購物車數量和Modal中購物車的商品顯示
+      this.getProducts();
+    });
     this.$bus.$on('activeIcon', (item) => {
-      // 轉移並變更路徑並且顯示分類的箭頭和按鈕加上框
-      // 使用到的compent有： content 的導航欄, home 的各項分類按鈕, 手機板 modal 的分類按鈕, order 的繼續選購
       this.collections = item; // 變更sidebar分類的顯示框
       this.menu = true; // 顯示sidebar分類的箭頭
     });
