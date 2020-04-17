@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="content py-3 py-lg-5" :class="{'vh-100' : sameProduct.length === 0}">
-      <div class="container" v-if="sameProduct.length !== 0">
+    <div class="content py-3 py-lg-5" :class="{'vh-100' : sameProducts.length === 0}">
+      <div class="container" v-if="sameProducts.length !== 0">
         <!-- 導覽列 -->
         <ul class="nav py-5">
           <li class="nav-item">
@@ -123,7 +123,7 @@
         <carousel :per-page="page" :paginationEnabled="false" :scrollPerPage="false"
         :mouse-drag="true" :autoplay="true" :autoplayTimeout="5500"
         :loop="true" :speed="3000">
-            <slide v-for="item in sameProduct" :key="item.id" class="similarItem p-2">
+            <slide v-for="item in sameProducts" :key="item.id" class="similarItem p-2">
               <div class="similarItem-img"
                 :style="{backgroundImage: 'url(' + item.imageUrl + ')' }">
                   <div class="wrap-shadow">
@@ -142,7 +142,7 @@
                         </p>
                       </div>
                       <a href="#" class="button button-slide text-center h-auto p-2"
-                      @click.prevent="getContent(item.category,
+                      @click.prevent="getItem(item.category,
                       item.Item, item.id)">
                         查看商品
                       </a>
@@ -165,7 +165,7 @@ export default {
   data() {
     return {
       product: [],
-      sameProduct: [],
+      sameProducts: [],
       cart: [],
       amount: 1,
       isDisable: false,
@@ -182,13 +182,14 @@ export default {
       // 取得選定商品資料
       const vm = this;
       vm.$store.dispatch('loading', true);
-      vm.sameProduct = [];
+      vm.sameProducts = [];
       const product = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
       const mainItems = vm.$route.params.mainItem;
       const items = vm.$route.params.item;
       this.$http.get(product).then((response) => {
         if (response.data.success) {
           vm.product = response.data.product;
+          this.$bus.$emit('updateProducts');
           if (mainItems === 'tops') {
             vm.mainItem = '上衣';
             if (items === 't-shirt') {
@@ -219,19 +220,11 @@ export default {
               vm.item = '鞋類';
             }
           }
-          const allProducts = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
-          this.$http.get(allProducts).then((responses) => {
-            if (responses.data.success) {
-              vm.sameProduct = responses.data.products.filter(item => item.category
-              === vm.product.category && item.title !== vm.product.title);
-              vm.$store.dispatch('loading', false);
-            }
-          });
         }
       });
     },
     getAmount(item) {
-      // 數量選擇範圍
+      // 商品數量限制範圍
       const vm = this;
       if (item === 'plus' && vm.amount < 5) {
         vm.amount += 1;
@@ -250,8 +243,9 @@ export default {
       vm.status.loadingItem = id;
       const cartData = vm.cart.carts.filter(item => item.product_id === id);
       const cart = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      // 篩選購物車中是否有此比id的商品
+      // 透過cartData將購物車內所有商品與此筆商品作對比
       if (cartData.length === 0) {
+        // 沒有相同id則直接加入商品
         const cartItem = {
           product_id: id,
           qty: amount,
@@ -265,6 +259,7 @@ export default {
           }
         });
       } else if (cartData.length > 0) {
+        // 有相同id的話就刪除商品並將舊有商品與新入商品的數量合併在加入購物車
         const cartId = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${cartData[0].id}`;
         vm.$http.delete(cartId).then((response) => {
           if (response.data.success) {
@@ -289,10 +284,12 @@ export default {
       const vm = this;
       const getSite = sessionStorage.getItem('sign');
       if (getSite != null) {
+        // 執行結帳前必須先登入
         vm.$store.dispatch('loading', true);
         const cartData = vm.cart.carts.filter(item => item.product_id === id);
-        // 篩選購物車中是否有此比id的商品
+        // 透過cartData將購物車內所有商品與此筆商品作對比
         if (cartData.length === 0) {
+          // 沒有相同id則直接加入商品
           const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
           const cart = {
             product_id: id,
@@ -309,6 +306,7 @@ export default {
             }
           });
         } else if (cartData.length > 0) {
+          // 有相同id的話就刪除商品並將舊有商品與新入商品的數量合併在加入購物車
           const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${cartData[0].id}`;
           vm.$http.delete(api).then((response) => {
             if (response.data.success) {
@@ -336,12 +334,12 @@ export default {
         vm.$bus.$emit('alert', '請先登入會員');
       }
     },
-    getContent(category, item, id) {
-      // 前往選定的商品
+    getItem(category, item, id) {
+      // 點擊相似商品的變更資料
       const vm = this;
       vm.$router.push({ path: `/content/${category}/${item}`, query: { id } }).catch(err => err);
-      $('html, body').animate({ scrollTop: 0 }, 1);
       vm.getProduct(id);
+      window.scrollTo(0, 0);
     },
     winWidth() {
       // 變更商品顯示的數量
@@ -357,17 +355,18 @@ export default {
     },
   },
   created() {
-    $('html, body').animate({ scrollTop: 0 }, 1);
     this.getProduct(this.$route.query.id);
     this.$bus.$on('getCart', (item) => {
       this.cart = item;
       // 取得購物車資料
     });
-    // this.$bus.$on('getLogin', () => {
-    //   this.login = true;
-    //   // 取得登入資訊
-    // });
-    this.$bus.$emit('updateCart');
+    this.$bus.$on('getProducts', (allData) => {
+      // 取得全部商品資料再篩選與此筆相似的商品資料
+      this.sameProducts = allData.filter(item => item.category
+      === this.product.category && item.title !== this.product.title);
+      this.$store.dispatch('loading', false);
+    });
+    this.$bus.$emit('updateProducts');
     this.winWidth();
   },
   components: {
