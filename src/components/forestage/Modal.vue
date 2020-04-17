@@ -101,7 +101,7 @@
                   data-toggle="collapse" data-target="#product"
                   aria-expanded="false" aria-controls="product">
                     <a href="#" class="nav-link d-inline-block w-100 px-0"
-                    @click="$router.push({ path: `/shop/all` }).catch(err => err)">
+                    @click.prevent="$router.push({ path: `/shop/all` }).catch(err => err)">
                       服飾
                     </a>
                     <div class="plus border-0 position-absolute"
@@ -119,7 +119,7 @@
                             data-toggle="collapse" data-target="#tops"
                             aria-expanded="false" aria-controls="tops">
                             <a href="#" data-dismiss="modal"
-                            @click.prevent="$bus.$emit('getCategorie', 'tops')">
+                            @click.prevent="$bus.$emit('UpdateCategorie', 'tops')">
                               上衣
                             </a>
                               <div class="plus border-0 position-absolute"
@@ -136,21 +136,21 @@
                                   <li class="nav-item">
                                     <a href="#" class="nav-link" data-dismiss="modal"
                                     @click.prevent="
-                                    $bus.$emit('getCategorie', 'tops', 't-shirt')">
+                                    $bus.$emit('UpdateCategorie', 'tops', 't-shirt')">
                                       短袖
                                     </a>
                                   </li>
                                   <li class="nav-item">
                                     <a href="#" class="nav-link" data-dismiss="modal"
                                     @click.prevent="
-                                    $bus.$emit('getCategorie', 'tops', 'shirt')">
+                                    $bus.$emit('UpdateCategorie', 'tops', 'shirt')">
                                       襯衫
                                     </a>
                                   </li>
                                   <li class="nav-item">
                                     <a href="#" class="nav-link" data-dismiss="modal"
                                     @click.prevent="
-                                    $bus.$emit('getCategorie', 'tops', 'outer')">
+                                    $bus.$emit('UpdateCategorie', 'tops', 'outer')">
                                       外套
                                     </a>
                                   </li>
@@ -163,7 +163,7 @@
                             data-toggle="collapse" data-target="#bottoms"
                             aria-expanded="false" aria-controls="bottoms">
                             <a href="#" data-dismiss="modal"
-                            @click.prevent="$bus.$emit('getCategorie', 'bottoms')">
+                            @click.prevent="$bus.$emit('UpdateCategorie', 'bottoms')">
                               下身
                             </a>
                               <div class="plus border-0 position-absolute"
@@ -180,21 +180,21 @@
                                   <li class="nav-item">
                                     <a href="#" class="nav-link" data-dismiss="modal"
                                     @click.prevent="
-                                    $bus.$emit('getCategorie', 'bottoms', 'shorts')">
+                                    $bus.$emit('UpdateCategorie', 'bottoms', 'shorts')">
                                       短褲
                                     </a>
                                   </li>
                                   <li class="nav-item">
                                     <a href="#" class="nav-link" data-dismiss="modal"
                                     @click.prevent="
-                                    $bus.$emit('getCategorie', 'bottoms', 'pants')">
+                                    $bus.$emit('UpdateCategorie', 'bottoms', 'pants')">
                                       長褲
                                     </a>
                                   </li>
                                   <li class="nav-item">
                                     <a href="#" class="nav-link" data-dismiss="modal"
                                     @click.prevent="
-                                    $bus.$emit('getCategorie', 'bottoms', 'jeans')">
+                                    $bus.$emit('UpdateCategorie', 'bottoms', 'jeans')">
                                       牛仔褲
                                     </a>
                                   </li>
@@ -208,7 +208,7 @@
                             aria-expanded="false" aria-controls="accessories">
                             <a href="#" data-dismiss="modal"
                             @click.prevent="
-                            $bus.$emit('getCategorie', 'accessories')">
+                            $bus.$emit('UpdateCategorie', 'accessories')">
                               配件
                             </a>
                               <div class="plus border-0 position-absolute"
@@ -225,21 +225,21 @@
                                   <li class="nav-item">
                                     <a href="#" class="nav-link" data-dismiss="modal"
                                     @click.prevent="
-                                    $bus.$emit('getCategorie', 'accessories', 'hat')">
+                                    $bus.$emit('UpdateCategorie', 'accessories', 'hat')">
                                       帽子
                                     </a>
                                   </li>
                                   <li class="nav-item">
                                     <a href="#" class="nav-link" data-dismiss="modal"
                                     @click.prevent="
-                                    $bus.$emit('getCategorie', 'accessories', 'bag')">
+                                    $bus.$emit('UpdateCategorie', 'accessories', 'bag')">
                                       背包
                                     </a>
                                   </li>
                                   <li class="nav-item">
                                     <a href="#" class="nav-link" data-dismiss="modal"
                                     @click.prevent="
-                                    $bus.$emit('getCategorie', 'accessories', 'shoes')">
+                                    $bus.$emit('UpdateCategorie', 'accessories', 'shoes')">
                                       鞋子
                                     </a>
                                   </li>
@@ -249,7 +249,7 @@
                           </li>
                           <li class="nav-item">
                             <a href="#" class="nav-link" data-dismiss="modal"
-                            @click.prevent="$bus.$emit('getCategorie', 'all')">
+                            @click.prevent="$bus.$emit('UpdateCategorie', 'all')">
                               All
                             </a>
                           </li>
@@ -369,7 +369,7 @@
                     'text-danger' : accountData.length === 0}"
                     :disabled="accountData.length === 0"
                     class="form-control" v-model="user.signIn.username"
-                    @change="changeData(user.signIn.username)">
+                    @change="autoInputPassword(user.signIn.username)">
                       <option selected disabled value="" v-if="accountData.length === 0">
                         請先進行註冊
                       </option>
@@ -418,7 +418,7 @@
                   >帳號
                     <select id="registerAccount"
                     class="form-control" v-model="user.signUp.username"
-                    @change="changeData(user.signUp.username, true)">
+                    @change="autoInputPassword(user.signUp.username, true)">
                       <option selected disabled value="">請選取任一測試帳號</option>
                       <option v-for="(item, i) in newAccount"
                       :key="i" :value="item.username"
@@ -534,7 +534,7 @@
                   <tbody>
                     <tr>
                       <td>
-                        <a class="text-primary" href="#" @click.prevent="order(item.id)">
+                        <a class="text-primary" href="#" @click.prevent="checkoutOrder(item.id)">
                           {{ item.create_at }} </a>
                       </td>
                       <td>
@@ -627,10 +627,11 @@ export default {
     };
   },
   methods: {
-    checkLogin() {
-      // 確認是否登入
+    getLogin() {
+      // 已登入的狀態下進入後台並返回前台時將確保資料還原
       const vm = this;
       const getSite = sessionStorage.getItem('sign');
+      vm.$bus.$emit('updateCart');
       if (getSite != null) {
         vm.newAccount.forEach((item) => {
           vm.user.signUp.username = item.username;
@@ -661,64 +662,8 @@ export default {
         }, 1000);
       }
     },
-    signIn() {
-      // 登入
-      const vm = this;
-      vm.isLoading = true;
-      if (vm.user.signIn.username !== '' && vm.user.signIn.password !== '') {
-        setTimeout(() => {
-          $('#loginModal').modal('hide');
-          sessionStorage.setItem('sign', vm.user.signUp.username);
-          vm.loginStatus = true;
-          vm.$bus.$emit('loginStatus', true);
-          vm.$bus.$emit('alert', '測試會員，您已成功登入！');
-          vm.isLoading = false;
-        }, 1000);
-      }
-    },
-    getOrder(id) {
-      // 取得歷史訂單
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${id}`;
-      this.$http.get(api).then((response) => {
-        if (response.data.success) {
-          vm.orderList.push(response.data.order);
-        }
-      });
-    },
-    order(id) {
-      // 檢視訂單內容
-      const vm = this;
-      $('#orderModal').modal('hide');
-      $('#orderModal').on('hidden.bs.modal', () => {
-        $('#menuModal').modal('hide');
-        vm.$bus.$emit('closeIcon');
-        if (vm.$router.history.current.name === 'Check') {
-          vm.$router.push('/');
-          setTimeout(() => {
-            vm.$router.push({ name: 'Check', params: { orderId: id } });
-            $('html, body').animate({ scrollTop: 0 }, 1);
-          }, 1);
-        } else {
-          vm.$router.push({ name: 'Check', params: { orderId: id } });
-        }
-      });
-    },
-    payment() {
-      // 執行結帳動作
-      const vm = this;
-      if (vm.loginStatus === true) {
-        $('#cartModal').modal('hide');
-        vm.$bus.$emit('closeIcon');
-        vm.$router.push('/order');
-      } else {
-        $('#cartModal').modal('hide');
-        $('#loginModal').modal('show');
-        vm.$bus.$emit('alert', '請先登入會員');
-      }
-    },
-    changeData(account, signUp) {
-      // 選取帳號帶入密碼
+    autoInputPassword(account, signUp) {
+      // 註冊登入 modal 選取帳號自動帶入密碼
       const vm = this;
       if (signUp) {
         vm.newAccount.forEach((item) => {
@@ -732,6 +677,21 @@ export default {
             vm.user.signIn.password = item.password;
           }
         });
+      }
+    },
+    signIn() {
+      // 登入
+      const vm = this;
+      vm.isLoading = true;
+      if (vm.user.signIn.username !== '' && vm.user.signIn.password !== '') {
+        setTimeout(() => {
+          $('#loginModal').modal('hide');
+          sessionStorage.setItem('sign', vm.user.signUp.username);
+          vm.loginStatus = true;
+          vm.$bus.$emit('loginStatus', true);
+          vm.$bus.$emit('alert', '測試會員，您已成功登入！');
+          vm.isLoading = false;
+        }, 1000);
       }
     },
     loginOut() {
@@ -751,22 +711,52 @@ export default {
         vm.$bus.$emit('alert', '您已成功登出！');
       }, 1000);
     },
+    getOrder(id) {
+      // 取得歷史訂單
+      const vm = this;
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${id}`;
+      this.$http.get(api).then((response) => {
+        if (response.data.success) {
+          vm.orderList.push(response.data.order);
+        }
+      });
+    },
+    checkoutOrder(id) {
+      // 檢視訂單內容
+      const vm = this;
+      $('#orderModal').modal('hide');
+      $('#orderModal').on('hidden.bs.modal', () => {
+        $('#menuModal').modal('hide');
+        vm.$bus.$emit('closeIcon');
+        if (vm.$router.history.current.name === 'Check') {
+          vm.$router.push('/');
+          setTimeout(() => {
+            vm.$router.push({ name: 'Check', params: { orderId: id } });
+          }, 1);
+        } else {
+          vm.$router.push({ name: 'Check', params: { orderId: id } });
+        }
+      });
+    },
+    payment() {
+      // 執行購物車 modal 結帳動作
+      const vm = this;
+      if (vm.loginStatus === true) {
+        $('#cartModal').modal('hide');
+        vm.$bus.$emit('closeIcon');
+        vm.$router.push('/order');
+      } else {
+        $('#cartModal').modal('hide');
+        $('#loginModal').modal('show');
+        vm.$bus.$emit('alert', '請先登入會員');
+      }
+    },
   },
   mounted() {
-    this.checkLogin();
-    // 首次瀏覽顯示優惠資訊
-    $('.mobileList .shopList').click(function menu(e) {
-      e.preventDefault();
-      if ($(this).find('.plus').hasClass('minus')) {
-        $(this).find('.plus').removeClass('minus');
-      } else {
-        $('.mobileList .shopList').find('.plus').removeClass('minus');
-        $(this).find('.plus').addClass('minus');
-      }
-    });
+    this.getLogin();
     $('#shop').click(function menu(e) {
+      // mobile web 點擊選單 "服飾" 時轉換加減號動畫並且轉為加號時將 "各項分類" 轉為加號
       e.preventDefault();
-      this.ckickList = true;
       if ($(this).find('.plus').hasClass('minus')) {
         $(this).find('.plus').removeClass('minus');
         $('.mobileList .shopList').find('.plus').removeClass('minus');
@@ -777,7 +767,18 @@ export default {
         $(this).find('.plus').addClass('minus');
       }
     });
+    $('.mobileList .shopList').click(function menu(e) {
+      // mobile web 點擊選單 "各項分類" 時執行加/減號動畫
+      e.preventDefault();
+      if ($(this).find('.plus').hasClass('minus')) {
+        $(this).find('.plus').removeClass('minus');
+      } else {
+        $(this).find('.plus').removeClass('minus');
+        $(this).find('.plus').addClass('minus');
+      }
+    });
     $('#menuModal').on('hidden.bs.modal', function menu(e) {
+      // mobile web 關閉 menuModal 後 將有減號轉為加號
       e.preventDefault();
       setTimeout(() => {
         if (!$(this).hasClass('show')) {
@@ -807,7 +808,7 @@ export default {
       // 從siderbar取得資料帶給購物車modal
     });
     this.$bus.$on('orderId', (item) => {
-      // order建立訂單後取得資料帶給訂單modal
+      // order.vue建立訂單後取得資料帶給訂單modal
       this.getOrder(item);
     });
   },
