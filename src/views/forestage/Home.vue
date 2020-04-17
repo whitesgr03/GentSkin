@@ -341,16 +341,6 @@ export default {
     };
   },
   methods: {
-    getProducts() {
-      // 取得所有商品
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
-      this.$http.get(api).then((response) => {
-        if (response.data.success) {
-          vm.products = response.data.products.filter(item => item.Item === 'suit');
-        }
-      });
-    },
     winWidth() {
       // 變更商品顯示的數量
       const vm = this;
@@ -372,9 +362,12 @@ export default {
     });
   },
   created() {
-    this.getProducts();
+    this.$bus.$on('getProducts', (allData) => {
+      this.products = allData.filter(item => item.Item === 'suit');
+      // 取得購物車資料
+    });
+    this.$bus.$emit('updateProducts');
     this.winWidth();
-    $('html, body').animate({ scrollTop: 0 }, 1);
   },
   components: {
     Carousel,
