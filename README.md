@@ -23,7 +23,7 @@
   <a href="#作品介紹">作品介紹</a> •
   <a href="#架設環境">架設環境</a> •
   <a href="#檔案結構">檔案結構</a> •
-  <a href="#packages">packages</a> •
+  <a href="#packages">使用插件</a> •
 </p>
 
 <img src="https://i.imgur.com/t4VrmH9.jpg">
@@ -34,25 +34,20 @@
 
 ## 作品介紹
 
-* 參考其他電商後進行網站 UI 配置，讓網站使用者在操作上可以更直覺更方便。
+* 依照現代電商進行網站 UI 設置，讓網站使用者在操作上可以更直覺更方便。
   - 使用 Vue.js 作為 JavaScript Framework 建構 SPA
   - 使用 Bootstrap 作為 CSS Framework 建構內容
   - 使用 jQuery 建構動畫效果
   - 使用 Sass/SCSS 使 CSS 進行結構化
   - 使用 Responsive Web Design 建構響應式網頁
   - 使用 axios 進行 API 串接
-
-* 設計屬於現代網頁需具備的幾個要素。
-  - 完整的瀏覽規劃
-  - 美觀的介面排板
-  - 快速的讀取速度
-  - 桌上型和行動版都能擁有良好的使用體驗
+  - 使用 Vuex  管理組件應用
+  - 使用 Vue Router 管理路由
 
 ## 操作流程
 
 * 註冊及登入選單中已自動設定預設帳號及密碼，只要手動選擇帳號即可完成註冊及登入流程
-* 桌機設備可於登入帳號後點選頁面最底部的 'GentSkin' 按鈕進入後台進行查看
-* 送出訂單後會進行模擬結帳，將訂單儲存在導覽列的'我的訂單'中，方便查看紀錄
+* web 可點選頁面最底部的 'GentSkin' 按鈕進入後台進行查看(需帳號密碼)
 
 ## 架設環境
 
@@ -95,6 +90,12 @@
     ├── filters
     │   ├── currency.js                   # 前台主要組件
     │   └── date.js                       # 後台主要組件
+    │
+    ├── store
+    │   ├── index.js                      # Vuex 全域組件
+    │   ├── products.js                   # 商品組件
+    │   ├── cart.js                       # 購物車組件
+    │   ├── order.js                      # 訂單組件
     │   
     ├── views
     │   ├── forestage                     # 前台主要頁面
@@ -108,9 +109,10 @@
 ## packages
 
 - [vue-router](https://github.com/vuejs/vue-router)
-- [vee-validate](https://github.com/logaretm/vee-validate)  # 表單驗證
-- [animate.css](https://github.com/daneden/animate.css)     # CSS動畫
-- [vue-carousel](https://github.com/SSENSE/vue-carousel)          # 輪播套件
-- [vue-infinite-loading](https://github.com/PeachScript/vue-infinite-loading)          # 無線滾動套件
+- [vee-validate](https://github.com/logaretm/vee-validate)                      # 表單驗證
+- [animate.css](https://github.com/daneden/animate.css)                         # CSS動畫
+- [vue-carousel](https://github.com/SSENSE/vue-carousel)                        # 輪播套件
+- [vue-infinite-loading](https://github.com/PeachScript/vue-infinite-loading)   # 無線滾動套件
 - [axios](https://github.com/axios/axios)
 - [vue-axios](https://github.com/imcvampire/vue-axios)
+- [Vuex](https://github.com/vuejs/vuex)
