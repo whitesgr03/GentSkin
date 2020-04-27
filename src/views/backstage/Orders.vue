@@ -1,6 +1,5 @@
 <template>
   <div>
-    <loading :active.sync="isLoading"></loading>
     <div class="orders">
       <table class="table mt-4  text-white">
         <thead>
@@ -62,7 +61,6 @@
 export default {
   data() {
     return {
-      isLoading: false,
       pagination: {},
       orders: [],
       totalItem: 0,
@@ -84,12 +82,12 @@ export default {
       });
       vm.count += 1;
       if (vm.count === vm.totalItem) {
-        vm.isLoading = false;
+        vm.$store.dispatch('loading', false);
       }
     },
     getOrders() {
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch('loading', true);
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${1}`;
       this.$http.get(api).then((response) => {
         if (response.data.success) {
@@ -110,7 +108,7 @@ export default {
           const bIsPaid = b.is_paid;
           return (aIsPaid > bIsPaid ? 1 : -1) * (vm.reverse === true ? 1 : -1);
         });
-      } else if (vm.sortData === 'buyData' && !vm.isLoading) {
+      } else if (vm.sortData === 'buyData' && !vm.$store.state.isLoading) {
         vm.orders.sort((a, b) => {
           const aData = a.create_at;
           const bData = b.create_at;

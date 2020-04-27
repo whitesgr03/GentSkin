@@ -1,6 +1,5 @@
 <template>
   <div>
-    <loading :active.sync="isLoading"></loading>
     <div class="products">
       <div class="text-right mb-4">
         <button type="button" class="button bg-biwacha" @click.prevent="openModal(true)">
@@ -295,7 +294,6 @@ export default {
       category: '',
       newData: '',
       isNew: false,
-      isLoading: false,
       status: {
         fileUploading: false,
       },
@@ -305,7 +303,7 @@ export default {
     getProducts() {
       // 取得所有商品資訊
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch('loading', true);
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products/all`;
       this.$http.get(api).then((response) => {
         if (response.data.success) {
@@ -319,7 +317,7 @@ export default {
           });
           vm.categorys = Array.from(new Set(sort));
           vm.newData = '';
-          vm.isLoading = false;
+          vm.$store.dispatch('loading', false);
         } else {
           vm.$router.push('/login');
         }
@@ -360,7 +358,7 @@ export default {
     updataProduct() {
       //  更新資料
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch('loading', true);
       let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product`;
       let httpMethod = 'post';
       if (!vm.isNew) {
@@ -369,13 +367,13 @@ export default {
         httpMethod = 'put';
       }
       this.$http[httpMethod](api, { data: vm.tempProduct }).then((response) => {
-        vm.isLoading = false;
+        vm.$store.dispatch('loading', false);
         $('#productModal').modal('hide');
         vm.getProducts();
         if (response.data.success && httpMethod === 'post') {
-          this.$bus.$emit('alert', '已新增商品');
+          vm.$store.dispatch('activeAlert', '已新增商品');
         } else {
-          this.$bus.$emit('alert', '已更新商品');
+          vm.$store.dispatch('activeAlert', '已更新商品');
         }
       });
     },
@@ -390,7 +388,7 @@ export default {
       this.$http.delete(api).then(() => {
         $('#delProductModal').modal('hide');
         vm.getProducts();
-        this.$bus.$emit('alert', '已刪除商品');
+        vm.$store.dispatch('activeAlert', '已刪除商品');
       });
     },
     uploadFile() {
@@ -410,7 +408,7 @@ export default {
         if (response.data.success) {
           vm.$set(vm.tempProduct, 'imageUrl', response.data.imageUrl); //  將imageIUrl雙向綁定  使用$set將後端response.data.imageUrl裡的資料強制,寫入變數vm.tempProduct裡的'imageUrl'
         } else {
-          this.$bus.$emit('alert', response.data.message);
+          vm.$store.dispatch('activeAlert', response.data.message);
         }
       });
     },

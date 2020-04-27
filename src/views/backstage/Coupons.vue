@@ -1,6 +1,5 @@
 <template>
   <div>
-    <loading :active.sync="isLoading"></loading>
     <div class="coupons">
       <div class="text-right mb-4">
         <button class="button bg-biwacha" @click.prevent="openModal(true)">
@@ -216,7 +215,6 @@ export default {
       coupons: [],
       tempProduct: {},
       isNew: false,
-      isLoading: false,
     };
   },
   methods: {
@@ -224,12 +222,12 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${1}`;
       const vm = this;
       if (Loading) {
-        vm.isLoading = true; // 啟用讀取動畫
+        vm.$store.dispatch('loading', true);
       }
       this.$http.get(api).then((response) => {
         vm.coupons = response.data.coupons;
         vm.newData = '';
-        vm.isLoading = false; // 資料讀取完成後再停用動畫
+        vm.$store.dispatch('loading', false);
       });
     },
     updataEnabled(isEnabled, item) {
@@ -262,7 +260,7 @@ export default {
     },
     updataCoupons() {
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch('loading', true);
       let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon`;
       let httpMethod = 'post';
       if (!vm.isNew) {
@@ -270,13 +268,13 @@ export default {
         httpMethod = 'put';
       }
       this.$http[httpMethod](api, { data: vm.tempProduct }).then((response) => {
-        vm.isLoading = false;
+        vm.$store.dispatch('loading', false);
         $('#couponsModal').modal('hide');
         vm.getCoupons();
         if (response.data.success && httpMethod === 'post') {
-          this.$bus.$emit('alert', '已新增優惠碼');
+          vm.$store.dispatch('activeAlert', '已新增優惠碼');
         } else {
-          this.$bus.$emit('alert', '已更新優惠碼');
+          vm.$store.dispatch('activeAlert', '已更新優惠碼');
         }
       });
     },
@@ -289,7 +287,7 @@ export default {
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempProduct.id}`;
       this.$http.delete(api).then(() => {
-        this.$bus.$emit('alert', '已刪除優惠碼');
+        vm.$store.dispatch('activeAlert', '已刪除優惠碼');
         $('#delcouponsModal').modal('hide');
         vm.getCoupons();
       });
