@@ -29,6 +29,7 @@ export default {
             context.dispatch('getOrderList', response.data.orderId);
             $('#payModal').modal('hide');
             router.push({ name: 'Check', params: { orderId: response.data.orderId } });
+            context.dispatch('activeAlert', '訂單已儲存，可在 "我的訂單" 查看', { root: true });
           }, 2000);
         }
       });

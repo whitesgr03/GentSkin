@@ -168,7 +168,6 @@ export default {
       vm.$store.dispatch('loading', true);
       this.$http.get(api).then((response) => {
         vm.order = response.data.order;
-        vm.$store.dispatch('activeAlert', '已儲存此筆訂單，可在 "我的訂單" 中查看');
         vm.$store.dispatch('loading', false);
       });
     },
