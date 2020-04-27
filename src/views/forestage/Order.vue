@@ -1,6 +1,5 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" loader="dots" style="z-index: 1;"></loading>
     <div class="order container-fluid" :class="{'vh-100' : cart.length === 0}">
 
       <div class="row" v-if="cart.total > 0">
@@ -170,7 +169,7 @@
                   </div>
                 </div>
                 <a href="#" class="button button-slide text-center h-auto p-2"
-                @click.prevent="$router.push({ path: `/shop/all` }).catch(err => {})">
+                @click.prevent="activeIcon(true, 'all'), $router.push({ path: `/shop/all` })">
                   繼續選購
                 </a>
                 <button type="submit" class="button button-slide">
@@ -236,12 +235,12 @@
                 type="text"
                 v-model="coupon_code"
                 required
-                placeholder="請輸入優惠碼"
+                placeholder="輸入優惠碼"
                 />
               <button type="submit" class="btn"
-                :disabled="isDisable || addCoupon"
+                :disabled="isDisable"
                 :class="{ 'text-success': coupon_code != '' }">
-                發送
+                使用
               </button>
               <i
                 class="far fa-question-circle text-warning ml-2 cart-animate"
@@ -263,7 +262,7 @@
           購物車目前無任何商品
         </p>
         <a href="#" class="button button-slide bg-biwacha text-center h-auto p-2"
-        @click.prevent="$router.push({ path: `/shop/all` }).catch(err => {})">
+        @click.prevent="activeIcon(true, 'all'), $router.push({ path: `/shop/all` })">
           繼續選購商品
         </a>
       </div>
@@ -293,7 +292,7 @@
               取消
             </button>
             <button type="button" class="py-3 w-50 btn btn-outline-danger border-0"
-            @click.prevent="removeCartItem()">
+            @click.prevent="removeCartItem(removeItem)">
               確定
             </button>
           </div>
@@ -321,7 +320,6 @@
     <div
       class="modal animated fadeIn"
       id="payModal"
-      tabindex="-1"
       role="dialog"
       data-backdrop="static"
       aria-labelledby="exampleModalLabel"
@@ -345,17 +343,14 @@
 import $ from 'jquery';
 import { ValidationProvider, ValidationObserver } from 'vee-validate'; // 驗證功能
 import twzipcode from 'twzipcode-data';
-
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   data() {
     return {
-      isLoading: false,
       isDisable: false,
-      addCoupon: false,
       coupon_code: '',
       removeItem: '',
-      cart: [],
       delivery: 'COD',
       cities: '',
       zipCode: '',
@@ -379,100 +374,6 @@ export default {
       },
     };
   },
-
-  methods: {
-    autoCoupon() {
-      // 自動折購
-      const vm = this;
-      vm.isLoading = true;
-      const coupon = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
-      const code = {
-        code: 'discount',
-      };
-      this.$http.post(coupon, { data: code }).then((response) => {
-        if (response.data.success) {
-          vm.isLoading = false;
-        }
-      });
-    },
-    getZipCode() {
-      // 取得台灣縣市郵遞區號
-      const vm = this;
-      vm.zipCode = twzipcode().zipcodes;
-      vm.cities = twzipcode().counties;
-    },
-    creatOrder() {
-      // 建立訂單
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
-      const order = vm.form;
-      vm.$refs.observer.validate().then((result) => {
-        vm.isLoading = true;
-        if (result) {
-          vm.isLoading = false;
-          $('#payModal').modal('show');
-          this.$http.post(api, { data: order }).then((response) => {
-            if (response.data.success) {
-              const Api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/pay/${response.data.orderId}`;
-              this.$http.post(Api).then(() => {});
-              setTimeout(() => {
-                $('#payModal').modal('hide');
-                this.$bus.$emit('updateCart');
-                this.$bus.$emit('orderId', response.data.orderId);
-                vm.$router.push({ name: 'Check', params: { orderId: response.data.orderId } });
-              }, 2000);
-            }
-          });
-        } else {
-          this.$bus.$emit('alert', '欄位輸入錯誤或不完整');
-          vm.isLoading = false;
-        }
-      });
-    },
-    removeCartItem() {
-      // 移除商品
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${vm.removeItem}`;
-      $('#removeCart').modal('hide');
-      this.$http.delete(api).then((response) => {
-        if (response.data.success) {
-          vm.$bus.$emit('updateCart');
-          vm.$bus.$emit('alert', '商品已被刪除');
-          vm.isLoading = false;
-        }
-      });
-    },
-    addCouponCode() {
-      // 使用優惠碼
-      const vm = this;
-      vm.isDisable = true;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
-      const coupon = {
-        code: vm.coupon_code,
-      };
-      if (vm.form.user.fee.shipping !== 0 && vm.cart.total - vm.form.user.fee.shipping >= 3000) {
-        vm.isLoading = true;
-        this.$http.post(api, { data: coupon }).then((response) => {
-          if (response.data.success) {
-            this.$bus.$emit('updateCart');
-            vm.coupon_code = '';
-            vm.addCoupon = true;
-            this.$bus.$emit('alert', '已使用優惠碼');
-          } else {
-            this.$bus.$emit('alert', '錯誤的優惠碼');
-          }
-          vm.isLoading = false;
-          vm.isDisable = false;
-        });
-      } else {
-        this.$bus.$emit('alert', '未符合優惠條件');
-        setTimeout(() => {
-          vm.isDisable = false;
-        }, 1000);
-      }
-    },
-  },
   computed: {
     filterData() {
       const vm = this;
@@ -490,18 +391,87 @@ export default {
       }
       return city;
     },
+    ...mapGetters('cartModules', ['cart']),
+  },
+  methods: {
+    // 取得購物車
+    ...mapActions('cartModules', ['getCart']),
+    getDiscount() {
+      // 啟用優惠
+      const discount = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
+      const coupon = {
+        code: 'discount',
+      };
+      this.$http.post(discount, { data: coupon }).then((response) => {
+        if (response.data.success) {
+          this.$store.dispatch('activeAlert', '已啟用季節優惠');
+        }
+      });
+    },
+    getZipCode() {
+      // 取得台灣縣市郵遞區號
+      const vm = this;
+      vm.zipCode = twzipcode().zipcodes;
+      vm.cities = twzipcode().counties;
+    },
+    creatOrder() {
+      // 建立訂單
+      this.$store.dispatch('loading', true);
+      this.$refs.observer.validate().then((result) => {
+        if (result) {
+          this.$store.dispatch('loading', false);
+          this.$store.dispatch('orderModules/createOrder', this.form);
+        } else {
+          this.$store.dispatch('activeAlert', '欄位輸入錯誤或不完整');
+          this.$store.dispatch('loading', false);
+        }
+      });
+    },
+    removeCartItem(id) {
+      // 取得購物車
+      this.$store.dispatch('cartModules/removeCartItem', id);
+    },
+    addCouponCode() {
+      // 使用優惠碼
+      const vm = this;
+      vm.isDisable = true;
+      if (vm.form.user.fee.shipping !== 0 && vm.cart.total - vm.form.user.fee.shipping >= 3000) {
+        this.$store.dispatch('loading', true);
+        const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
+        const coupon = {
+          code: vm.coupon_code,
+        };
+        this.$http.post(api, { data: coupon }).then((response) => {
+          if (response.data.success) {
+            this.getCart();
+            vm.coupon_code = '';
+            vm.isDisable = false;
+            this.$store.dispatch('activeAlert', '已使用優惠碼');
+            this.$store.dispatch('loading', false);
+          } else {
+            vm.isDisable = false;
+            this.$store.dispatch('loading', false);
+            this.$store.dispatch('activeAlert', '錯誤的優惠碼');
+          }
+        });
+      } else {
+        this.$store.dispatch('activeAlert', '未符合優惠條件');
+        setTimeout(() => {
+          vm.isDisable = false;
+        }, 1000);
+      }
+    },
+    activeIcon(status, category) {
+      this.$store.dispatch('activeIcon', { status, category });
+    },
   },
   mounted() {
     // 優惠碼提醒
     $('[data-toggle="tooltip"]').tooltip();
   },
   created() {
-    this.$bus.$on('getCart', (item) => {
-      this.cart = item;
-      // 取得購物車資料
-    });
-    this.$bus.$emit('updateCart');
-    this.autoCoupon();
+    this.getCart();
+    this.getDiscount();
     this.getZipCode();
   },
   components: {

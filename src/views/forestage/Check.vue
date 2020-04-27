@@ -1,6 +1,5 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" loader="dots" style="z-index: 1;"></loading>
     <div class="check py-5">
       <div class="container">
         <h3 class="text-center mb-5">訂單資訊</h3>
@@ -155,7 +154,6 @@ import $ from 'jquery';
 export default {
   data() {
     return {
-      isLoading: false,
       order: {
         user: {},
       },
@@ -167,10 +165,11 @@ export default {
       // 取得訂單資訊
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${id}`; // 從後端取的orderId
-      vm.isLoading = true;
+      vm.$store.dispatch('loading', true);
       this.$http.get(api).then((response) => {
         vm.order = response.data.order;
-        vm.isLoading = false;
+        vm.$store.dispatch('activeAlert', '已儲存此筆訂單，可在 "我的訂單" 中查看');
+        vm.$store.dispatch('loading', false);
       });
     },
     getHelper(value) {
@@ -179,9 +178,9 @@ export default {
       $('#serviceModal').modal('hide');
       $('#serviceModal').on('hidden.bs.modal', () => {
         if (value === 'delivery' || value === 'receipt') {
-          vm.$router.push({ name: 'Helper', params: { scroll: '#Q2' } }).catch(err => err);
+          vm.$router.push({ name: 'Helper', params: { scroll: '#Q2' } });
         } else {
-          vm.$router.push({ name: 'Helper', params: { scroll: value } }).catch(err => err);
+          vm.$router.push({ name: 'Helper', params: { scroll: value } });
         }
       });
     },

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" loader="dots" style="z-index: 1;"></loading>
-    <div class="product py-3 py-lg-5" :class="{'vh-100' : isLoading}">
+    <div class="product py-3 py-lg-5" :class="{'vh-100' : index === 0 &&
+    $route.params.item !== 'collections'}">
 
       <!-- 導覽列 -->
       <div class="container-sm">
@@ -9,7 +9,7 @@
           <div class="row py-5">
             <ul class="nav pb-3 py-md-0">
               <li class="nav-item">
-                <a href="#" class="nav-link" @click.prevent="$bus.$emit('closeIcon'),
+                <a href="#" class="nav-link" @click.prevent="$store.dispatch('activeIcon', false),
                 $router.push('/')">
                   首頁
                 </a>
@@ -19,7 +19,7 @@
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link"
-                @click.prevent="getCategorie('collections')">
+                @click.prevent="$router.push({ path: `/shop/collections` }).catch(err => err)">
                   分類
                 </a>
               </li>
@@ -28,7 +28,8 @@
               </li>
               <li class="nav-item"  v-if="mainItem">
                 <a href="#" class="nav-link"
-                @click.prevent="getCategorie(routerName), item = '';">
+                @click.prevent="$router.push({ path: `/shop/${routerName}` }).catch(err => err),
+                item = '';">
                   {{ mainItem }}
                 </a>
               </li>
@@ -48,7 +49,8 @@
                   class="form-control border-0"
                   placeholder="Search..."
                   v-model="search"
-                  @keyup.enter="searchItems = search, getCategorie('search')"
+                  @keyup.enter="searchItems = search,
+                  $router.push({ path: `/shop/search` }).catch(err => err)"
                 >
               </div>
             </div>
@@ -65,7 +67,7 @@
                 <div class="collections-content">
                   <h4>上衣</h4>
                   <button type="button" class="button button-slide"
-                  @click.prevent="getCategorie('tops')">
+                  @click.prevent="$router.push({ path: `/shop/tops` }).catch(err => err)">
                     開始選購
                   </button>
                 </div>
@@ -75,7 +77,8 @@
           <div class="col-6 col-lg-4 pl-lg-0">
             <div class="wrap">
               <a href="#" class="collections-img collections-img-tshirt"
-              @click.prevent="getCategorie('tops', 't-shirt')">
+              @click.prevent="$router.push({ path: `/shop/tops`, query:
+              { item: 't-shirt' } }).catch(err => err)">
                 <div class="wrap-shadow">
                   <div class="text-content">
                     <p class="underline m-0">短袖</p>
@@ -87,7 +90,8 @@
           <div class="col-6 col-lg-4">
             <div class="wrap">
               <a href="#" class="collections-img collections-img-shirt"
-              @click.prevent="getCategorie('tops', 'shirt')">
+              @click.prevent="$router.push({ path: `/shop/tops`, query:
+              { item: 'shirt' } }).catch(err => err)">
                 <div class="wrap-shadow">
                   <div class="text-content">
                     <p class="underline m-0">襯衫</p>
@@ -99,7 +103,8 @@
           <div class="col-6 col-lg-4 pr-lg-0">
             <div class="wrap">
               <a href="#" class="collections-img collections-img-outer"
-              @click.prevent="getCategorie('tops', 'outer')">
+              @click.prevent="$router.push({ path: `/shop/tops`, query:
+              { item: 'outer' } }).catch(err => err)">
                 <div class="wrap-shadow">
                   <div class="text-content">
                   <p class="underline m-0">外套</p>
@@ -116,7 +121,7 @@
                 <div class="collections-content">
                   <h4>下身</h4>
                   <button type="button" class="button button-slide"
-                  @click.prevent="getCategorie('bottoms')">
+                  @click.prevent="$router.push({ path: `/shop/bottoms` }).catch(err => err)">
                     開始選購
                   </button>
                 </div>
@@ -126,7 +131,8 @@
           <div class="col-6 col-lg-4 pl-lg-0">
             <div class="wrap">
               <a href="#" class="collections-img collections-img-shorts"
-              @click.prevent="getCategorie('bottoms', 'shorts')">
+              @click.prevent="$router.push({ path: `/shop/bottoms`, query:
+              { item: 'shorts' } }).catch(err => err)">
                 <div class="wrap-shadow">
                   <div class="text-content">
                     <p class="underline m-0">短褲</p>
@@ -138,7 +144,8 @@
           <div class="col-6 col-lg-4">
             <div class="wrap">
               <a href="#" class="collections-img collections-img-pants"
-              @click.prevent="getCategorie('bottoms', 'pants')">
+              @click.prevent="$router.push({ path: `/shop/bottoms`, query:
+              { item: 'pants' } }).catch(err => err)">
                 <div class="wrap-shadow">
                   <div class="text-content">
                     <p class="underline m-0">長褲</p>
@@ -150,7 +157,8 @@
           <div class="col-6 col-lg-4 pr-lg-0">
             <div class="wrap">
               <a href="#" class="collections-img collections-img-jeans"
-              @click.prevent="getCategorie('bottoms', 'jeans')">
+              @click.prevent="$router.push({ path: `/shop/bottoms`, query:
+              { item: 'jeans' } }).catch(err => err)">
                 <div class="wrap-shadow">
                   <div class="text-content">
                     <p class="underline m-0">牛仔褲</p>
@@ -167,7 +175,7 @@
                 <div class="collections-content">
                   <h4>配件</h4>
                   <button type="button" class="button button-slide"
-                  @click.prevent="getCategorie('accessories')">
+                  @click.prevent="$router.push({ path: `/shop/accessories` }).catch(err => err)">
                     開始選購
                   </button>
                 </div>
@@ -177,7 +185,8 @@
           <div class="col-6 col-lg-4 pl-lg-0">
             <div class="wrap">
               <a href="#" class="collections-img collections-img-hat"
-              @click.prevent="getCategorie('accessories', 'hat')">
+              @click.prevent="$router.push({ path: `/shop/accessories`,
+              query: { item: 'hat' } }).catch(err => err)">
                 <div class="wrap-shadow">
                   <div class="text-content">
                     <p class="underline m-0">帽子</p>
@@ -189,7 +198,8 @@
           <div class="col-6 col-lg-4">
             <div class="wrap">
               <a href="#" class="collections-img collections-img-bag"
-              @click.prevent="getCategorie('accessories', 'bag')">
+              @click.prevent="$router.push({ path: `/shop/accessories`,
+              query: { item: 'bag' } }).catch(err => err)">
                 <div class="wrap-shadow">
                   <div class="text-content">
                     <p class="underline m-0">背包</p>
@@ -201,7 +211,8 @@
           <div class="col-6 col-lg-4 pr-lg-0">
             <div class="wrap">
               <a href="#" class="collections-img collections-img-shoes"
-              @click.prevent="getCategorie('accessories', 'shoes')">
+              @click.prevent="$router.push({ path: `/shop/accessories`,
+              query: { item: 'shoes' } }).catch(err => err)">
                 <div class="wrap-shadow">
                   <div class="text-content">
                     <p class="underline m-0">鞋子</p>
@@ -215,7 +226,7 @@
 
       <!-- 商品顯示 -->
       <div class="container" v-if="$route.params.item !== 'collections'">
-        <div class="product-item">
+        <div class="product-item" v-if="filterItem">
           <div class="row">
             <div class="col-6 col-sm-4 col-md-3 my-3 " v-for="(item, i) in itemList" :key="i">
               <div :id="i"  class="product-item-wrap fadein-up" v-if="item.is_enabled"
@@ -246,6 +257,11 @@
             </div>
           </div>
         </div>
+        <!-- <div class="product-search  h-100" v-if="filterItem.length === 0">
+          <div class="row justify-content-center align-items-center h-100">
+            <p>沒有收尋到任何商品</p>
+          </div>
+        </div> -->
       </div>
 
       <!-- 商品滾動加載 -->
@@ -263,60 +279,30 @@
 <script>
 import $ from 'jquery';
 import InfiniteLoading from 'vue-infinite-loading';
+import { mapGetters, mapActions } from 'vuex';
+
 
 export default {
   data() {
     return {
       index: 0,
       itemList: [],
-      active: false,
       product: [],
-      allProduct: [],
       infiniteId: +new Date(),
-      status: {
-        loadingItem: '',
-      },
       collections: '',
       mainItem: '',
       item: '',
       routerName: '',
       search: '',
       searchItems: '',
-      isLoading: false,
     };
   },
-  methods: {
-    infiniteHandler($state) {
-      // 讀取商品
-      const vm = this;
-      if (vm.product.length >= vm.index + 1) {
-        vm.itemList.push(...vm.product[vm.index]);
-        vm.index += 1;
-        $state.loaded();
-        $('.loading').removeClass('vh-100');
-        setTimeout(() => {
-          $('.fadein-up').addClass('fadein-up-show');
-          $('.product-item-wrap').mousemove(function hover() {
-            const hashtag = '#';
-            const targetId = $(this).attr('id');
-            $(hashtag + targetId).find('.underline').addClass('underline-active');
-          });
-          $('.product-item-wrap').mouseout(function hover() {
-            const hashtag = '#';
-            const targetId = $(this).attr('id');
-            $(hashtag + targetId).find('.underline').removeClass('underline-active');
-          });
-          // 捲動頁面執行動畫
-        }, 1);
-      } else {
-        $state.complete();
-      }
-    },
+  computed: {
+    ...mapGetters('productsModules', ['products']),
     filterItem() {
       // 篩選商品
       const vm = this;
-      vm.isLoading = true;
-      $('.loading').addClass('vh-100');
+      window.scrollTo(0, 0);
       const items = vm.$route.params.item;
       let product = [];
       if (items === 'all') {
@@ -324,27 +310,21 @@ export default {
         vm.routerName = 'all';
         vm.item = '';
         vm.search = '';
-        product = this.allProduct;
-        window.scrollTo(0, 0);
+        product = this.products;
       } else if (items === 'search') {
-        product = this.allProduct.filter((item) => {
-          vm.mainItem = 'All';
-          vm.routerName = 'all';
-          vm.item = '';
-          window.scrollTo(0, 0);
-          return item.title.indexOf(vm.searchItems) > -1;
-        });
+        vm.mainItem = '';
+        vm.routerName = '';
+        vm.item = '';
+        product = this.products.filter(item => item.title.indexOf(vm.searchItems) > -1);
       } else {
         if (vm.$route.query.item !== undefined) {
           vm.collections = vm.$route.query.item;
         } else {
           vm.collections = items;
         }
-        product = this.allProduct.filter((item) => {
-          vm.search = '';
-          window.scrollTo(0, 0);
-          return item.category === vm.collections || item.Item === vm.collections;
-        });
+        vm.search = '';
+        product = this.products.filter(item => item.category === vm.collections
+        || item.Item === vm.collections);
         if (product.length !== 0) {
           vm.routerName = items;
           if (items === 'tops') {
@@ -398,24 +378,39 @@ export default {
         element.delay = seconds;
         productItem[index].push(element);
       });
-      vm.product = productItem;
+      vm.infiniteId += 1;
       vm.index = 0;
       vm.itemList = [];
-      vm.infiniteId += 1;
-      vm.isLoading = false;
+      return productItem;
     },
-    getCategorie(item, item2) {
-      // 路由變更使商品重新篩選
+  },
+  methods: {
+    // 取得所有商品
+    ...mapActions('productsModules', ['getProducts']),
+    infiniteHandler($state) {
+      // 讀取商品
       const vm = this;
-      if (item === 'search') {
-        vm.$router.push({ path: `/shop/${item}`, query: { item: item2 } }).catch(err => err);
-      } else {
-        vm.$router.push('/').catch(err => err);
+      if (vm.filterItem.length >= vm.index + 1) {
+        vm.itemList.push(...vm.filterItem[vm.index]);
+        vm.index += 1;
+        $state.loaded();
         setTimeout(() => {
-          vm.$router.push({ path: `/shop/${item}`, query: { item: item2 } }).catch(err => err);
+          $('.fadein-up').addClass('fadein-up-show');
+          $('.product-item-wrap').mousemove(function hover() {
+            const hashtag = '#';
+            const targetId = $(this).attr('id');
+            $(hashtag + targetId).find('.underline').addClass('underline-active');
+          });
+          $('.product-item-wrap').mouseout(function hover() {
+            const hashtag = '#';
+            const targetId = $(this).attr('id');
+            $(hashtag + targetId).find('.underline').removeClass('underline-active');
+          });
+          // 捲動頁面執行動畫
         }, 1);
+      } else {
+        $state.complete();
       }
-      vm.filterItem();
     },
   },
   mounted() {
@@ -440,17 +435,7 @@ export default {
     });
   },
   created() {
-    this.$bus.$on('UpdateCategorie', (item, item2) => {
-      // 手機板modal登出執行
-      this.getCategorie(item, item2);
-    });
-    this.$bus.$on('getProducts', (allData) => {
-      this.allProduct = allData;
-      this.filterItem();
-      // 取得購物車資料
-    });
-    this.isLoading = true;
-    this.$bus.$emit('updateProducts');
+    this.getProducts();
   },
   components: {
     InfiniteLoading,

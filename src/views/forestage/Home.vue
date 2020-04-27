@@ -16,8 +16,8 @@
                 New Collection
               </h3>
               <a href="#" class="carousel-button"
-              @click.prevent="$bus.$emit('activeIcon', ''),
-              $router.push({ path: `/shop/collections` }).catch(err => {})">
+              @click.prevent="activeIcon(true, ''),
+              $router.push({ path: `/shop/collections` })">
                 立即選購
               </a>
             </div>
@@ -38,8 +38,8 @@
                 New Season Arrivals
               </h3>
               <a href="#" class="carousel-button"
-              @click.prevent="$bus.$emit('activeIcon', 'all'),
-              $router.push({ path: `/shop/all` }).catch(err => {})">
+              @click.prevent="activeIcon(true, 'all'),
+              $router.push({ path: `/shop/all` })">
                 檢視單品
               </a>
             </div>
@@ -65,8 +65,8 @@
             <div class="col-6 col-lg-4">
               <div class="wrap">
                 <a href="#" class="recommend-img recommend-img-1"
-                @click.prevent="$bus.$emit('activeIcon', 'all'),
-                $router.push({ path: `/shop/all` }).catch(err => {})">
+                @click.prevent="activeIcon(true, 'all'),
+                $router.push({ path: `/shop/all` })">
                   <div class="wrap-shadow">
                     <button type="button" class="button button-active">
                       新品推薦
@@ -78,8 +78,8 @@
             <div class="col-6 col-lg-4">
               <div class="wrap">
                 <a href="#" class="recommend-img recommend-img-2"
-                @click.prevent="$bus.$emit('activeIcon', 'all'),
-                $router.push({ path: `/shop/all` }).catch(err => {})">
+                @click.prevent="activeIcon(true, 'all'),
+                $router.push({ path: `/shop/all` })">
                   <div class="wrap-shadow">
                     <button type="button" class="button button-active">
                       特價商品
@@ -91,8 +91,8 @@
             <div class="col-6 col-lg-4">
               <div class="wrap">
                 <a href="#" class="recommend-img recommend-img-3"
-                @click.prevent="$bus.$emit('activeIcon', 'all'),
-                $router.push({ path: `/shop/all` }).catch(err => {})">
+                @click.prevent="activeIcon(true, 'all'),
+                $router.push({ path: `/shop/all` })">
                   <div class="wrap-shadow">
                     <button type="button" class="button button-active">
                       人氣商品
@@ -119,10 +119,10 @@
       <div class="container-lg">
         <div class="featured" >
           <h3 class="text-center">精選系列</h3>
-          <carousel :per-page="page" :paginationEnabled="false" :scrollPerPage="false"
+          <carousel :per-page="pageNum" :paginationEnabled="false" :scrollPerPage="false"
           :mouse-drag="true" :autoplay="true" :autoplayTimeout="3500"
           :loop="true" :speed="3000">
-              <slide v-for="item in products" :key="item.id" class="p-2" style="height: 50vh;">
+              <slide v-for="item in suitCategory" :key="item.id" class="p-2" style="height: 50vh;">
                 <div class="featured-img"
                   :style="{backgroundImage: 'url(' + item.imageUrl + ')' }">
                     <div class="wrap-shadow">
@@ -141,7 +141,7 @@
                           </p>
                         </div>
                         <a href="#" class="button button-slide text-center h-auto p-2"
-                          @click.prevent="$bus.$emit('activeIcon', 'tops'),
+                          @click.prevent="activeIcon(true, 'tops'),
                           $router.push({ path: `/content/${item.category}/${item.Item}`,
                           query: { id :`${item.id}` } })">
                           查看商品
@@ -188,7 +188,7 @@
               <div class="col-md-6 pl-md-0 category-wrap-h35">
                 <div class="wrap">
                   <a href="#" class="category-img category-img-shoes"
-                  @click.prevent="$bus.$emit('activeIcon', 'accessories'),
+                  @click.prevent="activeIcon(true, 'accessories'),
                   $router.push({ path: `/shop/accessories`,
                   query: { item: `shoes` } }).catch(err => {})">
                     <div class="wrap-shadow">
@@ -200,7 +200,7 @@
               <div class="col-md-6 category-wrap-h35">
                 <div class="wrap">
                   <a href="#" class="category-img category-img-bottoms"
-                  @click.prevent="$bus.$emit('activeIcon', 'bottoms'),
+                  @click.prevent="activeIcon(true, 'bottoms'),
                   $router.push({ path: `/shop/bottoms`,
                   query: { item: `jeans` } }).catch(err => {})">
                     <div class="wrap-shadow">
@@ -216,7 +216,7 @@
               <div class="col-md-6 category-wrap-h35">
                 <div class="wrap">
                   <a href="#" class="category-img category-img-coat"
-                  @click.prevent="$bus.$emit('activeIcon', 'tops'),
+                  @click.prevent="activeIcon(true, 'tops'),
                   $router.push({ path: `/shop/tops`,
                   query: { item: `outer` } }).catch(err => {})">
                     <div class="wrap-shadow">
@@ -228,7 +228,7 @@
               <div class="col-md-6 pr-md-0 category-wrap-h35">
                 <div class="wrap">
                   <a href="#" class="category-img category-img-accessories"
-                  @click.prevent="$bus.$emit('activeIcon', 'accessories'),
+                  @click.prevent="activeIcon(true, 'accessories'),
                   $router.push({ path: `/shop/accessories`,
                   query: { item: `hat` } }).catch(err => {})">
                     <div class="wrap-shadow">
@@ -240,7 +240,7 @@
               <div class="col-12 pt-lg-5 pr-md-0 category-wrap-h65">
                 <div class="wrap">
                   <a href="#" class="category-img category-img-suit"
-                  @click.prevent="$bus.$emit('activeIcon', 'tops'),
+                  @click.prevent="activeIcon(true, 'tops'),
                   $router.push({ path: `/shop/tops`,
                   query: { item: `suit` } }).catch(err => {})">
                     <div class="wrap-shadow">
@@ -333,25 +333,21 @@
 <script>
 import $ from 'jquery';
 import { Carousel, Slide } from 'vue-carousel';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   data() {
     return {
-      products: [],
     };
   },
+  computed: {
+    ...mapGetters('productsModules', ['suitCategory', 'products', 'pageNum']),
+  },
   methods: {
-    winWidth() {
-      // 變更商品顯示的數量
-      const vm = this;
-      const w = window.innerWidth;
-      if (w <= 767) {
-        vm.page = 2;
-      } else if (w <= 1023) {
-        vm.page = 3;
-      } else {
-        vm.page = 4;
-      }
+    // 取得所有商品
+    ...mapActions('productsModules', ['getProducts', 'productCarousel']),
+    activeIcon(status, category) {
+      this.$store.dispatch('activeIcon', { status, category });
     },
   },
   mounted() {
@@ -362,12 +358,8 @@ export default {
     });
   },
   created() {
-    this.$bus.$on('getProducts', (allData) => {
-      this.products = allData.filter(item => item.Item === 'suit');
-      // 取得購物車資料
-    });
-    this.$bus.$emit('updateProducts');
-    this.winWidth();
+    this.getProducts();
+    this.productCarousel();
   },
   components: {
     Carousel,

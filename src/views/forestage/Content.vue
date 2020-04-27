@@ -5,8 +5,8 @@
         <!-- 導覽列 -->
         <ul class="nav py-5">
           <li class="nav-item">
-            <a href="#" class="nav-link" @click.prevent="$bus.$emit('closeIcon'),
-                $router.push('/')">
+            <a href="#" class="nav-link" @click.prevent="$store.dispatch('activeIcon', false),
+                $router.push('/').catch(err => err)">
               首頁
             </a>
           </li>
@@ -15,7 +15,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link"
-            @click.prevent="$router.push({ path: `/shop/collections` }).catch(err => {})">
+            @click.prevent="$router.push({ path: `/shop/collections` }).catch(err => err)">
               分類
             </a>
           </li>
@@ -95,7 +95,7 @@
                   >
                     加入購物車
                     <i class="fas fa-xs fa-spinner fa-spin mr-1"
-                      v-if="status.loadingItem === product.id">
+                      v-if="isAdding === product.id">
                     </i>
                   </button>
                   <button
@@ -120,7 +120,7 @@
 
         <!-- 類似商品 -->
         <h4 class="text-center my-5">你可能會喜歡</h4>
-        <carousel :per-page="page" :paginationEnabled="false" :scrollPerPage="false"
+        <carousel :per-page="pageNum" :paginationEnabled="false" :scrollPerPage="false"
         :mouse-drag="true" :autoplay="true" :autoplayTimeout="5500"
         :loop="true" :speed="3000">
             <slide v-for="item in sameProducts" :key="item.id" class="similarItem p-2">
@@ -158,38 +158,36 @@
 </template>
 
 <script>
-import $ from 'jquery';
 import { Carousel, Slide } from 'vue-carousel';
+import { mapGetters, mapActions } from 'vuex';
+
 
 export default {
   data() {
     return {
       product: [],
-      sameProducts: [],
-      cart: [],
       amount: 1,
-      isDisable: false,
       mainItem: '',
       item: '',
-      page: 0,
-      status: {
-        loadingItem: '',
-      },
     };
   },
+  computed: {
+    ...mapGetters('productsModules', ['sameProducts', 'pageNum']),
+    ...mapGetters('cartModules', ['isDisable', 'isAdding', 'cart']),
+  },
   methods: {
+    ...mapActions('productsModules', ['productCarousel']),
     getProduct(id) {
       // 取得選定商品資料
       const vm = this;
       vm.$store.dispatch('loading', true);
-      vm.sameProducts = [];
       const product = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
       const mainItems = vm.$route.params.mainItem;
       const items = vm.$route.params.item;
       this.$http.get(product).then((response) => {
         if (response.data.success) {
           vm.product = response.data.product;
-          this.$bus.$emit('updateProducts');
+          this.$store.dispatch('productsModules/getProducts', vm.product);
           if (mainItems === 'tops') {
             vm.mainItem = '上衣';
             if (items === 't-shirt') {
@@ -221,6 +219,7 @@ export default {
             }
           }
         }
+        this.$store.dispatch('loading', false);
       });
     },
     getAmount(item) {
@@ -233,141 +232,27 @@ export default {
       } else if (vm.amount < 1) {
         vm.amount = 1;
       } else {
-        vm.$bus.$emit('alert', '商品數量範圍 1 - 5');
+        vm.$store.dispatch('activeAlert', '商品數量範圍 1 - 5');
       }
     },
     addtoCart(id, amount) {
       // 加入購物車
-      const vm = this;
-      vm.isDisable = true;
-      vm.status.loadingItem = id;
-      const cartData = vm.cart.carts.filter(item => item.product_id === id);
-      const cart = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      // 透過cartData將購物車內所有商品與此筆商品作對比
-      if (cartData.length === 0) {
-        // 沒有相同id則直接加入商品
-        const cartItem = {
-          product_id: id,
-          qty: amount,
-        };
-        this.$http.post(cart, { data: cartItem }).then((response) => {
-          if (response.data.success) {
-            vm.isDisable = false;
-            vm.status.loadingItem = '';
-            vm.$bus.$emit('updateCart');
-            vm.$bus.$emit('alert', '商品已加入購物車');
-          }
-        });
-      } else if (cartData.length > 0) {
-        // 有相同id的話就刪除商品並將舊有商品與新入商品的數量合併在加入購物車
-        const cartId = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${cartData[0].id}`;
-        vm.$http.delete(cartId).then((response) => {
-          if (response.data.success) {
-            const cartItem = {
-              product_id: id,
-              qty: amount + cartData[0].qty,
-            };
-            this.$http.post(cart, { data: cartItem }).then((responses) => {
-              if (responses.data.success) {
-                vm.$bus.$emit('updateCart');
-                vm.status.loadingItem = '';
-                vm.isDisable = false;
-                vm.$bus.$emit('alert', '商品已加入購物車');
-              }
-            });
-          }
-        });
-      }
+      this.$store.dispatch('cartModules/addtoCart', { id, amount });
     },
     buyNow(id, amount) {
-      // 立即加入購物車並結帳
-      const vm = this;
-      const getSite = sessionStorage.getItem('sign');
-      if (getSite != null) {
-        // 執行結帳前必須先登入
-        vm.$store.dispatch('loading', true);
-        const cartData = vm.cart.carts.filter(item => item.product_id === id);
-        // 透過cartData將購物車內所有商品與此筆商品作對比
-        if (cartData.length === 0) {
-          // 沒有相同id則直接加入商品
-          const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-          const cart = {
-            product_id: id,
-            qty: amount,
-          };
-          this.$http.post(api, { data: cart }).then((response) => {
-            if (response.data.success) {
-              setTimeout(() => {
-                vm.$store.dispatch('loading', false);
-                vm.$bus.$emit('alert', '商品已加入購物車');
-                vm.$bus.$emit('closeIcon');
-                vm.$router.push('/order');
-              }, 1000);
-            }
-          });
-        } else if (cartData.length > 0) {
-          // 有相同id的話就刪除商品並將舊有商品與新入商品的數量合併在加入購物車
-          const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${cartData[0].id}`;
-          vm.$http.delete(api).then((response) => {
-            if (response.data.success) {
-              const Api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-              const cart = {
-                product_id: id,
-                qty: amount + cartData[0].qty,
-              };
-              this.$http.post(Api, { data: cart }).then((responses) => {
-                if (responses.data.success) {
-                  setTimeout(() => {
-                    vm.$bus.$emit('updateCart');
-                    vm.$store.dispatch('loading', false);
-                    vm.$bus.$emit('alert', '商品已加入購物車');
-                    vm.$bus.$emit('closeIcon');
-                    vm.$router.push('/order');
-                  }, 1000);
-                }
-              });
-            }
-          });
-        }
-      } else {
-        $('#loginModal').modal('show');
-        vm.$bus.$emit('alert', '請先登入會員');
-      }
+      this.$store.dispatch('cartModules/buyNow', { id, amount });
     },
     getItem(category, item, id) {
       // 點擊相似商品的變更資料
       const vm = this;
-      vm.$router.push({ path: `/content/${category}/${item}`, query: { id } }).catch(err => err);
+      vm.$router.push({ path: `/content/${category}/${item}`, query: { id } });
       vm.getProduct(id);
       window.scrollTo(0, 0);
-    },
-    winWidth() {
-      // 變更商品顯示的數量
-      const vm = this;
-      const w = window.innerWidth;
-      if (w <= 767) {
-        vm.page = 2;
-      } else if (w <= 1023) {
-        vm.page = 3;
-      } else {
-        vm.page = 4;
-      }
     },
   },
   created() {
     this.getProduct(this.$route.query.id);
-    this.$bus.$on('getCart', (item) => {
-      this.cart = item;
-      // 取得購物車資料
-    });
-    this.$bus.$on('getProducts', (allData) => {
-      // 取得全部商品資料再篩選與此筆相似的商品資料
-      this.sameProducts = allData.filter(item => item.category
-      === this.product.category && item.title !== this.product.title);
-      this.$store.dispatch('loading', false);
-    });
-    this.$bus.$emit('updateProducts');
-    this.winWidth();
+    this.productCarousel();
   },
   components: {
     Carousel,

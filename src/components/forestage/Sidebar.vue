@@ -7,33 +7,33 @@
         <ul class="nav">
           <li class="nav-item">
             <button type="button" class="btn nav-link"
-            @click.prevent="$bus.$emit('UpdateCategorie', 'tops'),
-            collections = 'tops'"
-            :class="{ 'active': collections == 'tops' }">
+            @click.prevent="activeIcon(true, 'tops'),
+            $router.push({ path: `/shop/tops` }).catch(err => err)"
+            :class="{ 'active': menuIcon == 'tops' }">
               <strong>上衣</strong>
             </button>
           </li>
           <li class="nav-item">
             <button type="button" class="btn nav-link"
-            @click.prevent="$bus.$emit('UpdateCategorie', 'bottoms'),
-            collections = 'bottoms'"
-            :class="{ 'active': collections == 'bottoms' }">
+            @click.prevent="activeIcon(true, 'bottoms'),
+            $router.push({ path: `/shop/bottoms` }).catch(err => err)"
+            :class="{ 'active': menuIcon == 'bottoms' }">
               <strong>下身</strong>
             </button>
           </li>
           <li class="nav-item">
             <button type="button" class="btn nav-link"
-            @click.prevent="$bus.$emit('UpdateCategorie', 'accessories'),
-            collections = 'accessories'"
-            :class="{ 'active': collections == 'accessories' }">
+            @click.prevent="activeIcon(true, 'accessories'),
+            $router.push({ path: `/shop/accessories` }).catch(err => err)"
+            :class="{ 'active': menuIcon == 'accessories' }">
               <strong>配件</strong>
             </button>
           </li>
           <li class="nav-item">
             <button type="button" class="btn nav-link"
-            @click.prevent="$bus.$emit('UpdateCategorie', 'all'),
-            collections = 'all'"
-            :class="{ 'active': collections == 'all' }">
+            @click.prevent="activeIcon(true, 'all'),
+            $router.push({ path: `/shop/all` }).catch(err => err)"
+            :class="{ 'active': menuIcon == 'all' }">
               <strong>ALL</strong>
             </button>
           </li>
@@ -43,20 +43,21 @@
       <div class="option">
         <button type="button" class="menu"
         data-toggle="modal" data-target="#menuModal"
-        @click.prevent="mobileMenu = !mobileMenu"
+        @click.prevent="mobileMenuClose"
         :class="{'menu-active' : mobileMenu}">
             <span></span>
             <span></span>
             <span></span>
             <span></span>
         </button>
-        <a href="#" class="logo mt-lg-5 text-center" @click.prevent="menu = false,
-        $router.push('/')">
+        <a href="#" class="logo mt-lg-5 text-center"
+        @click.prevent="activeIcon(false, ''),
+        $router.push('/').catch(err => err)">
           GentSkin
         </a>
         <ul class="nav">
           <li class="nav-item nav-item-hide d-none d-lg-block"
-            :class="{'nav-item-visible': loginStatus}">
+            :class="{'nav-item-visible': login}">
             <button
               class="btn"
               type="button"
@@ -77,8 +78,8 @@
               <i class="fas fa-2x fa-shopping-bag"></i>
               <span
                 class="badge badge-pill badge-darkRed"
-                v-if="cartAmount != 0">
-                {{ cartAmount }}
+                v-if="cartAmout !== 0">
+                {{ cartAmout }}
               </span>
             </button>
           </li>
@@ -88,7 +89,7 @@
               type="button"
               data-toggle="modal"
               data-target="#loginModal"
-              v-if="!loginStatus"
+              v-if="!login"
             >
               <i class="far fa-2x fa-user"></i>
             </button>
@@ -97,7 +98,7 @@
               type="button"
               data-toggle="modal"
               data-target="#loginOutModal"
-              v-if="loginStatus"
+              v-if="login"
             >
               <i class="fas fa-2x fa-user-tie"></i>
             </button>
@@ -108,29 +109,29 @@
       <div class="menuList d-none d-lg-block">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a href="#" class="nav-link" @click.prevent="menu = false,
-            $router.push('/')">
+            <a href="#" class="nav-link" @click.prevent="activeIcon(false, ''),
+            $router.push('/').catch(err => err)">
               首頁
             </a>
           </li>
           <li id="menu" class="nav-item position-relative">
             <a  href="#" class="nav-link" @click.prevent="
             $router.push({ path: `/shop/all` }).catch(err => err),
-            menu = true, collections = 'all', menuList = true">
+            activeIcon(true, 'all'), menuList = true">
               服飾
               <i class="fas fa-angle-right animated fadeInLeft text-white"
-              v-if="menu"></i>
+              v-if="arrowIcon"></i>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" @click.prevent="menu = false,
-            $router.push('/article')">
+            <a href="#" class="nav-link" @click.prevent="activeIcon(false, ''),
+            $router.push('/article').catch(err => err)">
               主題
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" @click.prevent="menu = false,
-            $router.push('/about')">
+            <a href="#" class="nav-link" @click.prevent="activeIcon(false, ''),
+            $router.push('/about').catch(err => err)">
               關於
             </a>
           </li>
@@ -142,58 +143,24 @@
 
 <script>
 import $ from 'jquery';
+import { mapGetters } from 'vuex';
 
 export default {
   data() {
     return {
-      loginStatus: false,
       menuList: false,
-      menu: false,
-      mobileMenu: false,
-      product: [],
-      cartAmount: 0,
-      collections: '',
     };
   },
-
+  computed: {
+    ...mapGetters('cartModules', ['cartAmout']),
+    ...mapGetters(['arrowIcon', 'menuIcon', 'mobileMenu', 'login']),
+  },
   methods: {
-    getCart() {
-      // 取得購物車資料
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      this.$http.get(api).then((response) => {
-        if (response.data.success) {
-          const getSite = sessionStorage.getItem('coupon');
-          // 透過sessionStorage可以分辨網頁是第一次開啟還是從後台轉回前台
-          if (getSite == null) { // 如果是第一次開啟網頁則執行以下檢查資料的動作
-            if (response.data.data.carts.length === 0) {
-              vm.$bus.$emit('getCart', response.data.data); // 開起網頁後如果購物車是空的就將空的資料帶入購物車Modal
-            } else { // 開起網頁後如果購物車有資料就將每一筆資料清空然後再重新取得資料接著再帶給購物車Modal
-              response.data.data.carts.forEach((item) => {
-                const removeItem = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${item.id}`;
-                this.$http.delete(removeItem).then(() => {
-                  this.$http.get(api).then((responses) => {
-                    vm.$bus.$emit('getCart', responses.data.data);
-                  });
-                });
-              });
-            }
-            sessionStorage.setItem('coupon', true);
-          } else { // 如果是後台轉回前台 則更新商品數量並直接帶入購物車資料
-            vm.cartAmount = response.data.data.carts.length;
-            vm.$bus.$emit('getCart', response.data.data);
-          }
-        }
-      });
+    activeIcon(status, category) {
+      this.$store.dispatch('activeIcon', { status, category });
     },
-    getProducts() {
-      // 取得所有商品
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
-      this.$http.get(api).then((response) => {
-        if (response.data.success) {
-          this.$bus.$emit('getProducts', response.data.products);
-        }
-      });
+    mobileMenuClose() {
+      this.$store.dispatch('mobileMenuClose', true);
     },
   },
   mounted() {
@@ -211,32 +178,6 @@ export default {
       || this.$router.history.current.name === 'Content') {
         this.menuList = !this.menuList;
       }
-    });
-  },
-  created() {
-    this.$bus.$on('loginStatus', (item) => {
-      // modal登入執行
-      this.loginStatus = item;
-    });
-    this.$bus.$on('updateCart', () => {
-      // 更新sidbar購物車數量和Modal中購物車的商品顯示
-      this.getCart();
-    });
-    this.$bus.$on('updateProducts', () => {
-      // 更新sidbar購物車數量和Modal中購物車的商品顯示
-      this.getProducts();
-    });
-    this.$bus.$on('activeIcon', (item) => {
-      this.collections = item; // 變更sidebar分類的顯示框
-      this.menu = true; // 顯示sidebar分類的箭頭
-    });
-    this.$bus.$on('closeIcon', () => {
-      // 關閉sidebar分類的箭頭
-      this.menu = false;
-    });
-    this.$bus.$on('closeMenu', () => {
-      // 手機板漢堡選單動畫
-      this.mobileMenu = false;
     });
   },
 };

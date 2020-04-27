@@ -1,6 +1,5 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" loader="dots" style="z-index: 99999;"></loading>
 
     <!-- 優惠提示 Modal -->
     <div class="modal animated rollIn" id="saleModal"
@@ -40,7 +39,7 @@
       role="dialog"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
-      @click.prevent="$bus.$emit('closeMenu')">
+      @click.prevent="mobileMenuClose">
       <div
         class="modal-dialog"
         role="document"
@@ -56,7 +55,7 @@
             <div class="mobileMenu">
               <ul class="nav">
                 <li class="nav-item nav-item-hide"
-                  :class="{'nav-item-visible': loginStatus}">
+                  :class="{'nav-item-visible': login}">
                   <button
                     class="btn"
                     type="button"
@@ -72,7 +71,7 @@
                     type="button"
                     data-toggle="modal"
                     data-target="#loginModal"
-                    v-if="!loginStatus"
+                    v-if="!login"
                   >
                     <i class="far fa-2x fa-user"></i>
                   </button>
@@ -81,7 +80,7 @@
                     type="button"
                     data-toggle="modal"
                     data-target="#loginOutModal"
-                    v-if="loginStatus"
+                    v-if="login"
                   >
                     <i class="fas fa-2x fa-user-tie"></i>
                   </button>
@@ -92,7 +91,7 @@
               <ul class="nav flex-column">
                 <li class="nav-item border-bottom">
                 <a href="#" class="nav-link" data-dismiss="modal"
-                @click.prevent="$router.push('/')">
+                @click.prevent="$router.push('/').catch(err => err)">
                   首頁
                 </a>
                 </li>
@@ -119,7 +118,7 @@
                             data-toggle="collapse" data-target="#tops"
                             aria-expanded="false" aria-controls="tops">
                             <a href="#" data-dismiss="modal"
-                            @click.prevent="$bus.$emit('UpdateCategorie', 'tops')">
+                            @click.prevent="$router.push({ path: `/shop/tops` }).catch(err => err)">
                               上衣
                             </a>
                               <div class="plus border-0 position-absolute"
@@ -135,22 +134,22 @@
                                 <ul class="nav flex-column">
                                   <li class="nav-item">
                                     <a href="#" class="nav-link" data-dismiss="modal"
-                                    @click.prevent="
-                                    $bus.$emit('UpdateCategorie', 'tops', 't-shirt')">
+                                    @click.prevent="$router.push({ path: `/shop/tops`,
+                                    query:{ item: 't-shirt' } }).catch(err => err)">
                                       短袖
                                     </a>
                                   </li>
                                   <li class="nav-item">
                                     <a href="#" class="nav-link" data-dismiss="modal"
-                                    @click.prevent="
-                                    $bus.$emit('UpdateCategorie', 'tops', 'shirt')">
+                                    @click.prevent="$router.push({ path: `/shop/tops`,
+                                    query:{ item: 'shirt' } }).catch(err => err)">
                                       襯衫
                                     </a>
                                   </li>
                                   <li class="nav-item">
                                     <a href="#" class="nav-link" data-dismiss="modal"
-                                    @click.prevent="
-                                    $bus.$emit('UpdateCategorie', 'tops', 'outer')">
+                                    @click.prevent="$router.push({ path: `/shop/tops`,
+                                    query:{ item: 'outer' } }).catch(err => err)">
                                       外套
                                     </a>
                                   </li>
@@ -163,7 +162,8 @@
                             data-toggle="collapse" data-target="#bottoms"
                             aria-expanded="false" aria-controls="bottoms">
                             <a href="#" data-dismiss="modal"
-                            @click.prevent="$bus.$emit('UpdateCategorie', 'bottoms')">
+                            @click.prevent="
+                            $router.push({ path: `/shop/bottoms` }).catch(err => err)">
                               下身
                             </a>
                               <div class="plus border-0 position-absolute"
@@ -179,22 +179,22 @@
                                 <ul class="nav flex-column">
                                   <li class="nav-item">
                                     <a href="#" class="nav-link" data-dismiss="modal"
-                                    @click.prevent="
-                                    $bus.$emit('UpdateCategorie', 'bottoms', 'shorts')">
+                                    @click.prevent="$router.push({ path: `/shop/bottoms`,
+                                    query:{ item: 'shorts' } }).catch(err => err)">
                                       短褲
                                     </a>
                                   </li>
                                   <li class="nav-item">
                                     <a href="#" class="nav-link" data-dismiss="modal"
-                                    @click.prevent="
-                                    $bus.$emit('UpdateCategorie', 'bottoms', 'pants')">
+                                    @click.prevent="$router.push({ path: `/shop/bottoms`,
+                                    query:{ item: 'pants' } }).catch(err => err)">
                                       長褲
                                     </a>
                                   </li>
                                   <li class="nav-item">
                                     <a href="#" class="nav-link" data-dismiss="modal"
-                                    @click.prevent="
-                                    $bus.$emit('UpdateCategorie', 'bottoms', 'jeans')">
+                                    @click.prevent="$router.push({ path: `/shop/bottoms`,
+                                    query:{ item: 'jeans' } }).catch(err => err)">
                                       牛仔褲
                                     </a>
                                   </li>
@@ -208,7 +208,7 @@
                             aria-expanded="false" aria-controls="accessories">
                             <a href="#" data-dismiss="modal"
                             @click.prevent="
-                            $bus.$emit('UpdateCategorie', 'accessories')">
+                            $router.push({ path: `/shop/accessories` }).catch(err => err)">
                               配件
                             </a>
                               <div class="plus border-0 position-absolute"
@@ -224,22 +224,22 @@
                                 <ul class="nav flex-column">
                                   <li class="nav-item">
                                     <a href="#" class="nav-link" data-dismiss="modal"
-                                    @click.prevent="
-                                    $bus.$emit('UpdateCategorie', 'accessories', 'hat')">
+                                    @click.prevent="$router.push({ path: `/shop/accessories`,
+                                    query:{ item: 'hat' } }).catch(err => err)">
                                       帽子
                                     </a>
                                   </li>
                                   <li class="nav-item">
                                     <a href="#" class="nav-link" data-dismiss="modal"
-                                    @click.prevent="
-                                    $bus.$emit('UpdateCategorie', 'accessories', 'bag')">
+                                    @click.prevent="$router.push({ path: `/shop/accessories`,
+                                    query:{ item: 'bag' } }).catch(err => err)">
                                       背包
                                     </a>
                                   </li>
                                   <li class="nav-item">
                                     <a href="#" class="nav-link" data-dismiss="modal"
-                                    @click.prevent="
-                                    $bus.$emit('UpdateCategorie', 'accessories', 'shoes')">
+                                    @click.prevent="$router.push({ path: `/shop/accessories`,
+                                    query:{ item: 'shoes' } }).catch(err => err)">
                                       鞋子
                                     </a>
                                   </li>
@@ -249,7 +249,7 @@
                           </li>
                           <li class="nav-item">
                             <a href="#" class="nav-link" data-dismiss="modal"
-                            @click.prevent="$bus.$emit('UpdateCategorie', 'all')">
+                            @click.prevent="$router.push({ path: `/shop/all` }).catch(err => err)">
                               All
                             </a>
                           </li>
@@ -260,13 +260,13 @@
                 </li>
                 <li class="nav-item border-bottom">
                 <a href="#" class="nav-link" data-dismiss="modal"
-                @click.prevent="$router.push('/article')">
+                @click.prevent="$router.push('/article').catch(err => err)">
                   主題
                 </a>
                 </li>
                 <li class="nav-item border-bottom">
                 <a href="#" class="nav-link" data-dismiss="modal"
-                @click.prevent="$router.push('/about')">
+                @click.prevent="$router.push('/about').catch(err => err)">
                   關於
                 </a>
                 </li>
@@ -284,13 +284,14 @@
       tabindex="-1"
       role="dialog"
       aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
+      aria-hidden="true"
+      v-if="cart.carts">
       <div
         class="modal-dialog"
         role="document"
-        :class="{'modal-dialog-scrollable' : cartItem.carts.length !== 0}">
+        :class="{'modal-dialog-scrollable' : cart.carts.length !== 0}">
         <form class="modal-content bg-black" @submit.prevent="payment"
-        v-if="cartItem.carts.length !== 0">
+        v-if="cart.carts.length !== 0">
           <button type="button" class="close position-absolute text-white"
           style="right: 10px; top: 0px; opacity: 1;" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -301,7 +302,7 @@
             </h5>
           </div>
           <div class="modal-body">
-            <div class="row" v-for="item in cartItem.carts" :key="item.id">
+            <div class="row" v-for="item in cart.carts" :key="item.id">
               <div class="col-5">
                 <img class="w-100 border p-1" :src="item.product.imageUrl" />
               </div>
@@ -323,7 +324,7 @@
           <div
             class="modal-footer justify-content-around">
             <div class="h5 m-0">
-              <span class="mr-3">總金額</span> {{ cartItem.total | currency }}
+              <span class="mr-3">總金額</span> {{ cart.total | currency }}
             </div>
               <button type="submit" class="button button-slide">
                 結帳
@@ -331,7 +332,7 @@
           </div>
         </form>
         <div class="modal-content bg-black justify-content-center"
-        v-if="cartItem.carts.length === 0">
+        v-if="cart.carts.length === 0">
         <h5 class="m-0 text-center">
           您還沒有選購任何商品
         </h5>
@@ -593,21 +594,16 @@
 
 <script>
 import $ from 'jquery';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   data() {
     return {
       sign: false,
-      isLoading: false,
-      loginStatus: false,
       loginInput: '註冊完畢後即可選擇帳號',
       removeItem: '',
       counter: 0,
       num: 0,
-      cartItem: {
-        carts: [],
-      },
-      orderList: [],
       accountData: [],
       newAccount:
       [{
@@ -626,39 +622,44 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapGetters('cartModules', ['cart']),
+    ...mapGetters('orderModules', ['orderList']),
+    ...mapGetters(['login']),
+  },
   methods: {
+    // 取得購物車
+    ...mapActions('cartModules', ['getCart']),
     getLogin() {
       // 已登入的狀態下進入後台並返回前台時將確保資料還原
       const vm = this;
-      const getSite = sessionStorage.getItem('sign');
-      vm.$bus.$emit('updateCart');
-      if (getSite != null) {
+      const storage = sessionStorage.getItem('sign');
+      if (storage != null) {
         vm.newAccount.forEach((item) => {
           vm.user.signUp.username = item.username;
           vm.user.signUp.password = item.password;
         });
         vm.accountData.push(vm.user.signUp);
         vm.loginInput = '請先選擇帳號';
-        vm.$bus.$emit('loginStatus', true);
-        vm.loginStatus = true;
+        vm.$store.dispatch('login', true);
       }
     },
     signUp() {
       // 註冊
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch('loading', true);
       if (vm.accountData.length === 0) {
         setTimeout(() => {
           vm.accountData.push(vm.user.signUp);
-          vm.$bus.$emit('alert', '測試帳號已註冊成功');
+          vm.$store.dispatch('activeAlert', '測試帳號已註冊成功');
           vm.loginInput = '請先選擇帳號';
           vm.sign = false;
-          vm.isLoading = false;
+          vm.$store.dispatch('loading', false);
         }, 1000);
       } else {
         setTimeout(() => {
-          vm.isLoading = false;
-          this.$bus.$emit('alert', '此帳號已被註冊');
+          vm.$store.dispatch('activeAlert', '此帳號已被註冊');
+          vm.$store.dispatch('loading', false);
         }, 1000);
       }
     },
@@ -682,44 +683,32 @@ export default {
     signIn() {
       // 登入
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch('loading', true);
       if (vm.user.signIn.username !== '' && vm.user.signIn.password !== '') {
         setTimeout(() => {
           $('#loginModal').modal('hide');
           sessionStorage.setItem('sign', vm.user.signUp.username);
-          vm.loginStatus = true;
-          vm.$bus.$emit('loginStatus', true);
-          vm.$bus.$emit('alert', '測試會員，您已成功登入！');
-          vm.isLoading = false;
+          vm.$store.dispatch('login', true);
+          vm.$store.dispatch('activeAlert', '測試會員，您已成功登入');
+          vm.$store.dispatch('loading', false);
         }, 1000);
       }
     },
     loginOut() {
       // 登出
       const vm = this;
-      vm.isLoading = true;
+      vm.$store.dispatch('loading', true);
       setTimeout(() => {
         sessionStorage.removeItem('sign');
-        this.loginStatus = false;
-        vm.$bus.$emit('loginStatus', false);
-        vm.isLoading = false;
+        vm.$store.dispatch('login', false);
+        vm.$store.dispatch('loading', false);
         if (vm.$router.history.current.name === 'Check'
           || vm.$router.history.current.name === 'Order') {
           vm.$router.push('/');
         }
         $('#loginOutModal').modal('hide');
-        vm.$bus.$emit('alert', '您已成功登出！');
+        vm.$store.dispatch('activeAlert', '您已成功登出');
       }, 1000);
-    },
-    getOrder(id) {
-      // 取得歷史訂單
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${id}`;
-      this.$http.get(api).then((response) => {
-        if (response.data.success) {
-          vm.orderList.push(response.data.order);
-        }
-      });
     },
     checkoutOrder(id) {
       // 檢視訂單內容
@@ -727,7 +716,7 @@ export default {
       $('#orderModal').modal('hide');
       $('#orderModal').on('hidden.bs.modal', () => {
         $('#menuModal').modal('hide');
-        vm.$bus.$emit('closeIcon');
+        this.$store.dispatch('activeIcon', false, '');
         if (vm.$router.history.current.name === 'Check') {
           vm.$router.push('/');
           setTimeout(() => {
@@ -741,19 +730,37 @@ export default {
     payment() {
       // 執行購物車 modal 結帳動作
       const vm = this;
-      if (vm.loginStatus === true) {
+      if (vm.login === true) {
         $('#cartModal').modal('hide');
-        vm.$bus.$emit('closeIcon');
-        vm.$router.push('/order');
+        this.$store.dispatch('activeIcon', false, '');
+        vm.$router.push('/order').catch(err => err);
       } else {
         $('#cartModal').modal('hide');
         $('#loginModal').modal('show');
-        vm.$bus.$emit('alert', '請先登入會員');
+        vm.$store.dispatch('activeAlert', '請先登入會員');
+      }
+    },
+    mobileMenuClose() {
+      this.$store.dispatch('mobileMenuClose', false);
+    },
+    activeDiscount() {
+      // 首次進入網站顯示折扣廣告並登出管理員帳號
+      const storage = sessionStorage.getItem('discount');
+      if (storage == null) {
+        const logout = `${process.env.VUE_APP_APIPATH}/logout`;
+        this.$http.post(logout).then((response) => {
+          if (response.data.success) {
+            this.$store.dispatch('login', false);
+          }
+        });
+        sessionStorage.setItem('discount', true);
+        $('#saleModal').modal('show');
       }
     },
   },
   mounted() {
     this.getLogin();
+    this.activeDiscount();
     $('#shop').click(function menu(e) {
       // mobile web 點擊選單 "服飾" 時轉換加減號動畫並且轉為加號時將 "各項分類" 轉為加號
       e.preventDefault();
@@ -789,28 +796,7 @@ export default {
     });
   },
   created() {
-    setTimeout(() => {
-      // 首次進入網站顯示折扣廣告並登出管理員帳號
-      const getSite = sessionStorage.getItem('coupon');
-      if (getSite == null) {
-        const logout = `${process.env.VUE_APP_APIPATH}/logout`;
-        this.$http.post(logout).then((response) => {
-          if (response.data.success) {
-            this.loginStatus = false;
-            this.$bus.$emit('loginStatus', false); // 改變sidebar的登入圖示
-          }
-        });
-        $('#saleModal').modal('show');
-      }
-    }, 500);
-    this.$bus.$on('getCart', (item) => {
-      this.cartItem = item;
-      // 從siderbar取得資料帶給購物車modal
-    });
-    this.$bus.$on('orderId', (item) => {
-      // order.vue建立訂單後取得資料帶給訂單modal
-      this.getOrder(item);
-    });
+    this.getCart();
   },
 };
 </script>
