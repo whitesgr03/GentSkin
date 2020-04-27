@@ -245,11 +245,12 @@
               <i
                 class="far fa-question-circle text-warning ml-2 cart-animate"
                 data-toggle="tooltip"
-                data-placement="bottom"
                 data-html="true"
+                data-placement="bottom"
+                data-trigger="hover"
                 title="<div>季節優惠：<p>- 凡購買商品立即享9折 -</p></div>
-                  <div>特價優惠：<div>總金額大於(滿)3000元 <div>輸入GentSkin</div>
-                  </div><div>- 即可享7折 -</div></div>">
+                <div>特價優惠：<div>總金額大於(滿)3000元 <div>輸入GentSkin</div>
+                </div><div>- 即可享7折 -</div></div>">
               </i>
             </form>
           </div>
@@ -464,10 +465,13 @@ export default {
     activeIcon(status, category) {
       this.$store.dispatch('activeIcon', { status, category });
     },
+    tooltip() {
+      $('[data-toggle="tooltip"]').tooltip();
+    },
   },
   mounted() {
+    this.tooltip();
     // 優惠碼提醒
-    $('[data-toggle="tooltip"]').tooltip();
   },
   created() {
     this.getCart();
