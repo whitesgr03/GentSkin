@@ -1,8 +1,9 @@
 .message {
   position: fixed;
   top: 0px;
-  left:50%;
+  left: 50%;
   opacity: 0;
+  z-index: 2000;
   visibility: hidden;
   transform: translate(-50%, -100px);
   transition: all 1s;
