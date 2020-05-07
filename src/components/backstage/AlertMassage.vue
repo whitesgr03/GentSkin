@@ -23,10 +23,6 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'alert',
-  data() {
-    return {
-    };
-  },
   computed: {
     ...mapGetters(['alert', 'message']),
   },
