@@ -34,10 +34,14 @@
     &-option {
       display: flex;
       justify-content: space-around;
+      &-active {
+        border: 1px solid $momoshiocha;
+      }
       .button {
         padding: 0;
         width: 140px;
         height: 42px;
+        border-radius: 10px;
         @include media-breakpoint-down(md) {
           font-size: $font-size-base * .8;
         }
