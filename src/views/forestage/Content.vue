@@ -90,7 +90,7 @@
                 <div class="button-warp">
                   <button
                     class="button button-slide mr-5 mb-sm-5"
-                    @click.prevent="addtoCart(product.id, amount)"
+                    @click.prevent="addtoCart(product.id, amount, false)"
                     :disabled="isDisable"
                   >
                     加入購物車
@@ -100,7 +100,7 @@
                   </button>
                   <button
                     class="button button-slide"
-                    @click.prevent="buyNow(product.id, amount)"
+                    @click.prevent="addtoCart(product.id, amount, true)"
                   >
                     立即購買
                   </button>
@@ -158,9 +158,9 @@
 </template>
 
 <script>
+import $ from 'jquery';
 import { Carousel, Slide } from 'vue-carousel';
 import { mapGetters, mapActions } from 'vuex';
-
 
 export default {
   data() {
@@ -232,15 +232,53 @@ export default {
       } else if (vm.amount < 1) {
         vm.amount = 1;
       } else {
-        vm.$store.dispatch('activeAlert', '商品數量範圍 1 - 5');
+        this.$store.dispatch('activeAlert', '商品數量範圍 1 - 5');
       }
     },
-    addtoCart(id, amount) {
-      // 加入購物車
-      this.$store.dispatch('cartModules/addtoCart', { id, amount });
+    clearQty(id) {
+      const productId = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
+      return new Promise((resolve) => {
+        this.$http.delete(productId).then((response) => {
+          if (response.data.success) {
+            resolve();
+          }
+        });
+      });
     },
-    buyNow(id, amount) {
-      this.$store.dispatch('cartModules/buyNow', { id, amount });
+    addtoCart(id, qty, buyNow) {
+      // 加入購物車或直接購買
+      const storage = sessionStorage.getItem('sign');
+      if (storage != null && buyNow) {
+        this.$store.dispatch('loading', true);
+      } else if (!buyNow) {
+        this.$store.dispatch('cartModules/disable', true);
+        this.$store.dispatch('cartModules/adding', id);
+      } else {
+        $('#loginModal').modal('show');
+        this.$store.dispatch('activeAlert', '請先登入會員', { root: true });
+        return;
+      }
+      const vm = this;
+      const cartData = vm.cart.carts.filter(item => item.product_id === vm.product.id);
+      if (cartData.length === 1) {
+        const amount = qty + cartData[0].qty;
+        this.clearQty(cartData[0].id).then(() => {
+          this.$store.dispatch('cartModules/addtoCart', { id, amount, buyNow })
+            .then(() => {
+              if (buyNow) {
+                this.$router.push('/order');
+              }
+            });
+        });
+      } else {
+        const amount = qty;
+        this.$store.dispatch('cartModules/addtoCart', { id, amount, buyNow })
+          .then(() => {
+            if (buyNow) {
+              this.$router.push('/order');
+            }
+          });
+      }
     },
     getItem(category, item, id) {
       // 點擊相似商品的變更資料

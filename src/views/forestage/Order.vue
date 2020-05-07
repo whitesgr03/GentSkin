@@ -11,12 +11,14 @@
                 <p>配送方式</p>
                 <div class="delivery-option">
                   <button type="button"  class="button bg-black text-white"
+                  :class="{'delivery-option-active': delivery === 'CVS'}"
                   @click.prevent="delivery = 'CVS', form.user.fee.shipping = 60,
                   form.user.recipient.transport = '門市取貨', form.user.fee.payment = '門市取貨付款'"
                   >
                     超商取貨
                   </button>
                   <button type="button" class="button bg-black text-white"
+                  :class="{'delivery-option-active': delivery === 'COD'}"
                     @click.prevent="delivery = 'COD', form.user.fee.shipping = 80,
                     form.user.recipient.transport = '宅配到府', form.user.fee.payment = '宅配貨到付款'">
                     宅配到府
@@ -393,6 +395,8 @@ export default {
       return city;
     },
     ...mapGetters('cartModules', ['cart']),
+    ...mapGetters('orderModules', ['newOrderId']),
+
   },
   methods: {
     // 取得購物車
@@ -420,8 +424,14 @@ export default {
       this.$store.dispatch('loading', true);
       this.$refs.observer.validate().then((result) => {
         if (result) {
+          $('#payModal').modal('show');
           this.$store.dispatch('loading', false);
-          this.$store.dispatch('orderModules/createOrder', this.form);
+          this.$store.dispatch('orderModules/createOrder', this.form)
+            .then(() => {
+              $('#payModal').modal('hide');
+              this.$router.push({ name: 'Check', params: { orderId: this.newOrderId } });
+              this.$store.dispatch('activeAlert', '訂單已儲存，可在 "我的訂單" 查看');
+            });
         } else {
           this.$store.dispatch('activeAlert', '欄位輸入錯誤或不完整');
           this.$store.dispatch('loading', false);
@@ -430,6 +440,7 @@ export default {
     },
     removeCartItem(id) {
       // 取得購物車
+      $('#removeCart').modal('hide');
       this.$store.dispatch('cartModules/removeCartItem', id);
     },
     addCouponCode() {
