@@ -12,6 +12,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "core-js": "^3.6.5",
+    "cssnano": "^4.1.10",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.1",
     "twzipcode-data": "^1.7.1",
