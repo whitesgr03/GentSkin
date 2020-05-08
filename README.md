@@ -10,7 +10,7 @@
 </h1>
 
 <h4 align="center">
-  電商網站設計：打造可供各平台瀏覽的響應式網頁
+  電商網站設計：打造純粹風格的響應式網頁
 </h4>
 
 <p align="center">
@@ -34,15 +34,25 @@
 
 ## 作品介紹
 
-* 依照現代電商進行網站 UI 設置，讓網站使用者在操作上可以更直覺更方便。
-  - 使用 Vue.js 作為 JavaScript Framework 建構 SPA
-  - 使用 Bootstrap 作為 CSS Framework 建構內容
-  - 使用 jQuery 建構動畫效果
-  - 使用 Sass/SCSS 使 CSS 進行結構化
-  - 使用 Responsive Web Design 建構響應式網頁
-  - 使用 axios 進行 API 串接
-  - 使用 Vuex  管理組件應用
-  - 使用 Vue Router 管理路由
+* 設計概念
+  - Less is More—「少即是多，多即是少」，以簡單純粹為設計原點
+  - 用更快的讀取時間和更好的響應式網站增加使用者的良好用戶體驗
+
+
+* 主要架構
+  - 依照現代網站進行 UI 設置，讓網站使用者在操作上可以更直覺更方便
+  - 選用深色背景給予沉著、優雅的氛圍，讓使用者更加聚焦內容本身
+  - 側邊欄設計給予連結更簡潔的方式呈現並且也讓右側產品圖像展現更多的視覺體驗
+
+
+* 使用技術
+  - Vue.js 作為 JavaScript Framework 建構 SPA
+  - Bootstrap 作為 Framework 建構內容
+  - jQuery 建構動畫效果
+  - SCSS 整合 Bootstrap 進行結構化和建構 RWD 網頁
+  - axios 進行 API 串接
+  - Vuex  管理組件應用
+  - Vue Router 管理路由
 
 ## 操作流程
 
@@ -51,7 +61,7 @@
 
 ## 架設環境
 
-使用 Github Pages 架設靜態網站。
+使用 Github Pages 搭配後端 API 建置靜態網站。
 
 ## 檔案結構
 
