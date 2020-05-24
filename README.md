@@ -23,7 +23,7 @@
   <a href="#作品介紹">作品介紹</a> •
   <a href="#架設環境">架設環境</a> •
   <a href="#檔案結構">檔案結構</a> •
-  <a href="#packages">使用插件</a> •
+  <a href="#packages">使用插件</a>
 </p>
 
 <img src="https://i.imgur.com/t4VrmH9.jpg">
@@ -35,7 +35,7 @@
 ## 作品介紹
 
 * 主要概念
-  - Less is More—「少即是多，多即是少」，以簡單純粹為設計原點
+  - Less is More —「少即是多，多即是少」，以簡單純粹為設計原點
   - 用更快速的讀取時間和更彈性的響應式技術來增加使用者瀏覽網站時的最佳體驗
 
 
@@ -46,17 +46,17 @@
 
 
 * 使用技術
-  - Vue.js 作為 JavaScript Framework 建構內容
-  - SCSS 整合 Bootstrap 進行結構化和建構 RWD 網頁
-  - jQuery 建構動畫效果
-  - axios 進行 API 串接
-  - Vuex  管理組件應用
-  - Vue Router 管理路由
+  - Vue.js / Vue Router 建構 SPA
+  - Vuex  進行組件狀態管理
+  - Vue axios 進行後端 API 串接
+  - Sass/SCSS 設計整合 Bootstrap 自定義變數
+  - Bootstrap 設計 RWD 網頁
+  
 
 ## 操作流程
 
 * 註冊及登入選單中已自動設定預設帳號及密碼，只要手動選擇帳號即可完成註冊及登入流程
-* web 可點選頁面最底部的 'GentSkin' 按鈕進入後台進行查看(需帳號密碼)
+* web 頁面最底部的 'GentSkin' 按鈕可進入後台進行查看(需使用帳號密碼登入)
 
 ## 架設環境
 
