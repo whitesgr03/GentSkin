@@ -56,7 +56,12 @@
 ## 操作流程
 
 * 註冊及登入選單中已自動設定預設帳號及密碼，只要手動選擇帳號即可完成註冊及登入流程
-* web 頁面最底部的 'GentSkin' 按鈕可進入後台進行查看(需使用帳號密碼登入)
+
+![Member login imgur](https://i.imgur.com/icVkLzr.gif)
+
+* Web 頁面最底部的 'GentSkin' 按鈕可進入後台進行查看 ( 需使用帳號密碼登入 )
+
+![CMS login imgur](https://i.imgur.com/oiI6jO0.gif)
 
 ## 架設環境
 
