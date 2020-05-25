@@ -59,7 +59,7 @@
 
 ![Member login imgur](https://i.imgur.com/9jjPUEk.gif)
 
-* web 頁面最底部的 'GentSkin' 按鈕可進入後台進行查看(需使用帳號密碼登入)
+* Web 頁面最底部的 'GentSkin' 按鈕可進入後台進行查看(需使用帳號密碼登入)
 
 ![CMS login imgur](https://i.imgur.com/oiI6jO0.gif)
 
