@@ -1,7 +1,7 @@
 <template>
   <div>
     <Alert />
-    <loading :active.sync="isLoading"></loading>
+    <!-- <loading :active.sync="isLoading"></loading> -->
     <div class="login">
       <form class="form" @submit.prevent="signin">
         <h1 class="h3 text-center mb-4">管理員登入</h1>
@@ -59,7 +59,6 @@ export default {
   name: 'Login',
   data() {
     return {
-      isLoading: false,
       user: {
         username: '',
         password: '',
@@ -70,26 +69,26 @@ export default {
     signin() {
       // 登入
       const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
       if (vm.user.username !== '' && vm.user.password !== '') {
-        vm.isLoading = true;
+        this.$store.dispatch('loading', true);
+        const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
         this.$http.post(api, vm.user).then((response) => {
           if (response.data.success) {
             $('#SigninModal').modal('show');
+            vm.$store.dispatch('loading', false);
             setTimeout(() => {
               $('#SigninModal').modal('hide');
             }, 1000);
             $('#SigninModal').on('hidden.bs.modal', () => {
-              vm.isLoading = false;
               vm.$router.push('/admin/products').catch(err => err);
             });
           } else if (!response.data.success) {
-            this.$bus.$emit('alert', '帳號或密碼輸入錯誤');
-            vm.isLoading = false;
+            this.$store.dispatch('activeAlert', '帳號或密碼輸入錯誤');
+            vm.$store.dispatch('loading', false);
           }
         });
       } else {
-        this.$bus.$emit('alert', '欄位不能留空');
+        this.$store.dispatch('activeAlert', '欄位不能留空');
       }
     },
   },
