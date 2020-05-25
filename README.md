@@ -57,10 +57,7 @@
 
 * 註冊及登入選單中已自動設定預設帳號及密碼，只要手動選擇帳號即可完成註冊及登入流程
 
-![Member login imgur](https://i.imgur.com/9jjPUEk.gif)
-[Imgur](https://i.imgur.com/9jjPUEk.gifv)
-![Imgur](https://i.imgur.com/9jjPUEk.gif)
-[Imgur](https://i.imgur.com/9jjPUEk.gif)
+![Member login imgur](https://i.imgur.com/icVkLzr.gifv)
 
 * Web 頁面最底部的 'GentSkin' 按鈕可進入後台進行查看(需使用帳號密碼登入)
 
