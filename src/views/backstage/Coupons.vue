@@ -40,15 +40,15 @@
             <td class="text-center">{{ item.percent }}%</td>
             <td>{{ item.due_date }}</td>
             <td>
-              <span v-if="item.is_enabled" class="text-success"  style="cursor: pointer;"
-                @click.prevent="updataEnabled(false, item)">已啟用
+              <span v-if="item.is_enabled" class="text-success"  style="cursor: pointer;">
+                已啟用
                 <i class="fas fa-spinner fa-spin" v-if="newData === item.id"></i>
               </span>
-              <span v-else class="text-warning"  style="cursor: pointer;"
+              <!-- <span v-else class="text-warning"  style="cursor: pointer;"
               @click.prevent="updataEnabled(true, item)">
                 未啟用
                 <i class="fas fa-spinner fa-spin" v-if="newData === item.id"></i>
-              </span>
+              </span> -->
             </td>
             <td>
               <button
@@ -230,20 +230,20 @@ export default {
         vm.$store.dispatch('loading', false);
       });
     },
-    updataEnabled(isEnabled, item) {
-      const vm = this;
-      vm.tempProduct = Object.assign({}, item);
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempProduct.id}`;
-      vm.newData = vm.tempProduct.id;
-      if (isEnabled) {
-        vm.tempProduct.is_enabled = 1;
-      } else if (!isEnabled) {
-        vm.tempProduct.is_enabled = 0;
-      }
-      this.$http.put(api, { data: vm.tempProduct }).then(() => {
-        vm.getCoupons(false);
-      });
-    },
+    // updataEnabled(isEnabled, item) {
+    // 為了展示後台畫面將是否啟動功能移除
+    //   const vm = this;
+    //   vm.tempProduct = Object.assign({}, item);
+    //   vm.newData = vm.tempProduct.id;
+    //   if (isEnabled) {
+    //     vm.tempProduct.is_enabled = 1;
+    //   } else if (!isEnabled) {
+    //     vm.tempProduct.is_enabled = 0;
+    //   }
+    //   this.$http.put(api, { data: vm.tempProduct }).then(() => {
+    //     vm.getCoupons(false);
+    //   });
+    // },
     openModal(isNew, item) {
       // 新增資料
       if (isNew) {
@@ -259,24 +259,29 @@ export default {
       $('#couponsModal').modal('show');
     },
     updataCoupons() {
-      const vm = this;
-      vm.$store.dispatch('loading', true);
-      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon`;
-      let httpMethod = 'post';
-      if (!vm.isNew) {
-        api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempProduct.id}`;
-        httpMethod = 'put';
-      }
-      this.$http[httpMethod](api, { data: vm.tempProduct }).then((response) => {
-        vm.$store.dispatch('loading', false);
+      // 為了展示後台畫面將新增及修改功能移除，改成只顯示 Alert
+      this.$store.dispatch('loading', true);
+      setTimeout(() => {
+        this.$store.dispatch('loading', false);
         $('#couponsModal').modal('hide');
-        vm.getCoupons();
-        if (response.data.success && httpMethod === 'post') {
-          vm.$store.dispatch('activeAlert', '已新增優惠碼');
-        } else {
-          vm.$store.dispatch('activeAlert', '已更新優惠碼');
-        }
-      });
+        this.$store.dispatch('activeAlert', '測試網站，無法執行新增或編輯');
+      }, 1000);
+      // const vm = this;
+      // this.$store.dispatch('loading', true);
+      // let httpMethod = 'post';
+      // if (!vm.isNew) {
+      //   httpMethod = 'put';
+      // }
+      // this.$http[httpMethod](api, { data: vm.tempProduct }).then((response) => {
+      //   this.$store.dispatch('loading', false);
+      //   $('#couponsModal').modal('hide');
+      //   vm.getCoupons();
+      //   if (response.data.success && httpMethod === 'post') {
+      //     this.$store.dispatch('activeAlert', '已新增優惠碼');
+      //   } else {
+      //     this.$store.dispatch('activeAlert', '已更新優惠碼');
+      //   }
+      // });
     },
     deleteModal(item) {
       $('#delcouponsModal').modal('show');
@@ -284,13 +289,18 @@ export default {
       vm.tempProduct = Object.assign({}, item);
     },
     deleteCoupon() {
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempProduct.id}`;
-      this.$http.delete(api).then(() => {
-        vm.$store.dispatch('activeAlert', '已刪除優惠碼');
+      // 為了展示後台畫面將刪除功能移除，改成只顯示 Alert
+      // 刪除優惠卷
+      setTimeout(() => {
+        this.$store.dispatch('activeAlert', '測試網站，無法執行刪除');
         $('#delcouponsModal').modal('hide');
-        vm.getCoupons();
-      });
+      }, 1000);
+      // const vm = this;
+      // this.$http.delete(api).then(() => {
+      //   vm.$store.dispatch('activeAlert', '已刪除優惠碼');
+      //   $('#delcouponsModal').modal('hide');
+      //   vm.getCoupons();
+      // });
     },
   },
   computed: {

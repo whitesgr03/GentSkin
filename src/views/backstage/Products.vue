@@ -47,16 +47,16 @@
             <td class="text-center" v-if="item.origin_price === '0'">----</td>
             <td class="text-center">{{ item.price | currency }}</td>
             <td>
-              <span v-if="item.is_enabled" class="text-success"  style="cursor: pointer;"
-                @click.prevent="updataEnabled(false, item)" :class="{'gg':newData !== item.id}">已上架
+              <span v-if="item.is_enabled" class="text-success"  style="cursor: pointer;">
+                已上架
                 <i class="fas fa-spinner fa-spin" v-if="newData === item.id"></i>
               </span>
-              <span v-else class="text-warning"  style="cursor: pointer;"
+              <!-- <span v-else class="text-warning"  style="cursor: pointer;"
               :class="{'gg':newData !== item.id}"
               @click.prevent="updataEnabled(true, item)">
                 未上架
                 <i class="fas fa-spinner fa-spin" v-if="newData === item.id"></i>
-              </span>
+              </span> -->
             </td>
             <td>
               <button
@@ -323,21 +323,21 @@ export default {
         }
       });
     },
-    updataEnabled(isEnabled, item) {
-      // 是否啟動商品
-      const vm = this;
-      vm.tempProduct = Object.assign({}, item);
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;
-      vm.newData = vm.tempProduct.id;
-      if (isEnabled) {
-        vm.tempProduct.is_enabled = 1;
-      } else if (!isEnabled) {
-        vm.tempProduct.is_enabled = 0;
-      }
-      this.$http.put(api, { data: vm.tempProduct }).then(() => {
-        vm.getProducts(false);
-      });
-    },
+    // updataEnabled(isEnabled, item) {
+    // 為了展示後台畫面將是否啟動功能移除
+    //   // 是否啟動商品
+    //   const vm = this;
+    //   vm.tempProduct = Object.assign({}, item);
+    //   vm.newData = vm.tempProduct.id;
+    //   if (isEnabled) {
+    //     vm.tempProduct.is_enabled = 1;
+    //   } else if (!isEnabled) {
+    //     vm.tempProduct.is_enabled = 0;
+    //   }
+    //   this.$http.put(api, { data: vm.tempProduct }).then(() => {
+    //     vm.getProducts(false);
+    //   });
+    // },
     openModal(isNew, item) {
       const vm = this;
       if (isNew) {
@@ -356,26 +356,31 @@ export default {
       $('#productModal').modal('show');
     },
     updataProduct() {
+      // 為了展示後台畫面將新增及修改功能移除，改成只顯示 Alert
       //  更新資料
-      const vm = this;
-      vm.$store.dispatch('loading', true);
-      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product`;
-      let httpMethod = 'post';
-      if (!vm.isNew) {
-        //  isNew等於false時就開啟put模板
-        api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;
-        httpMethod = 'put';
-      }
-      this.$http[httpMethod](api, { data: vm.tempProduct }).then((response) => {
-        vm.$store.dispatch('loading', false);
+      this.$store.dispatch('loading', true);
+      setTimeout(() => {
         $('#productModal').modal('hide');
-        vm.getProducts();
-        if (response.data.success && httpMethod === 'post') {
-          vm.$store.dispatch('activeAlert', '已新增商品');
-        } else {
-          vm.$store.dispatch('activeAlert', '已更新商品');
-        }
-      });
+        this.$store.dispatch('loading', false);
+        this.$store.dispatch('activeAlert', '測試網站，無法執行新增或編輯');
+      }, 1000);
+      // const vm = this;
+      // this.$store.dispatch('loading', true);
+      // let httpMethod = 'post';
+      // if (!vm.isNew) {
+      //   //  isNew等於false時就開啟put模板
+      //   httpMethod = 'put';
+      // }
+      // this.$http[httpMethod](api, { data: vm.tempProduct }).then((response) => {
+      //   this.$store.dispatch('loading', false);
+      //   $('#productModal').modal('hide');
+      //   vm.getProducts();
+      //   if (response.data.success && httpMethod === 'post') {
+      //     this.$store.dispatch('activeAlert', '已新增商品');
+      //   } else {
+      //     this.$store.dispatch('activeAlert', '已更新商品');
+      //   }
+      // });
     },
     deleteModal(item) {
       const vm = this;
@@ -383,13 +388,19 @@ export default {
       vm.tempProduct = Object.assign({}, item); // 打開刪除模板並抓出資料到vm.tempProduct
     },
     deleteProduct() {
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/product/${vm.tempProduct.id}`;
-      this.$http.delete(api).then(() => {
+      // 為了展示後台畫面將新增及修改功能移除，改成只顯示 Alert
+      this.$store.dispatch('loading', true);
+      setTimeout(() => {
         $('#delProductModal').modal('hide');
-        vm.getProducts();
-        vm.$store.dispatch('activeAlert', '已刪除商品');
-      });
+        this.$store.dispatch('loading', false);
+        this.$store.dispatch('activeAlert', '測試網站，無法執行刪除');
+      }, 1000);
+      // const vm = this;
+      // this.$http.delete(api).then(() => {
+      //   $('#delProductModal').modal('hide');
+      //   vm.getProducts();
+      //   this.$store.dispatch('activeAlert', '已刪除商品');
+      // });
     },
     uploadFile() {
       //  上傳圖片
