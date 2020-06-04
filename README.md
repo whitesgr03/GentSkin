@@ -59,10 +59,12 @@
 
 ![Member login imgur](https://i.imgur.com/icVkLzr.gif)
 
-* Web 頁面最底部的 'GentSkin' 按鈕可進入後台進行查看
+* Web 頁面最底部的 'GentSkin' 點擊可進入後台管理進行查看
 
 ![CMS login imgur](https://i.imgur.com/oiI6jO0.gif)
 
+測試帳號：  GentSkinTest01@gmail.com
+測試密碼：  GentSkin
 
 ## 架設環境
 
