@@ -64,6 +64,7 @@
 ![CMS login imgur](https://i.imgur.com/oiI6jO0.gif)
 
 測試帳號：  GentSkinTest01@gmail.com
+<br>
 測試密碼：  GentSkin
 
 ## 架設環境
