@@ -61,7 +61,9 @@
 
 * 從前台登入帳號後 透過左上方的齒輪圖案點擊可進入後台管理進行查看
 
-![Member login imgur](https://imgur.com/dFSrrhh)
+![CMS login imgur](https://imgur.com/dFSrrhh.gif)
+
+
 
 測試帳號：  GentSkinTest01@gmail.com
 <br>
