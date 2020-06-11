@@ -134,6 +134,11 @@
           right: 10px;
         }
         &-item {
+          i {
+            @include media-breakpoint-down(lg) {
+              font-size: 1.5rem;
+            }
+          }
           &-hide {
             opacity: 0;
             visibility: hidden;
@@ -143,6 +148,7 @@
             opacity: 1;
             visibility: visible;
           }
+
         }
         .badge {
           position: absolute;
