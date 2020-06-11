@@ -82,18 +82,11 @@
                   <i class="fab fa-lg fa-github"></i>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="https://tinyurl.com/qmhf5sd" target="_blank"
-                class="nav-link">
-                  <i class="fab fa-lg fa-linkedin"></i>
-                </a>
-              </li>
             </ul>
-            <!-- 員工登入 -->
-            <router-link to="/admin/products" class="d-md-inline-block d-none" >
+            <p>
               &copy; 2020 - GentSkin
               <i class="fas fa-user-tie"></i>
-            </router-link>
+            </p>
         </div>
       </div>
     </div>

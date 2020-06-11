@@ -103,6 +103,13 @@
               <i class="fas fa-2x fa-user-tie"></i>
             </button>
           </li>
+          <!-- 員工登入 -->
+          <li class="nav-item nav-item-hide d-none d-lg-block"
+            :class="{'nav-item-visible': login}">
+            <router-link to="/admin/products" tag="button" class="btn d-md-inline-block d-none" >
+              <i class="fas fa-2x fa-cog"></i>
+            </router-link>
+          </li>
         </ul>
       </div>
       <!-- 桌機板導航欄 -->
