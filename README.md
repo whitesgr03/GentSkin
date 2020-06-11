@@ -62,7 +62,7 @@
 * 從前台登入帳號後 透過左上方的齒輪圖案點擊可進入後台管理進行查看
 
 ![I](https://i.imgur.com/YQdjykR.gif)
-![Member login imgur](https://i.imgur.com/YQdjykR.gif)
+![Member login imgur](https://imgur.com/dFSrrhh)
 
 測試帳號：  GentSkinTest01@gmail.com
 <br>
