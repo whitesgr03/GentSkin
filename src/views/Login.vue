@@ -95,5 +95,8 @@ export default {
   components: {
     Alert,
   },
+  created() {
+    this.$store.dispatch('loading', false);
+  },
 };
 </script>
