@@ -77,52 +77,47 @@
     ├── assets
     │   ├── images                        # 所有圖片素材
     │   ├── layout
-    │   │     ├── header.scss             # 頁首
-    │   │     ├── footer.scss             # 頁尾
-    │   │     └── sidebar.scss            # Dashboard 的側邊欄
-    │   │
-    │   ├── mixin
-    │   │     └── grid.scss               # Grid system
+    │   │     ├── _b-sidebar.scss         # 後台側邊欄
+    │   │     ├── _f-sidebar.scss         # 前台側邊欄
+    │   │     └── _footer.scss
     │   │
     │   ├── module
-    │   │     ├── alertMassage.scss       # 訊息提示
-    │   │     ├── button.scss
-    │   │     ├── form.scss
-    │   │     ├── modal.scss              # 修改 Bootstrap modal
-    │   │     ├── pagination.scss         # 分頁
-    │   │     └── scrollBtn.scss          # 回頂端按鈕
+    │   │     ├── _alertMassage.scss       # 訊息提示
+    │   │     ├── _button.scss
+    │   │     ├── _form.scss
+    │   │     ├── _modal.scss              # 自定義 Bootstrap modal
+    │   │     └── _scrollBtn.scss          # 回頂端按鈕
     │   │
     │   ├── page
-    │   │     ├── forestage
-    │   │     ├── backstage
-    │   │     ├── forestage.scss          # 前台頁面SCSS
-    │   │     └── backstage.scss          # 後台頁面SCSS
+    │   │     ├── backstage                # 後台頁面SCSS
+    │   │     ├── forestage                # 前台頁面SCSS
+    │   │     ├── _forestage.scss          
+    │   │     └── _backstage.scss
     │   │
-    │   ├── variable                      # Bootstrap 變數
+    │   ├── variable                      # 自定義 Bootstrap 變數
     │   └── all.scss
     │
     ├── components
-    │   ├── forestage                     # 前台主要頁面
-    │   └── backstage                     # 後台主要頁面
+    │   ├── backstage                     # 後台主要組件
+    │   └── forestage                     # 前台主要組件
     │
     ├── filters
-    │   ├── currency.js                   # 前台主要組件
-    │   └── date.js                       # 後台主要組件
+    │   ├── currency.js
+    │   └── date.js
     │
-    ├── store
-    │   ├── index.js                      # Vuex 全域組件
-    │   ├── products.js                   # 商品組件
+    ├── store                             # Vuex
     │   ├── cart.js                       # 購物車組件
+    │   ├── index.js                      # 全域組件
     │   ├── order.js                      # 訂單組件
+    │   ├── products.js                   # 商品組件
     │   
-    ├── views
-    │   ├── forestage                     # 前台主要頁面
-    │   ├── backstage                     # 後台主要頁面
-    │   ├── Index.vue                     # 前台版型
-    │   ├── Dashboard.vue                 # 後台版型
-    │   └── Login.vue                     # 登入頁面
-    │
-    └── bus.js                            # Event Bus
+    └── views
+        ├── backstage                     # 後台主要頁面
+        ├── forestage                     # 前台主要頁面
+        ├── Dashboard.vue                 # 後台版型
+        ├── Index.vue                     # 前台版型
+        └── Login.vue                     # 登入頁面
+ 
     
 ## packages
 
