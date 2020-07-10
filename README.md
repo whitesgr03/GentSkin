@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="https://whitebf.github.io/GentSkin/#/">
+  <a href="https://wesleybai.github.io/GentSkin/#/">
     <img src="https://img.icons8.com/color/500/000000/jeans-jacket.png"
          alt="GentSkin"
          width="200">
@@ -14,7 +14,7 @@
 </h4>
 
 <p align="center">
-  <a  href="https://whitebf.github.io/GentSkin/#/">
+  <a  href="https://wesleybai.github.io/GentSkin/#/">
     <img src="https://img.shields.io/badge/Demo-Gentskin-green">
   </a>
 </p>
@@ -28,7 +28,7 @@
 
 <img src="https://i.imgur.com/t4VrmH9.jpg">
 <h4>
-  <a href="https://whitebf.github.io/GentSkin/#/">Demo</a>
+  <a href="https://wesleybai.github.io/GentSkin/#/">Demo</a>
 </h4>
 
 
