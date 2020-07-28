@@ -120,9 +120,9 @@
 
 - [vue-router](https://github.com/vuejs/vue-router)
 - [Vuex](https://github.com/vuejs/vuex)
-- [vee-validate](https://github.com/logaretm/vee-validate)                      # 表單驗證
+- [vee-validate](https://github.com/logaretm/vee-validate)
 - [axios](https://github.com/axios/axios)
 - [vue-axios](https://github.com/imcvampire/vue-axios)
-- [vue-carousel](https://github.com/SSENSE/vue-carousel)                        # 輪播套件
-- [vue-infinite-loading](https://github.com/PeachScript/vue-infinite-loading)   # 無線滾動套件
-- [animate.css](https://github.com/daneden/animate.css)                         # CSS動畫
+- [vue-carousel](https://github.com/SSENSE/vue-carousel)
+- [vue-infinite-loading](https://github.com/PeachScript/vue-infinite-loading)
+- [animate.css](https://github.com/daneden/animate.css)
