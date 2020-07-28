@@ -34,20 +34,20 @@
 
 ## 作品介紹
 
-* 使用技術
-  - Vue.js
-    -Vue Router 管理路由
-    -Vuex 管理 Web API
-    -axios 串接 API 
-    -vee-validate 驗證表格
-  - CSS
-    -Bootstrap 設計 RWD
-    -Sass/SCSS
+### 使用技術
+- Vue.js
+  - Vue Router 管理路由
+  - Vuex 管理 Web API
+  - axios 串接 API 
+  - vee-validate 驗證表格
+- CSS
+  - Bootstrap 設計 RWD
+  - Sass/SCSS
 
-* 網站設計
-  - 參考一些電商網站，設計出屬於現代網站的 UI 配置
-  - 網站使用深色背景，讓使用者更加聚焦內容本身
-  - 使用左側邊欄設計更方便點擊連結，也讓右側內容視覺體驗增加
+### 網站設計
+- 參考一些電商網站，設計出屬於現代網站的 UI 配置
+- 網站使用深色背景，讓使用者更加聚焦內容本身
+- 使用左側邊欄設計更方便點擊連結，也讓右側內容視覺體驗增加
 
 
 ## 操作流程
@@ -57,19 +57,19 @@
 ![Member login imgur](https://i.imgur.com/icVkLzr.gif)
 
 * 從前台登入帳號後 透過左上方的齒輪圖案點擊可進入後台管理進行查看
+  - 後台帳號：  GentSkinTest01@gmail.com
+  - 後台密碼：  GentSkin
 
 ![CMS login imgur](https://imgur.com/dFSrrhh.gif)
 
-測試帳號：  GentSkinTest01@gmail.com
-<br>
-測試密碼：  GentSkin
+
 
 ## 架設環境
 
-使用 Github Pages 搭配後端 API 建置網站。
+- 使用 Github Pages 搭配後端 API 建置網站。
 
 ## 檔案結構
-
+```
     src
     ├── assets
     │   ├── images                        # 所有圖片素材
@@ -114,7 +114,7 @@
         ├── Dashboard.vue                 # 後台版型
         ├── Index.vue                     # 前台版型
         └── Login.vue                     # 登入頁面
- 
+ ```
     
 ## 使用套件
 
