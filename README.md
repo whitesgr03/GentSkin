@@ -10,7 +10,7 @@
 </h1>
 
 <h4 align="center">
-  電商網站設計：打造純粹風格的響應式網頁
+  電商網站設計：Vue.js 開發
 </h4>
 
 <p align="center">
@@ -23,7 +23,7 @@
   <a href="#作品介紹">作品介紹</a> •
   <a href="#架設環境">架設環境</a> •
   <a href="#檔案結構">檔案結構</a> •
-  <a href="#packages">使用插件</a>
+  <a href="#packages">使用套件</a>
 </p>
 
 <img src="https://i.imgur.com/t4VrmH9.jpg">
@@ -34,24 +34,21 @@
 
 ## 作品介紹
 
-* 主要概念
-  - Less is More —「少即是多，多即是少」，以簡單純粹為設計原點
-  - 用更快速的讀取時間和更彈性的響應式技術來增加使用者瀏覽網站時的最佳體驗
-
-
-* 設計架構
-  - 使用現代網站進行 UI 設置，讓網站使用者在操作上可以更直覺更方便
-  - 選用深色背景給予沉著、優雅的氛圍，讓使用者更加聚焦內容本身
-  - 側邊欄設計給予連結更簡潔的方式呈現並且也讓右側產品圖像展現更多的視覺體驗
-
-
 * 使用技術
-  - Vue.js / Vue Router 建構 SPA
-  - Vuex  進行組件狀態管理
-  - Vue axios 進行後端 API 串接
-  - Sass/SCSS 設計整合 Bootstrap 自定義變數
-  - Bootstrap 設計 RWD 網頁
-  
+  - Vue.js
+    -Vue Router 管理路由
+    -Vuex 管理 Web API
+    -axios 串接 API 
+    -vee-validate 驗證表格
+  - CSS
+    -Bootstrap 設計 RWD
+    -Sass/SCSS
+
+* 網站設計
+  - 參考一些電商網站，設計出屬於現代網站的 UI 配置
+  - 網站使用深色背景，讓使用者更加聚焦內容本身
+  - 使用左側邊欄設計更方便點擊連結，也讓右側內容視覺體驗增加
+
 
 ## 操作流程
 
@@ -69,7 +66,7 @@
 
 ## 架設環境
 
-使用 Github Pages 搭配後端 API 建置靜態網站。
+使用 Github Pages 搭配後端 API 建置網站。
 
 ## 檔案結構
 
@@ -119,13 +116,13 @@
         └── Login.vue                     # 登入頁面
  
     
-## packages
+## 使用套件
 
 - [vue-router](https://github.com/vuejs/vue-router)
+- [Vuex](https://github.com/vuejs/vuex)
 - [vee-validate](https://github.com/logaretm/vee-validate)                      # 表單驗證
-- [animate.css](https://github.com/daneden/animate.css)                         # CSS動畫
-- [vue-carousel](https://github.com/SSENSE/vue-carousel)                        # 輪播套件
-- [vue-infinite-loading](https://github.com/PeachScript/vue-infinite-loading)   # 無線滾動套件
 - [axios](https://github.com/axios/axios)
 - [vue-axios](https://github.com/imcvampire/vue-axios)
-- [Vuex](https://github.com/vuejs/vuex)
+- [vue-carousel](https://github.com/SSENSE/vue-carousel)                        # 輪播套件
+- [vue-infinite-loading](https://github.com/PeachScript/vue-infinite-loading)   # 無線滾動套件
+- [animate.css](https://github.com/daneden/animate.css)                         # CSS動畫
