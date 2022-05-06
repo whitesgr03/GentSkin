@@ -10,7 +10,7 @@
 </h1>
 
 <h4 align="center">
-  電商網站設計：Vue.js 開發
+  前端靜態網站設計：Vue.js 開發
 </h4>
 
 <p align="center">
