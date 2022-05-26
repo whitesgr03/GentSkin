@@ -13,14 +13,13 @@
   英倫風格服飾網站設計：由 Vue.js 建構
 </h4>
 
-<p align="center">
-  <a  href="https://whitesgr03.github.io/GentSkin/">
-    <img src="https://img.shields.io/badge/Demo-Gentskin-green">
-  </a>
-</p>
-
 <img src="https://i.imgur.com/t4VrmH9.jpg">
 
+<p align="center">
+  <a  href="https://whitesgr03.github.io/GentSkin/">
+    點此查看網站
+  </a>
+</p>
 
 ## 作品介紹
 
@@ -115,3 +114,10 @@
 - [vue-carousel](https://github.com/SSENSE/vue-carousel)
 - [vue-infinite-loading](https://github.com/PeachScript/vue-infinite-loading)
 - [animate.css](https://github.com/daneden/animate.css)
+
+## 
+<p>
+  <a  href="https://whitesgr03.github.io/GentSkin/">
+    點此查看網站
+  </a>
+</p>
