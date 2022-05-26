@@ -10,7 +10,7 @@
 </h1>
 
 <h4 align="center">
-  前端靜態網站設計：Vue.js 開發
+  英倫風格服飾網站設計：由 Vue.js 建構
 </h4>
 
 <p align="center">
@@ -19,53 +19,43 @@
   </a>
 </p>
 
-<p align="center">
-  <a href="#作品介紹">作品介紹</a> •
-  <a href="#架設環境">架設環境</a> •
-  <a href="#檔案結構">檔案結構</a> •
-  <a href="#packages">使用套件</a>
-</p>
-
 <img src="https://i.imgur.com/t4VrmH9.jpg">
-<h4>
-  <a href="https://whitesgr03.github.io/GentSkin/">Demo</a>
-</h4>
 
 
 ## 作品介紹
 
+### UI/UX 設計
+- 網站使用深色背景，讓使用者容易聚焦內容本身
+- 使用左側欄設計更易於點擊連結，也提升主要內容的視覺體驗
+
 ### 使用技術
 - Vue.js
-  - Vue Router 管理路由
-  - Vuex 管理 Web API
-  - axios 串接 API 
-  - vee-validate 驗證表格
+  - Vue Router
+  - Vuex
+  - axios
+  - vee-validate
 - CSS
-  - Bootstrap 設計 RWD
+  - Bootstrap
   - Sass/SCSS
+- HTML
 
-### 網站設計
-- 網站使用深色背景，讓使用者更加聚焦內容本身
-- 使用左側邊欄設計更方便點擊連結，也讓右側內容視覺體驗增加
+### 架設環境
+- 網站為靜態網頁使用 Github Pages 架設
 
 
-## 操作流程
+## 操作展示
 
 * 註冊及登入選單中已自動設定預設帳號及密碼，只要手動選擇帳號即可完成註冊及登入流程
 
 ![Member login imgur](https://i.imgur.com/icVkLzr.gif)
 
 * 從前台登入帳號後 透過左上方的齒輪圖案點擊可進入後台管理進行查看
-  - 後台帳號：  GentSkinTest01@gmail.com
-  - 後台密碼：  GentSkin
+  - 後台測試帳號：  GentSkinTest01@gmail.com
+  - 後台測試密碼：  GentSkin
 
 ![CMS login imgur](https://imgur.com/dFSrrhh.gif)
 
 
-
-## 架設環境
-
-- 使用 Github Pages 搭配後端 API 建置網站。
 
 ## 檔案結構
 ```
